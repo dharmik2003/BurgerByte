@@ -9,7 +9,7 @@ const Responsive = () => {
     const closehandler=()=>setshownavnbar(false)
   return (
     <div>
-          <Navbar openNav={openhandler}/>
+        <Navbar openNav={openhandler}/>
         <MobileNav showNav={shownavnbar} closeNav={closehandler}/>
     </div>
   )

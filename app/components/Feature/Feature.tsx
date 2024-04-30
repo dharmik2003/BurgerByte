@@ -9,7 +9,7 @@ const Feature = () => {
     <div className='pt-[5rem] pb-[3rem]'>
           <h1 className='heading'>
             burgers made with <br/>love and 
-            <span className='text-red-600'>Care</span>
+            <span className='text-red-600'> Care</span>
         </h1>
 
           <div className='w-[90%] md:w-[80%] mt-[3rem] md:mt-[5rem] mb:[3rem] mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-[3rem]'>

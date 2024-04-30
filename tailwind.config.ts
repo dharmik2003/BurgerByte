@@ -10,6 +10,15 @@ const config: Config = {
     extend: {
      
     },
+    screens: {
+      'sm': '640px',    // Small screens, mobile phones (default)
+      'md': '768px',    // Medium screens, tablets
+      'lg': '1024px',   // Large screens, laptops/desktops
+      'xl': '1280px',   // Extra large screens, large desktops
+      '2xl': '1536px',  // Extra large screens, extra large desktops
+      'ss': '380', 
+    },
+
   },
   plugins: [],
 };

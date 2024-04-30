@@ -4,7 +4,7 @@
 
 @layer components{
   .clip_path{
-  clip-path:polygon(50% 0%,100% 0%,100% 84%,50% 100%,0 85%,0% 60%,0 0);
+  clip-path:polygon(50% 0%,100% 0%,100% 85%,50% 100%,0 85%,0% 60%,0 0);
 }
 .heading{
   @apply text-[30px] md:text-[35px] lg:text-[45px] xl:text-[50px] uppercase font-bold text-gray-900 md:leading-[4rem] leading-[3rem] text-center
@@ -19,4 +19,36 @@ input[type="time"]::-webkit-calendar-picker-indicator{
 }
 input[type="time"]::-webkit-calendar-picker-indicator::after{
   filter: invert(1);
+}
+
+
+::-webkit-scrollbar {
+  width: 6px; 
+  border: 1px solid #FF7F0E;
+  border-radius: 5px;
+}
+::-webkit-scrollbar-track {
+  /* background: #F4F1EA;  */
+  background: white; 
+    width: 5px;
+}
+::-webkit-scrollbar-thumb {
+  background: #FF7F0E;
+  border-radius: 10px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background:#FF7F0E
+}
+
+
+@keyframes bounce {
+  0% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-5px); /* Adjust this value for desired bounce height */
+  }
+  100% {
+    transform: translateY(0);
+  }
 }

@@ -12,6 +12,7 @@ import 'aos/dist/aos.css'
 
 
 const Home = () => {
+  
 
   useEffect(()=>{
 
@@ -27,8 +28,11 @@ const Home = () => {
     initAos()
   },[])
 
+
+  
+
   return (
-      <div className='overflow-hidden '>
+      <div className='overflow-hidden'>
         <Hero/>
         <Feature/>
         <PropulerBurger />

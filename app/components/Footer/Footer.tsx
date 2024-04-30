@@ -4,8 +4,8 @@ import { FaBurger, FaFacebook } from 'react-icons/fa6'
 
 const Footer = () => {
   return (
-    <div className='pt-[5rem] pb-[3rem] bg-gray-900'>
-          <div className='w-[80%] pb-[2rem] border-b-[2px] border-b-gray-300 border-opacity-50 mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-[2rem] items-start'>
+    <div className='pt-[5rem] pb-[3rem] bg-gray-900 mt-0'>
+      <div className='w-[80%] pb-[2rem] border-b-[2px] border-b-gray-300 border-opacity-50 mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-[2rem] items-start'>
             <div>
                   <div className='flex items-center text-white space-x-2'>
                       <FaBurger className='w-[1.2rem] h-[1.2rem] sm:h-[1.4rem] sm:w-[1.4rem] text-orange-500' />
@@ -33,8 +33,8 @@ const Footer = () => {
             </div>
             <div>
                   <h1 className='text-[23px] font-semibold mb-[2rem] uppercase text-white'>Opening Hours</h1>
-                  <p className='text-white text-[18px]'>Monday - Friday : <span className='text-yellow-300'>8am - 49m</span></p>
-                  <p className='text-white text-[18px]'>Saturday : <span className='text-yellow-300'>8am - 129m</span></p>
+                  <p className='text-white text-[18px]'>Monday - Friday : <span className='text-yellow-300'>10am - 11pm</span></p>
+                  <p className='text-white text-[18px]'>Saturday : <span className='text-yellow-300'>09am - 11pm</span></p>
                   <div className='flex mt-[2rem] items-center space-x-6'>
                     <FaFacebook className='w-[1.5rem] h-[1.5rem] text-blue-400'/>
                     <FaInstagram className='w-[1.5rem] h-[1.5rem] text-red-400'/>
@@ -44,7 +44,6 @@ const Footer = () => {
           </div>
           <p className='text-center text-white opacity-50 mt-[1.5rem]'>Copyright 2024 <span className='text-yellow-300'> WebDev Warriors</span>. All rights reserved </p>
 
- 
     </div>
   )
 }

@@ -1,4 +1,8 @@
 /** @type {import('next').NextConfig} */
-const nextConfig = {};
+const nextConfig = {
+    images: {
+        domains: ['www.tasteofhome.com', 'cdn.svgator.com', 'i.pinimg.com', 'supershopping.lk','icon-library.com', 'c.tenor.com', 'github.com'],
+    },
+};
 
 export default nextConfig;
