@@ -42,5 +42,18 @@ export const Cookienamether = (cookieName: string): boolean => {
     });
 };
 
+// export const Cookienamether = (request: NextRequest, cookieName: string): boolean => {
+//     if (request && request.headers) {
+//         const cookieHeader = request.headers.get('cookie');
+//         if (cookieHeader) {
+//             const cookies = cookieHeader.split(';');
+//             return cookies.some(cookie => {
+//                 const [name] = cookie.trim().split('=');
+//                 return name === cookieName;
+//             });
+//         }
+//     }
+//     return false;
+// };
 
 

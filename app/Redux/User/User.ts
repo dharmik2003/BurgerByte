@@ -80,7 +80,9 @@ export const authSlice = createSlice({
             state.userpassword = initialState.userpassword;
             state.userphotos = initialState.userphotos;
             state.isLogin = initialState.isLogin;
+            state.admin = initialState.admin;
         },
+        
     },
 });
 

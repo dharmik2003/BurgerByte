@@ -7,6 +7,8 @@ import React, { useEffect, useState } from 'react';
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 import { useSelector } from 'react-redux';
+import Spinner from '../Spinner/Spinner';
+import toast from 'react-hot-toast';
 
 const responsive = {
     desktop: {
@@ -27,6 +29,18 @@ const responsive = {
 };
 
 const Myorder = () => {
+
+
+    const [loading, setLoading] = useState(true); 
+
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            setLoading(false);
+        }, 3000);
+
+        return () => clearTimeout(timer); 
+    }, []);
+
     const { myorders } = useSelector((state: any) => state.myorderdata);
     console.log("page myorders", myorders);
 
@@ -60,7 +74,7 @@ const Myorder = () => {
                 return userId
             }
             else {
-                alert("user id not existing please login")
+                toast.error("Please Login!")
             }
 
         } catch (error) {
@@ -116,23 +130,26 @@ const Myorder = () => {
         console.log("groupedOrders", groupedOrders);
     }, [apiorderdata, myorderss, groupedOrders]);
 
+
     return (
-        <div className='w-full h-auto bg-[#f4f1ea] p-6'>
-            {groupedOrders.length === 0 ? (
-                <div>No orders available.</div>
+        <div className='w-full h-full bg-[#f4f1ea] p-6'>
+            {loading ? (
+                <div className='w-full h-[610px] flex justify-center items-center'> <Spinner /></div>
+            ) : groupedOrders.length === 0 ? (
+                    <div className='w-full h-[610px] flex justify-center items-center text-[20px] sm:text-[22px]'>No orders available.</div>
             ) : (
                 <div>
                     <h1 className='heading'>Order <span className='text-red-600'>History</span></h1>
 
-                    {groupedOrders.map((orders: any[], index: number) => (
-                        <div key={index} className='flex justify-center items-center'>
-                            <div className='w-[80%] h-auto lg:w-[70%] flex-col justify-center items-center sm:flex-row sm:h-[200px] p-2 lg:pl-10 bg-white m-2 flex lg:justify-start gap-2 sm:gap-0 lg:gap-5 rounded-lg border'>
+                            {[...groupedOrders].reverse().map((orders: any[], index: number) => (
+                        <div key={index} className='flex sm:justify-center sm:items-center'>
+                            <div className='w-[95%] h-auto lg:w-[70%] flex-col justify-center items-center sm:flex-row sm:h-[230px] p-2 lg:pl-10 bg-white m-2 flex lg:justify-start gap-2 sm:gap-0 lg:gap-5 rounded-lg border'>
                                 <div className='w-full sm:w-[40%] lg:w-[30%]'>
                                     {/* Render images carousel here */}
                                     <Carousel additionalTransfrom={0} arrows={false} autoPlay={true} autoPlaySpeed={4000} centerMode={false} infinite responsive={responsive} itemClass="item" showDots={false}>
                                         {orders.map((order: any, orderIndex: number) => (
                                             <div key={orderIndex} className='w-full h-full flex justify-center items-center lg:justify-center'>
-                                                <Image src={order.image} alt='not found' width={200} height={200} />
+                                                <Image src={order.image} alt='not found' width={210} height={210} />
                                             </div>
                                         ))}
                                     </Carousel>
@@ -140,17 +157,18 @@ const Myorder = () => {
                                 <div className='w-[100%] lg:w-[40%]'>
                                     <div className='flex gap-1 sm:gap-4 pt-3 justify-evenly sm:justify-start items-center'>
                                         <div>
+                                            <h1 className='text-red-600 text-[17px] sm:text-[20px]'>Payment ID:</h1>
                                             <h1 className='text-red-600 text-[17px] sm:text-[20px]'>Order ID:</h1>
-                                            <h1 className='text-red-600 text-[17px] sm:text-[20px]'>Date & Time: </h1>
+                                            <h1 className='text-red-600 text-[17px] sm:text-[20px]'>Date</h1>
+                                            <h1 className='text-red-600 text-[17px] sm:text-[20px]'>Items</h1>
                                             <h1 className='text-red-600 text-[17px] sm:text-[20px]'>Total:</h1>
                                         </div>
                                         <div>
-                                            
+                                            <h1 className='font-semibold text-green-700 text-[16px] sm:text-[18px]'>{orders[0].paymentID}</h1>
                                             <h1 className='font-semibold text-green-700 text-[16px] sm:text-[18px]'>{orders[0].orderId}</h1>
-                                            <h1 className='font-semibold text-green-700 text-[16px] sm:text-[18px]'>{new Date(orders[0].createdAt).toLocaleDateString('en-IN', { year: 'numeric', month: '2-digit', day: '2-digit' })} | {new Date(orders[0].createdAt).toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit' }) }</h1>
-                                            <h1 className='font-semibold text-green-700 text-[16px] sm:text-[18px]'> ₹{orders.reduce((acc: number, item: any) => acc + item.price*item.quantity, 0)}</h1>
-                                            
-                                           
+                                            <h1 className='font-semibold text-green-700 text-[16px] sm:text-[18px]'>{new Date(orders[0].createdAt).toLocaleDateString('en-IN', { year: 'numeric', month: '2-digit', day: '2-digit' })} | {new Date(orders[0].createdAt).toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit' })}</h1>
+                                            <h1 className='font-semibold text-green-700 text-[16px] sm:text-[18px]'>{orders.length}</h1>
+                                            <h1 className='font-semibold text-green-700 text-[16px] sm:text-[18px]'> ₹{orders.reduce((acc: number, item: any) => acc + item.price * item.quantity, 0)}    (Items:{orders.length})</h1>
                                         </div>
                                     </div>
                                     <div onClick={() => handleorderid(orders[0].orderId)} className='flex justify-center items-center sm:justify-start mt-5'>
@@ -164,6 +182,7 @@ const Myorder = () => {
             )}
         </div>
     );
+
 
 };
 

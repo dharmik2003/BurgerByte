@@ -8,10 +8,13 @@ export interface BurgerItem {
 
 export interface OrderState {
     orderID: string;
+    paymentID:string
 }
 
 const initialState: OrderState = {
     orderID: '',
+    paymentID:''
+    
 };
 
 export const orderIDSlice = createSlice({
@@ -24,10 +27,16 @@ export const orderIDSlice = createSlice({
         setresetOrderID(state) {
             state.orderID = '';
         },
+        setresetpaymentid(state) {
+            state.paymentID = '';
+        },
+        addpaymentid(state, action) {
+            state.paymentID = action.payload
+        },
     },
 });
 
 
-export const { setaddorderID, setresetOrderID } = orderIDSlice.actions;
+export const { setaddorderID, setresetpaymentid, addpaymentid, setresetOrderID } = orderIDSlice.actions;
 
 export default orderIDSlice.reducer;

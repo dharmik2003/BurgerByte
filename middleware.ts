@@ -35,33 +35,63 @@ const secretKey = "dharmik";
 
 export async function middleware(request: NextRequest) {
     // Check if userDetails cookie is present
+
+    const adminDetailsExists = haveCookie(request, 'adminDetails');
     const userDetailsExists = haveCookie(request, 'userDetails');
-    const adminDetailsExists = haveCookie1(request, 'adminDetails');
+
     
     console.log(request.nextUrl.pathname)
     console.log(userDetailsExists)
+    console.log("userDetailsExists", userDetailsExists)
     console.log("adminDetailsExists", adminDetailsExists)
+    console.log("request.nextUrl.pathname", request.nextUrl.pathname)
 
-    if ((request.nextUrl.pathname === '/product' || request.nextUrl.pathname === '/addproduct') && !adminDetailsExists) {
+
+    // if ((request.nextUrl.pathname === '/product' || request.nextUrl.pathname === '/addproduct') && !adminDetailsExists) {
+    //     // Redirect non-admin users trying to access product-related routes
+    //     const homeUrl: string = new URL('/', request.nextUrl.origin).toString();
+    //     return NextResponse.redirect(homeUrl);
+    // }
+    
+    // Redirect to the login page if the userDetails cookie is not present
+    if (request.nextUrl.pathname === '/product' && adminDetailsExists) {
+        // const homeUrl: string = new URL('/product', request.nextUrl.origin).toString();
+        // return NextResponse.redirect(homeUrl);
+        return NextResponse.next();
+    }
+    else if (request.nextUrl.pathname === '/addproduct' && adminDetailsExists) {
+        // const homeUrl: string = new URL('/addproduct', request.nextUrl.origin).toString();
+        // return NextResponse.redirect(homeUrl);
+        return NextResponse.next();
+    }
+    if (request.nextUrl.pathname === '/product' && userDetailsExists) {
         const homeUrl: string = new URL('/', request.nextUrl.origin).toString();
         return NextResponse.redirect(homeUrl);
     }
-    
-    // Redirect to the login page if the userDetails cookie is not present
-    if (!userDetailsExists && request.nextUrl.pathname !== '/login' && request.nextUrl.pathname !== '/signup' && request.nextUrl.pathname !== '/profile') {
+    else if (request.nextUrl.pathname === '/addproduct' && userDetailsExists) {
+        const homeUrl: string = new URL('/', request.nextUrl.origin).toString();
+        return NextResponse.redirect(homeUrl);
+    }
+
+    else if (!userDetailsExists && request.nextUrl.pathname !== '/login' && request.nextUrl.pathname !== '/signup' && request.nextUrl.pathname !== '/profile') {
         const loginUrl: string = new URL('/login', request.nextUrl.origin).toString();
         return NextResponse.redirect(loginUrl);
     }
     
     // Check if the user is trying to access the /login or /signup page
-    if ((request.nextUrl.pathname === '/login' || request.nextUrl.pathname === '/signup') && userDetailsExists) {
+    else if ((request.nextUrl.pathname === '/login' || request.nextUrl.pathname === '/signup') && userDetailsExists ) {
         // Redirect to the home page if the user is logged in and tries to access /login or /signup
         const homeUrl: string = new URL('/', request.nextUrl.origin).toString();
         return NextResponse.redirect(homeUrl);
     }
+    
 
-    // const { username, isLoading, admin } = useSelector((state: any) => state.auth);
-
+    
+    if ((request.nextUrl.pathname === '/login' || request.nextUrl.pathname === '/signup') && adminDetailsExists) {
+        // Redirect to the home page if the user is logged in and tries to access /login or /signup
+        const homeUrl: string = new URL('/', request.nextUrl.origin).toString();
+        return NextResponse.redirect(homeUrl);
+    }
    
 
     return NextResponse.next();
@@ -70,5 +100,5 @@ export async function middleware(request: NextRequest) {
 
 
 export const config = {
-    matcher: ['/cart', '/login', '/signup', '/profile'],
+    matcher: ['/product', '/cart', '/login', "/addproduct", '/signup', '/profile'],
 };

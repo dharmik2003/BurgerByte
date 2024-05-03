@@ -25,6 +25,9 @@ export interface Addtocarttype {
   price: number;
   quantity: number;
   orderId: String;
+  paymentID:String;
+  payment:Boolean
+
 }
 
 const Burger = ({ orderid, id, title, image, review, price, rating }: Producttype) => {
@@ -85,7 +88,8 @@ const Burger = ({ orderid, id, title, image, review, price, rating }: Producttyp
         return userId
       }
       else{
-        alert("user id not existing please login")
+        toast.error("Please Login!")
+        // alert("user id not existing please login")
       }
 
     } catch (error) {
@@ -113,6 +117,8 @@ const Burger = ({ orderid, id, title, image, review, price, rating }: Producttyp
           price: price,
           quantity: 1,
           orderId: orderID,
+          paymentID:'',
+          payment:false
         };
         try {
           const response = await fetch('/api/cart', {
@@ -128,6 +134,8 @@ const Burger = ({ orderid, id, title, image, review, price, rating }: Producttyp
               price: price,
               quantity: 1,
               orderId: orderID,
+              payment:false,
+              paymentID:''
             }),
           });
 
@@ -135,7 +143,7 @@ const Burger = ({ orderid, id, title, image, review, price, rating }: Producttyp
 
           if (!response.ok) {
             if(response.status==400){
-              alert("orderId must be Need!")
+              // alert("orderId must be Need!")
             }
             else{
 
@@ -143,7 +151,9 @@ const Burger = ({ orderid, id, title, image, review, price, rating }: Producttyp
 
             }
           }
-          toast.success('Item added to cart successfully!');
+          if(response.ok){
+            toast.success('Item added to cart successfully!');
+          }
           // dispatch(addOrder(burgerItem));
           const data = await response.json();
         } catch (error) {
@@ -187,7 +197,7 @@ const Burger = ({ orderid, id, title, image, review, price, rating }: Producttyp
           userId: orderuserID,
           productId: id,
           orderId: orderID,
-          quantity: newquantity, // Use newquantity here
+          quantity: newquantity, 
         })
       });
 
@@ -280,7 +290,7 @@ const Burger = ({ orderid, id, title, image, review, price, rating }: Producttyp
 
 
   return (
-    <div className=" bg-white p-2 sm:p-6 rounded-lg m-3">
+    <div className=" bg-white p-2 sm:p-6 relative rounded-lg m-3">
       <div className="w-[200px] mx-auto h-[200px] ">
         {/* <h1>{id}</h1>
         <h1>{orderID}</h1> */}

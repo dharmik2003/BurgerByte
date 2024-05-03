@@ -97,6 +97,7 @@ export const orderSlice = createSlice({
         addorderid(state,action){
             state.orderid=action.payload
         },
+        
         resetOrders(state) {
             state.orderid = '';
             state.orders = [];

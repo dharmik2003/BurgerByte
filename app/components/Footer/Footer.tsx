@@ -4,7 +4,7 @@ import { FaBurger, FaFacebook } from 'react-icons/fa6'
 
 const Footer = () => {
   return (
-    <div className='pt-[5rem] pb-[3rem] bg-gray-900 mt-0'>
+    <div className='w-full pt-[5rem] pb-[3rem] bg-gray-900 mt-0 absolute'>
       <div className='w-[80%] pb-[2rem] border-b-[2px] border-b-gray-300 border-opacity-50 mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-[2rem] items-start'>
             <div>
                   <div className='flex items-center text-white space-x-2'>

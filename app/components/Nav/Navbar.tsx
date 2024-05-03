@@ -1,7 +1,6 @@
 'use client'
 import Link from 'next/link'
-import { useRouter } from 'next/navigation'
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { BiCycling, BiShoppingBag } from 'react-icons/bi'
 import { FaBurger } from 'react-icons/fa6'
 import { HiBars3BottomRight } from 'react-icons/hi2'
@@ -9,6 +8,8 @@ import { useDispatch, useSelector } from 'react-redux'
 import Cookies from 'js-cookie';
 import { setlogout } from '@/app/Redux/User/User'
 import { Cookienamether, fetchCookie } from '@/app/utils/cookies'
+import { usePathname, useRouter } from 'next/navigation'
+
 
 interface Props{
     openNav:()=>void
@@ -16,7 +17,39 @@ interface Props{
 
 const Navbar = ({openNav}:Props) => {
 
+    const path=usePathname()
+    console.log("pathpath", path)
 
+
+    const { orderID } = useSelector((state: any) => state.orderID)
+    const [apiorderdata, setapiorderdata] = useState([]);
+
+    async function fetchCartItems() {
+        try {
+            const response = await fetch('/api/cart');
+            if (!response.ok) {
+                throw new Error('Failed to fetch cart items');
+            }
+            const cartItems = await response.json();
+            console.log(cartItems)
+            setapiorderdata(cartItems.cartItems);
+            return cartItems;
+        } catch (error) {
+            console.error('Error fetching cart items:', error);
+            return { error: 'An error occurred while fetching cart items' };
+        }
+    }
+
+    const filterlengthorder = apiorderdata.filter((item: any) => item.orderId ==orderID)
+    console.log("filterlengthorder", filterlengthorder.length)
+    const orderlength = filterlengthorder.length
+    useEffect(() => {
+        fetchCartItems();
+    },[]);
+
+    useEffect(() => {
+        console.log("apiorderdata", apiorderdata);
+    }, [apiorderdata]);
 
 
     const admintoken = Cookienamether('adminDetails');
@@ -30,17 +63,12 @@ const Navbar = ({openNav}:Props) => {
 
 
     const dispatch = useDispatch()
-    // useEffect(() => {
-    //     if (!Cookies.get('userDetails')) {
-    //         if (!Cookies.get('adminDetails')) {
-    //             dispatch(setlogout());
-    //         }
-    //         else{
-    //             dispatch(setlogout());
-    //         }
-    //     }
-        
-    // }, [Cookies]);
+    useEffect(() => {
+        if (!Cookies.get('userDetails') || !Cookies.get('adminDetails')) {
+            console.log("cookies ho effect")
+                // dispatch(setlogout());
+        }        
+    },);
 
     const router=useRouter()
     const handleLoginClick = () => {
@@ -57,7 +85,7 @@ const Navbar = ({openNav}:Props) => {
         router.push('/profile');
     };
 
-    
+
 
   return (
     <div className='h-[9vh] sm:h-[12vh] bg-white border'>
@@ -70,24 +98,25 @@ const Navbar = ({openNav}:Props) => {
              
             <div>
                   <ul className='hidden lg:flex items-center space-x-10'>
-                      <li className='text-[20px] font-medium hover:text-red-600'>
+                      <li className={`${path === '/' ? 'text-red-600 ' : 'text-black'} text-[20px] font-medium hover:text-red-600`}>
                           <Link href='/'>Home</Link>
                       </li>
-                      <li className='text-[20px] font-medium hover:text-red-600'>
+                      <li className={`${path === '/menu' ? 'text-red-600 ' : 'text-black'} text-[20px] font-medium hover:text-red-700`}>
                           <Link href='/menu'>Menu</Link>
                       </li>
-                      <li className='text-[20px] font-medium hover:text-red-600'>
+                      {/* <li className='text-[20px] font-medium hover:text-red-600'> */}
+                      <li className={`${path === '/about' ? 'text-red-600 ': 'text-black'} text-[20px] font-medium hover:text-red-600`}>
                           <Link href='/about'>About</Link>
                       </li>
                      
                     {
                           !admintoken ?(
-                              <li className='text-[20px] font-medium hover:text-red-600'>
+                              <li className={`${path === '/contact' ? 'text-red-600 ' : 'text-black'} text-[20px] font-medium hover:text-red-600`}>
                                   <Link href='/contact'>Contact</Link>
                               </li>
                      
                         ):(
-                            <li className='text-[20px] font-medium hover:text-red-600'>
+                                  <li className={`${path === '/product' ? 'text-red-600 ' : 'text-black'} text-[20px] font-medium hover:text-red-600`}>
                                 <Link href='/product'>Products</Link>
                               </li>
                                  
@@ -95,12 +124,12 @@ const Navbar = ({openNav}:Props) => {
                     }
                     {
                           !admintoken ?(
-                            <li className='text-[20px] font-medium hover:text-red-600'>
+                              <li className={`${path === '/myorder' ? 'text-red-600 ' : 'text-black'} text-[20px] font-medium hover:text-red-600`}>
                           <Link href='/myorder'>Myorder</Link>
                             </li>
                      
                         ):(
-                                  <li className='text-[20px] font-medium hover:text-red-600'>
+                                  <li className={`${path === '/addproduct' ? 'text-red-600 ' : 'text-black'} text-[20px] font-medium hover:text-red-600`}>
                                       <Link href='/addproduct'>Add Items</Link>
                                   </li>
                         )
@@ -132,11 +161,12 @@ const Navbar = ({openNav}:Props) => {
                                   <button onClick={handleaddtocartClick} className='sm:px-6 sm:py-3 px-4 py-2 hover:bg-green-700 transition-all duration-200 bg-orange-600 flex items-center rounded-md text-white relative'>
                                       <BiShoppingBag className='w-[1.3rem] h-[1.3rem] sm:w-[1.7rem] sm:h-[1.7rem]' />
                                   </button>
-                                  {totlaorderlength > 0 ? (<div className='w-[18px] h-[18px]  sm:right-10 lg:-right-2 border-black text-md sm:-top-2 sm:py-3 sm:px-3 flex justify-center items-center absolute -top-1 right-11 z-[10]  bg-white border rounded-full' style={{ animation: totlaorderlength > 0 ? 'bounce 1s infinite' : 'none' }}>
-                                      {totlaorderlength}
-                                  </div>) : (
-                                      <div></div>
-                                  )}
+                                  {
+                                      orderlength > 0? (<div className='w-[18px] h-[18px] sm:right-10 lg:-right-2 border-black text-md sm:-top-2 sm:py-3 sm:px-3 flex justify-center items-center absolute -top-1 right-11 z-[10] bg-white border rounded-full' style={{ animation: orderlength > 0 ? 'bounce 1s infinite' : 'none' }}>
+                                          {orderlength}
+                                      </div>):(<div></div>)
+                                  }
+
                             </div>
                           ):(
                             <div>
@@ -146,9 +176,7 @@ const Navbar = ({openNav}:Props) => {
 
                       }
 
-                  </div>
-                  
-                  
+                  </div>   
                   <HiBars3BottomRight onClick={openNav} className='lg:hidden w-[2rem] h-[2rem] text-black' />
               </div>
 

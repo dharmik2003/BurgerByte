@@ -1,7 +1,7 @@
 'use client'
 import { addmyOrder, resetmyOrders } from '@/app/Redux/Myorder/Myorder';
-import { BurgerItem, resetOrders, updateOrders } from '@/app/Redux/Order/OrderSlice';
-import { setaddorderID } from '@/app/Redux/OrderID/OrderIDSlice';
+import { addorderid,  BurgerItem, resetOrders, updateOrders } from '@/app/Redux/Order/OrderSlice';
+import { addpaymentid, setaddorderID } from '@/app/Redux/OrderID/OrderIDSlice';
 import { fetchCookie } from '@/app/utils/cookies';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation'
@@ -10,10 +10,23 @@ import toast from 'react-hot-toast';
 import { FaMinus, FaPlus } from 'react-icons/fa6';
 import { useDispatch, useSelector } from 'react-redux';
 import { nanoid } from 'nanoid';
+import Spinner from '../Spinner/Spinner';
+import ButtonSpinner from '../Spinner/ButtonSpinner';
 
 const AddtoCart = () => {
     // const { orders } = useSelector((state: any) => state.orderdata);
     // const { myorders } = useSelector((state: any) => state.myorderdata);
+
+
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            setLoading(false);
+        }, 3000);
+
+        return () => clearTimeout(timer);
+    }, []);
 
     const { orderID } = useSelector((state: any) => state.orderID)
     const [apiorderdata, setapiorderdata] = useState([]);
@@ -79,7 +92,7 @@ const AddtoCart = () => {
                 return userId
             }
             else {
-                alert("user id not existing please login")
+                toast.error("Please Login!")
             }
 
         } catch (error) {
@@ -226,8 +239,37 @@ const AddtoCart = () => {
         // toast.success('Item added to cart successfully!');
     };
 
-    const openPopup = () => {
-        setShowPopup(true);
+    const [loadingspinner, setloadingspinner]=useState(false)
+    const openPopup =async () => {
+
+        try{
+            setloadingspinner(true)
+            console.log("openPopup")
+            const response = await fetch('/api/razorpay',{
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    orderId: orderID,
+                })
+            })
+            if (response.ok) {
+                console.log("response payment", response)
+                const data = await response.json();
+                // console.log("payment links", data.paymentID, data.paymenturl);
+                dispatch(addpaymentid(data.paymentID))
+                console.log("payment links", data.paymentID, data.paymenturl);
+                router.push(data.paymenturl);
+                setloadingspinner(false)
+                setShowPopup(true);
+            }
+        }catch(error){
+            console.log("error payment api calling",error)
+            setloadingspinner(false)
+        }
+        
+        // setShowPopup(true);
     };
 
     const closePopup = () => {
@@ -255,6 +297,11 @@ const AddtoCart = () => {
     return (
         <div className='w-full h-full bg-[#f4f1ea] p-6'>
             {
+                
+                loading?(
+                    <div className = 'w-full h-[610px] flex justify-center items-center' > <Spinner /></div>
+
+                ): 
                 parseFloat(totalAmount) === 0 ? (
                     <div className='w-full h-[540px] flex flex-col justify-center items-center '>
                         <Image src={'https://supershopping.lk/images/home/Cart-empty.gif'} alt='emapty cart' width={600} height={600} className='rounded-xl mb-5' />
@@ -289,15 +336,6 @@ const AddtoCart = () => {
                             ))}
         </div>
                         {
-        showPopup && (
-            <div className='fixed top-0 left-0 w-full h-full bg-gray-600 bg-opacity-75 flex justify-center items-center'>
-                <div className='w-[80%] h-auto sm:w-[50%] lg:w-[40%] border rounded-xl bg-[#FCFEFC] px-3 py-6 flex flex-col justify-center items-center'>
-                    <h1 className='text-[#75B13D] text-2xl sm:text-2xl lg:text-3xl font-bold'>Thank You For Order</h1>
-                    <Image src="https://c.tenor.com/BntXpMlrGuEAAAAC/check-correct.gif" alt={'gif'} width={200} height={200} />
-                    <button onClick={closePopup} className='px-3 py-2 rounded-lg sm:w-[80%] lg:w-[70%] mt-4 text-[16px] lg:text-[20px] w-[90%] bg-[#75B13D] transition-all duration-200 hover:bg-red-600 text-white'>Go To Home Page</button>
-                </div>
-            </div>
-        )
     }
     <div className='flex justify-center items-center py-2 px-3'>
         <div className='w-full h-auto w-80% sm:w-[70%] lg:w-[45%] border rounded-xl bg-white  px-3'>
@@ -320,7 +358,16 @@ const AddtoCart = () => {
                 <h1 className='text-red-600 text-lg sm:text-2xl px-3 font-bold'>₹{totalAmount}</h1>
             </div>
             <div className='mt-[2rem] w-[80%] mx-auto text-center'>
-                <button onClick={openPopup} className='px-8 py-3 rounded-lg mb-[3rem] text-[16px] w-full bg-green-700 transition-all duration-200 hover:bg-blue-950 text-white'>Pay Now</button>
+                {
+                    !loadingspinner?(
+                        <button onClick={openPopup} className='px-8 py-3 rounded-lg mb-[3rem] text-[16px] w-full bg-green-700 transition-all duration-200 hover:bg-blue-950 text-white'>Pay Now</button>
+
+                     ) : (
+
+                            <ButtonSpinner />
+                        ) 
+
+                }
             </div>
         </div>
     </div>

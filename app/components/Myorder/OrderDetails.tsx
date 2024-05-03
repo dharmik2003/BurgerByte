@@ -5,13 +5,15 @@ import { useParams } from 'next/navigation';
 import Image from 'next/image';
 import { BurgerItem } from '@/app/Redux/Order/OrderSlice';
 import { fetchCookie } from '@/app/utils/cookies';
+import toast from 'react-hot-toast';
 
 const OrderDetails = () => {
 
-    const { myorders } = useSelector((state: any) => state.myorderdata);
-    console.log("page myorders", myorders)
+    // const { myorders } = useSelector((state: any) => state.myorderdata);
+    // console.log("page myorders", myorders)
 
-
+    const [apiorderdata, setapiorderdata] = useState<{ [key: string]: any[] }>({});
+    const [myorderss, setmyorderss] = useState([]);
    
     const paramsObject = useParams()
     console.log("paramsObject", paramsObject)
@@ -24,37 +26,60 @@ const OrderDetails = () => {
     const filteredData: any[] = [];
 
     // Outer loop for myorders
-    myorders.forEach((orders: any) => {
-        // Inner loop for arrays inside myorders
-        orders.forEach((order: any) => {
-            // Filtering data based on orderid === params
-            const filteredOrder = order.filter((data: any) => data.orderId == params);
+    // myorderss.forEach((orders: any) => {
+    //     // Inner loop for arrays inside myorders
+    //     orders.forEach((order: any) => {
+    //         // Filtering data based on orderid === params
+    //         const filteredOrder = order.filter((data: any) => data.orderId == params);
 
-            // Concatenate the filteredOrder array into filteredData
-            filteredData.push(...filteredOrder);
-        });
+    //         // Concatenate the filteredOrder array into filteredData
+    //         filteredData.push(...filteredOrder);
+    //     });
+    // });
+    myorderss.forEach((orders: any) => {
+        // Check if orders is an array
+        if (Array.isArray(orders)) {
+            // Inner loop for arrays inside myorders
+            orders.forEach((order: any) => {
+                // Filtering data based on orderid === params
+                const filteredOrder = order.filter((data: any) => data.orderId == params);
+
+                // Concatenate the filteredOrder array into filteredData
+                filteredData.push(...filteredOrder);
+            });
+        } else {
+            console.error("Invalid data structure: orders is not an array");
+        }
     });
 
-    console.log(filteredData);
+
+    console.log("filteredData", filteredData);
 
     const [totalAmount, setTotalAmount] = useState<string>("");
     useEffect(() => {
         // Calculate total amount whenever orders change
         const calculateTotalAmount = () => {
             let total = 0;
-            filteredData.forEach((order: BurgerItem) => {
+            myorderss.forEach((order: BurgerItem) => {
                 total += order.price * order.quantity;
             });
             setTotalAmount(total.toFixed(2));
         };
-
         calculateTotalAmount();
-    }, [myorders]);
+    }, [myorderss]);
 
 
     //fetch data from api
-    const [apiorderdata, setapiorderdata] = useState<{ [key: string]: any[] }>({});
-    const [myorderss, setmyorderss] = useState([]);
+
+    interface Order {
+        paymentID: string;
+        // other properties...
+    }
+
+    // Assuming myorderss is an array of Order objects
+    let paymentid = (myorderss[0] as Order)?.paymentID;
+    console.log("paymentid", paymentid);
+
     const getuserid = async (key: any) => {
         try {
             const response = await fetch('/api/jwtverify', {
@@ -75,7 +100,7 @@ const OrderDetails = () => {
                 return userId
             }
             else {
-                alert("user id not existing please login")
+                toast.error("Login Now")
             }
 
         } catch (error) {
@@ -135,10 +160,11 @@ const OrderDetails = () => {
             </div>
             <div className='flex justify-center items-center py-2 px-3'>
                 <div className='w-full h-auto w-80% sm:w-[70%] lg:w-[45%] border rounded-xl bg-white  px-3'>
-                    <h1 className='text-red-600 text-center font-bold text-xl my-4 sm:text-2xl sm:my-5'>Order Id: {params}</h1>
+                    <h1 className='text-green-700 text-1xl text-center py-2 sm:text-3xl px-3 font-bold'>Payment Done</h1>
+
                     <div className='w-full h-full mb-2 px-5 lg:px-6 '>
                         {
-                            filteredData.map((order: any) => (
+                            myorderss.map((order: any) => (
                                 <div className='flex justify-between items-center border-b pb-2' key={order.id}>
                                     <h1 className='text-green-700 text-md sm:text-[22px]'>{order.name}</h1>
                                     <div>
@@ -147,11 +173,26 @@ const OrderDetails = () => {
                                 </div>
                             ))
                         }
+                        {/* {
+                            filteredData.map((order: any) => (
+                                <div className='flex justify-between items-center border-b pb-2' key={order.id}>
+                                    <h1 className='text-green-700 text-md sm:text-[22px]'>{order.name}</h1>
+                                    <div>
+                                        <h3 className='font-semibold text-green-700 text-md sm:text-[20px]'>{order.quantity}  x  {order.price}</h3>
+                                    </div>
+                                </div>
+                            ))
+                        } */}
                     </div>
-                    <div className='flex justify-between items-center px-3 mb-4 lg:mb-8'>
+                    <div className='flex justify-between items-center px-3 mb-1 lg:mb-2'>
                         <h1 className='text-green-700 text-xl sm:text-2xl px-2 font-bold'>Total Amount :</h1>
                         <h1 className='text-green-700 text-xl sm:text-2xl px-3 font-bold'>₹{totalAmount}</h1>
                     </div>
+                    <div className='flex flex-col sm:flex-row justify-between items-center px-3 mb-3 lg:mb-3'>
+                        <h1 className='text-gray-300  text-left font-bold text-sm my-1 sm:text-lg sm:my-5'>Order Id: {params}</h1>
+                        <h1 className='text-gray-300 text-let font-bold text-sm my-1 sm:text-lg sm:my-5'>Payment Id: {paymentid}</h1>
+                    </div>
+                    
                     
                 </div>
             </div>

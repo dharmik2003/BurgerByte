@@ -6,9 +6,9 @@ import CartItem from '@/app/models/CartItem';
 export async function POST(req: any) {
 
         try {
-            const { userId, productId, image, name, price, quantity, orderId } = await req.json();
+            const { userId, productId, image, name, price, quantity, orderId, payment, paymentID } = await req.json();
             console.log("0")
-            console.log(userId, productId, image, name, price, quantity, orderId)
+            console.log(userId, productId, image, name, price, quantity, orderId, paymentID, payment)
             // Check if the userId and productId are provided
             if (!userId || !productId || !quantity || !image || !name || !price || !orderId) {
                 return NextResponse.json({ message: 'Missing required fields' }, { status: 400 });
@@ -26,6 +26,8 @@ export async function POST(req: any) {
                     image,
                     price,                    
                     quantity,
+                    payment,
+                    paymentID
                 });
                 console.log("3")
             await cartItem.save();
@@ -39,7 +41,9 @@ export async function POST(req: any) {
   
 export async function PUT(req: any) {
     try {
-        const { userId, productId, image, name, price, quantity, orderId } = await req.json();
+        const { userId, productId, image, name, price, quantity, orderId, payment, paymentID } = await req.json();
+
+        console.log("payment,paymentID cart api",payment,paymentID)
 
         const db = await dbConnect();
 
@@ -62,6 +66,9 @@ export async function PUT(req: any) {
         if (productId !== undefined) orders.productId = productId;
         if (quantity !== undefined) orders.quantity = quantity;
         if (orderId !== undefined) orders.orderId = orderId;
+        if (payment !== undefined) orders.payment = payment;
+        if (paymentID !== undefined) orders.paymentID = paymentID;
+
         console.log("4")
         // Save updated user data
         await orders.save();

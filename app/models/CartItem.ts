@@ -10,6 +10,8 @@ const CartItemSchema = new mongoose.Schema({
     image:String,
     price: Number,
     quantity: Number,
+    payment:Boolean,
+    paymentID:String
     
 },{ timestamps: true });
 

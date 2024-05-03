@@ -73,6 +73,8 @@ import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
 import Burger from './Burger';
 import { nanoid } from 'nanoid';
+import Spinner from '../Spinner/Spinner';
+import { setaddorderID } from '@/app/Redux/OrderID/OrderIDSlice';
 
 interface Product {
   _id: string;
@@ -90,6 +92,15 @@ const PropulerProduct = () => {
   const dispatch = useDispatch();
   console.log("productsproducts", products)
 
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setLoading(false);
+    }, 3000);
+
+    return () => clearTimeout(timer);
+  }, []);
 
   
   useEffect(() => {
@@ -143,35 +154,47 @@ const PropulerProduct = () => {
   const handlegenerateid = () => {
     let orderId = nanoid();
     setorderid(orderId)
-    dispatch(addorderid(orderId));
+    
+    // dispatch(addorderid(orderId));
+    dispatch(setaddorderID(orderId));
+    console.log('orderid', orderId);
     console.log('orderid', orderId);
   };
 
   return (
-    <div className="pt-[3rem] pb-[3rem] bg-[#f4f1ea]">
-      <h1 className="heading">
-        Our Popular <span className="text-red-600 cursor-pointer" onClick={handlegenerateid}>Burgers</span>
-      </h1>
-      <div className="w-[80%] mt-[4rem] mx-auto">
-        <Carousel
-          additionalTransfrom={0}
-          arrows={true}
-          autoPlay={true}
-          autoPlaySpeed={4000}
-          centerMode={false}
-          infinite
-          responsive={responsive}
-          itemClass="item"
-          showDots={false}
-        >
+    <div className="pt-[3rem] pb-[3rem] relative bg-[#f4f1ea]">
+     {
+      loading?(
+          <div className='w-full h-[610px] flex justify-center items-center'> <Spinner /></div>
 
-          {products.map((product) => (
-            <Burger id={product._id} orderid={orderid} key={product._id} {...product} />
-          ))}
+      ):(
+        <div>
+              <h1 className="heading">
+                Our Popular <span className="text-red-600 cursor-pointer" onClick={handlegenerateid}>Burgers</span>
+              </h1>
+              <div className="w-[80%] mt-[4rem] mx-auto">
+                <Carousel
+                  additionalTransfrom={0}
+                  arrows={true}
+                  autoPlay={true}
+                  autoPlaySpeed={4000}
+                  centerMode={false}
+                  infinite
+                  responsive={responsive}
+                  itemClass="item"
+                  showDots={false}
+                >
+
+                  {products.map((product) => (
+                    <Burger id={product._id} orderid={orderid} key={product._id} {...product} />
+                  ))}
 
 
-        </Carousel>
-      </div>
+                </Carousel>
+              </div>
+        </div>
+      )
+     }
     </div>
   );
 };

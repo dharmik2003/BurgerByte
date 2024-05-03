@@ -1,7 +1,7 @@
 'use client'
 import { Cookienamether, haveCookie } from '@/app/utils/cookies'
 import Link from 'next/link'
-import { useRouter } from 'next/navigation'
+import { usePathname, useRouter } from 'next/navigation'
 import React from 'react'
 import { FaBurger } from 'react-icons/fa6'
 import { ImCross } from 'react-icons/im'
@@ -20,6 +20,8 @@ interface Props{
 
 const MobileNav = ({closeNav ,showNav}:Props) => {
 
+  const path=usePathname()
+
   const admintoken = Cookienamether('adminDetails');
   console.log("admintoken", admintoken)
 
@@ -37,16 +39,16 @@ const MobileNav = ({closeNav ,showNav}:Props) => {
                   </div>
        
                   <ul className='space-y-3 pl-5'>
-                      <li className='text-[25px] font-medium hover:text-yellow-400 text-white'>
-                      <TbPointFilled className='inline-block w-6 h-6 mr-2' /> {/* Add icon */}
-                      <Link href='/' onClick={closeNav}>Home</Link>
+          <li className={`${path === '/' ? 'text-yellow-400 ' : 'text-black'} text-[25px] font-medium hover:text-yellow-400 text-white`}>
+                        <TbPointFilled className='inline-block w-6 h-6 mr-2' /> {/* Add icon */}
+                        <Link href='/' onClick={closeNav}>Home</Link>
                       </li>
-                      <li className='text-[25px] font-medium hover:text-yellow-400 text-white'>
+          <li className={`${path === '/menu' ? 'text-yellow-400 ' : 'text-black'} text-[25px] font-medium hover:text-yellow-400 text-white`}>
             <TbPointFilled className='inline-block w-6 h-6 mr-2' /> {/* Add icon */}
 
                       <Link href='/menu' onClick={closeNav}>Menu</Link>
                       </li>
-                      <li className='text-[25px] font-medium hover:text-yellow-400 text-white'>
+          <li className={`${path === '/about' ? 'text-yellow-400 ' : 'text-black'} text-[25px] font-medium hover:text-yellow-400 text-white`}>
             <TbPointFilled className='inline-block w-6 h-6 mr-2' /> {/* Add icon */}
 
                       <Link href='/about' onClick={closeNav}>About</Link>
@@ -54,14 +56,14 @@ const MobileNav = ({closeNav ,showNav}:Props) => {
         
                      {
             !admintoken ?(
-              <li className='text-[25px] font-medium hover:text-yellow-400 text-white'>
+              <li className={`${path === '/contact' ? 'text-yellow-400 ' : 'text-black'} text-[25px] font-medium hover:text-yellow-400 text-white`}>
                 <TbPointFilled className='inline-block w-6 h-6 mr-2' /> {/* Add icon */}
 
                 <Link href='/contact' onClick={closeNav}>Contact</Link>
               </li>
                       
                       ):(
-                <li className='text-[25px] font-medium hover:text-yellow-400 text-white'>
+                <li className={`${path === '/product' ? 'text-yellow-400 ' : 'text-black'} text-[25px] font-medium hover:text-yellow-400 text-white`}>
                   <TbPointFilled className='inline-block w-6 h-6 mr-2' /> {/* Add icon */}
 
                   <Link href='/product' onClick={closeNav}>Products</Link>
@@ -70,22 +72,20 @@ const MobileNav = ({closeNav ,showNav}:Props) => {
                      }
                      {
             !admintoken ?(
-                         <li className='text-[25px] font-medium hover:text-yellow-400 text-white'>
+              <li className={`${path === '/myorder' ? 'text-yellow-400 ' : 'text-black'} text-[25px] font-medium hover:text-yellow-400 text-white`}>
             <TbPointFilled className='inline-block w-6 h-6 mr-2' /> {/* Add icon */}
 
                       <Link href='/myorder' onClick={closeNav}>Myorder</Link>
                       </li>
                       
                       ):(
-                <li className='text-[25px] font-medium hover:text-yellow-400 text-white'>
+                <li className={`${path === '/addproduct' ? 'text-yellow-400 ' : 'text-black'} text-[25px] font-medium hover:text-yellow-400 text-white`}>
                   <TbPointFilled className='inline-block w-6 h-6 mr-2' /> {/* Add icon */}
 
                   <Link href='/addproduct' onClick={closeNav}>Add Items</Link>
                 </li>
                       )
                      }
-                      
-
                   </ul>
             
         </div>

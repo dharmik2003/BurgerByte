@@ -4,7 +4,7 @@ import Footer from './components/Footer/Footer'
 
 const Page = () => {
   return (
-    <div className='bg-[#f4f1ea]'>
+    <div className='bg-[#f4f1ea] relative'>
       <Home/>
     </div>
   )
