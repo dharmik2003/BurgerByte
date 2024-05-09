@@ -22,7 +22,6 @@ export const myorderSlice = createSlice({
     reducers: {
         addmyOrder(state, action: PayloadAction<BurgerItem>) {
             state.myorders.unshift(action.payload);
-            console.log("myorders", state.myorders);
         }, 
         resetmyOrders(state) {
             state.myorders = [];

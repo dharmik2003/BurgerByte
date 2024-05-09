@@ -33,7 +33,6 @@ export interface Addtocarttype {
 const Burger = ({ orderid, id, title, image, review, price, rating }: Producttype) => {
   const dispatch = useDispatch();
   const admintoken = Cookienamether('adminDetails');
-  console.log("admintoken", admintoken)
 
   const { username, isLoading, admin } = useSelector((state: any) => state.auth);
 
@@ -49,7 +48,6 @@ const Burger = ({ orderid, id, title, image, review, price, rating }: Producttyp
         throw new Error('Failed to fetch cart items');
       }
       const cartItems = await response.json();
-      console.log(cartItems)
       setapiorderdata(cartItems.cartItems);
       return cartItems;
     } catch (error) {
@@ -60,11 +58,7 @@ const Burger = ({ orderid, id, title, image, review, price, rating }: Producttyp
 
   useEffect(() => {
     fetchCartItems();
-  },[]);
-
-  useEffect(() => {
-    console.log("apiorderdata", apiorderdata);
-  }, [apiorderdata]);
+  });
 
 
 
@@ -81,10 +75,7 @@ const Burger = ({ orderid, id, title, image, review, price, rating }: Producttyp
       });
       if (response.ok) {
         const responseData = await response.json();
-        console.log("responseData", responseData)
         const userId = responseData.userId;
-
-        console.log("---------------//", userId);
         return userId
       }
       else{
@@ -98,17 +89,12 @@ const Burger = ({ orderid, id, title, image, review, price, rating }: Producttyp
   }
 
   const { orderID } = useSelector((state: any) => state.orderID)
-  console.log("orderID//////////////////////", orderID)
-  
   const handleAddToCart = async () => {
     try {
 
       const userID = fetchCookie("userDetails")
-      console.log("userId", userID)
       const orderuserID =await getuserid(userID)
-      console.log("orderuserID", orderuserID)
     
-      console.log("hello ji", orderuserID, id, image, title, price, orderid);
 
         const burgerItem: Addtocarttype = {
           id: id,
@@ -139,7 +125,6 @@ const Burger = ({ orderid, id, title, image, review, price, rating }: Producttyp
             }),
           });
 
-          console.log("response", response);
 
           if (!response.ok) {
             if(response.status==400){
@@ -168,9 +153,7 @@ const Burger = ({ orderid, id, title, image, review, price, rating }: Producttyp
   }
   const handleIncreaseQuantity = async (id: string) => {
     const userID = fetchCookie("userDetails");
-    console.log("userId", userID);
     const orderuserID = await getuserid(userID);
-    console.log("orderuserID", orderuserID);
 
     let newquantity: number | undefined; // Declare newquantity outside the try-catch block
 
@@ -180,12 +163,9 @@ const Burger = ({ orderid, id, title, image, review, price, rating }: Producttyp
       ) as any;
 
       if (updatedOrders) {
-        console.log("updatedOrders", updatedOrders);
 
         newquantity = updatedOrders.quantity + 1;
-        console.log("newquantity", newquantity);
       } else {
-        console.log("No matching order found for the given criteria.");
       }
 
       const response = await fetch('/api/cart', {
@@ -213,9 +193,7 @@ const Burger = ({ orderid, id, title, image, review, price, rating }: Producttyp
   };
   const handleDecreaseQuantity = async (id: string) => {
     const userID = fetchCookie("userDetails");
-    console.log("userId", userID);
     const orderuserID = await getuserid(userID);
-    console.log("orderuserID", orderuserID);
 
     let newquantity: number | undefined;
 
@@ -225,10 +203,8 @@ const Burger = ({ orderid, id, title, image, review, price, rating }: Producttyp
       ) as any;
 
       if (updatedOrders) {
-        console.log("updatedOrders", updatedOrders);
 
         newquantity = updatedOrders.quantity - 1;
-        console.log("newquantity", newquantity);
         
         if (newquantity == 0) {
           // If new quantity is 0, delete the order
@@ -282,10 +258,8 @@ const Burger = ({ orderid, id, title, image, review, price, rating }: Producttyp
   };
 
 
-  console.log("filter", id, userId, orderID)
   const quantitydata = apiorderdata.find((order: any) => order.productId == id && order.userId == userId && order.orderId == orderID)
   if (quantitydata){
-  console.log("quantitydata", quantitydata.quantity)}
 
 
 
@@ -361,5 +335,5 @@ const Burger = ({ orderid, id, title, image, review, price, rating }: Producttyp
     </div>
   );
 };
-
+}
 export default Burger;

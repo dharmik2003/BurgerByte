@@ -23,7 +23,6 @@ const MobileNav = ({closeNav ,showNav}:Props) => {
   const path=usePathname()
 
   const admintoken = Cookienamether('adminDetails');
-  console.log("admintoken", admintoken)
 
   const { username, isLoading, admin } = useSelector((state: any) => state.auth);
 

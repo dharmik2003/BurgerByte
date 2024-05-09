@@ -40,11 +40,6 @@ export async function middleware(request: NextRequest) {
     const userDetailsExists = haveCookie(request, 'userDetails');
 
     
-    console.log(request.nextUrl.pathname)
-    console.log(userDetailsExists)
-    console.log("userDetailsExists", userDetailsExists)
-    console.log("adminDetailsExists", adminDetailsExists)
-    console.log("request.nextUrl.pathname", request.nextUrl.pathname)
 
 
     // if ((request.nextUrl.pathname === '/product' || request.nextUrl.pathname === '/addproduct') && !adminDetailsExists) {

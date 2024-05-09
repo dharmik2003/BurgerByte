@@ -18,7 +18,6 @@ interface Props{
 const Navbar = ({openNav}:Props) => {
 
     const path=usePathname()
-    console.log("pathpath", path)
 
 
     const { orderID } = useSelector((state: any) => state.orderID)
@@ -31,7 +30,6 @@ const Navbar = ({openNav}:Props) => {
                 throw new Error('Failed to fetch cart items');
             }
             const cartItems = await response.json();
-            console.log(cartItems)
             setapiorderdata(cartItems.cartItems);
             return cartItems;
         } catch (error) {
@@ -41,19 +39,14 @@ const Navbar = ({openNav}:Props) => {
     }
 
     const filterlengthorder = apiorderdata.filter((item: any) => item.orderId ==orderID)
-    console.log("filterlengthorder", filterlengthorder.length)
     const orderlength = filterlengthorder.length
     useEffect(() => {
         fetchCartItems();
-    },[]);
+    });
 
-    useEffect(() => {
-        console.log("apiorderdata", apiorderdata);
-    }, [apiorderdata]);
 
 
     const admintoken = Cookienamether('adminDetails');
-    console.log("admintoken", admintoken)
 
 
 
@@ -65,7 +58,6 @@ const Navbar = ({openNav}:Props) => {
     const dispatch = useDispatch()
     useEffect(() => {
         if (!Cookies.get('userDetails') || !Cookies.get('adminDetails')) {
-            console.log("cookies ho effect")
                 // dispatch(setlogout());
         }        
     },);

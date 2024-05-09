@@ -2,10 +2,6 @@ import nodemailer from "nodemailer";
 
 async function sendEmail(email:string, subject:string, message:string) {
 
-    console.log(email)
-    console.log(subject)
-    console.log(message)
-    
     let transporter = nodemailer.createTransport({
         host: 'smtp.gmail.com',
         port: 587,
@@ -26,7 +22,6 @@ async function sendEmail(email:string, subject:string, message:string) {
     // Send mail with defined transport object
     try {
         let info = await transporter.sendMail(mailOptions);
-        console.log("Message sent", info.messageId);
     } catch (error) {
         console.error("Error sending email:", error);
     }
@@ -44,9 +39,6 @@ function generateOTP() {
 //sendEmailForgotpassword
 
 async function sendEmailForgotpassword(email: string, subject: string, message: string, otp: string) {
-    console.log(email);
-    console.log(subject);
-    console.log(message);
 
     let transporter = nodemailer.createTransport({
         host: 'smtp.gmail.com',
@@ -58,7 +50,6 @@ async function sendEmailForgotpassword(email: string, subject: string, message: 
     });
 
     const resetPasswordLink = `http://localhost:3000/forgotpassword?otp=${otp}&email=${email}`;
-    console.log(resetPasswordLink)
 
     const emailMessage = `${message}\n\nClick <a href="${resetPasswordLink}">here</a> to reset your password.`;
 
@@ -71,7 +62,6 @@ async function sendEmailForgotpassword(email: string, subject: string, message: 
 
     try {
         let info = await transporter.sendMail(mailOptions);
-        console.log("Message sent", info.messageId);
     } catch (error) {
         console.error("Error sending email:", error);
     }

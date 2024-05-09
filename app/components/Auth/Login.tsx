@@ -36,7 +36,6 @@ const Login = () => {
         email: '',
         password: ''
     });
-    console.log("formData", formData)
 
     const [loading, setLoading] = useState(false);
     const [loading2, setLoading2] = useState(false);
@@ -46,8 +45,6 @@ const handleSubmit: MouseEventHandler<HTMLButtonElement> = async (event) => {
     setLoading(true)
     event.preventDefault();
         
-        console.log('Email:', formData.email);
-        console.log('Password:', formData.password);
         let orderId = nanoid();
 
 
@@ -56,7 +53,6 @@ const handleSubmit: MouseEventHandler<HTMLButtonElement> = async (event) => {
         //     password: ''
         // })
     try {
-            console.log("////////////////", formData.email)
             const response = await fetch('/api/login', {
                     method: 'POST',
                     headers: {
@@ -67,16 +63,13 @@ const handleSubmit: MouseEventHandler<HTMLButtonElement> = async (event) => {
                         password: formData.password
                     }),
                 });
-            console.log("response", response)
             if (response.ok) {
                 toast.success('User logged in successfully!');
                 
                 const responseData = await response.json();
-                console.log("responseData", responseData)
                 const users = responseData.userdata.user;
                 const userpassword = responseData.userdata.password;
                 const token = responseData.userdata.token;
-                console.log("token", token)
 
                 dispatch(setName(users.name));
                 dispatch(setEmail(users.email));
@@ -137,7 +130,6 @@ const handleSubmit: MouseEventHandler<HTMLButtonElement> = async (event) => {
     const forgotmainsend =async()=>{
         try{
             setLoading2(true)
-            console.log("forgot email id", forgotmail)
             const response = await fetch('/api/forgotpassword',{
                 method:'POST',
                 headers:{
@@ -147,7 +139,6 @@ const handleSubmit: MouseEventHandler<HTMLButtonElement> = async (event) => {
                     email: forgotmail
                 })
             })
-            console.log("response", response)
             if(response.ok){
                 toast.success('Please Check Email')
                 settoggelforgot(false)

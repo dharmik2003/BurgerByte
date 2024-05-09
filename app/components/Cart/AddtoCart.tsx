@@ -33,7 +33,6 @@ const AddtoCart = () => {
     const [datadisplay, setdatadisplay] = useState<Boolean>(false);
     const [orders, setorders] = useState([]);
     // const orderiddatabase = "k1NEHAZYbVwLd0NnWmUjO";
-    console.log("orders cart page", orders)
 
     async function fetchCartItems() {
         try {
@@ -42,14 +41,9 @@ const AddtoCart = () => {
                 throw new Error('Failed to fetch cart items');
             }
             const cartItems = await response.json();
-            // console.log(cartItems)
             if (cartItems.cartItems){
                 const userID = fetchCookie("userDetails")
-                console.log("userId", userID)
                 const orderuserID = await getuserid(userID)
-
-                // console.log("orderuserID", orderuserID)
-                // console.log("cartItems", cartItems)
                 const filterdata = cartItems.cartItems.filter((cart:any)=>{
                     return cart.userId == orderuserID && cart.orderId == orderID
                 })
@@ -65,10 +59,9 @@ const AddtoCart = () => {
 
     useEffect(() => {
         fetchCartItems();
-    },[]);
+    });
 
     useEffect(() => {
-        console.log("apiorderdata", apiorderdata);
     }, [apiorderdata]);
     const dispatch = useDispatch();
 
@@ -85,10 +78,8 @@ const AddtoCart = () => {
             });
             if (response.ok) {
                 const responseData = await response.json();
-                console.log("responseData", responseData)
                 const userId = responseData.userId;
 
-                console.log("---------------//", userId);
                 return userId
             }
             else {
@@ -119,29 +110,18 @@ const AddtoCart = () => {
 
     const handleIncreaseQuantity = async (id: string) => {
         const userID = fetchCookie("userDetails");
-        console.log("userId", userID);
         const orderuserID = await getuserid(userID);
-        console.log("orderuserID", orderuserID);
-        console.log("id",id)
-        console.log("id", orderuserID)
-        console.log("id", orderID)
 
         let newquantity: number | undefined; 
 
         try {
             
-            console.log("123456789", id, orderuserID, orderID)
             const updatedOrders = apiorderdata.find((order: any) =>
                 order.productId == id && order.userId == orderuserID && order.orderId == orderID
             );
 
-            console.log("123456789",updatedOrders)
-
             if (updatedOrders) {
-                console.log("updatedOrders", updatedOrders);
-
                 newquantity = updatedOrders.quantity + 1;
-                console.log("newquantity", newquantity);
             } else {
                 console.log("No matching order found for the given criteria.");
             }
@@ -171,9 +151,7 @@ const AddtoCart = () => {
     };
     const handleDecreaseQuantity = async (id: string) => {
         const userID = fetchCookie("userDetails");
-        console.log("userId", userID);
         const orderuserID = await getuserid(userID);
-        console.log("orderuserID", orderuserID);
 
         let newquantity: number | undefined;
 
@@ -183,10 +161,7 @@ const AddtoCart = () => {
             ) as any;
 
             if (updatedOrders) {
-                console.log("updatedOrders", updatedOrders);
-
                 newquantity = updatedOrders.quantity - 1;
-                console.log("newquantity", newquantity);
 
                 if (newquantity == 0) {
                     // If new quantity is 0, delete the order
@@ -244,7 +219,6 @@ const AddtoCart = () => {
 
         try{
             setloadingspinner(true)
-            console.log("openPopup")
             const response = await fetch('/api/razorpay',{
                 method: 'POST',
                 headers: {
@@ -255,17 +229,13 @@ const AddtoCart = () => {
                 })
             })
             if (response.ok) {
-                console.log("response payment", response)
                 const data = await response.json();
-                // console.log("payment links", data.paymentID, data.paymenturl);
                 dispatch(addpaymentid(data.paymentID))
-                console.log("payment links", data.paymentID, data.paymenturl);
                 router.push(data.paymenturl);
                 setloadingspinner(false)
                 setShowPopup(true);
             }
         }catch(error){
-            console.log("error payment api calling",error)
             setloadingspinner(false)
         }
         
@@ -278,7 +248,6 @@ const AddtoCart = () => {
         let orderId = nanoid();
         setapiorderdata([]);
         dispatch(setaddorderID(orderId))
-        console.log("gotohome orders", orders)
         dispatch(addmyOrder([orders] as any))
         dispatch(resetOrders())
 
@@ -289,9 +258,6 @@ const AddtoCart = () => {
         dispatch(resetOrders())
         router.push('/')
     };
-    console.log("order",orders)
-    // console.log("myorders", myorders)
-
 
 
     return (
@@ -314,8 +280,6 @@ const AddtoCart = () => {
                         <div className = "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 p-6">
                             {orders.map((item: any) => (
                                 <div key={item.id} className='bg-white p-6 rounded-lg border'>
-                                    <h1>{item.productId}</h1>
-                                    <h1>{orderID}</h1>
                                     <div className='w-[200px] h-[200px] mx-auto'>
                                         <Image src={item.image} alt={item.name} width={200} height={200} className='w-full h-full object-cover' />
                                     </div>

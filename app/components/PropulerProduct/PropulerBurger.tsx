@@ -90,8 +90,6 @@ const PropulerProduct = () => {
   const [products, setProducts] = useState<Product[]>([]); 
   const [orderid, setorderid] = useState<String>(''); 
   const dispatch = useDispatch();
-  console.log("productsproducts", products)
-
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -109,7 +107,6 @@ const PropulerProduct = () => {
         const response = await fetch('/api/products', { method:'GET' }); 
         if (response.ok) {
           const data = await response.json();
-          console.log("products", data)
           setProducts(data.products);
         } else {
           console.error('Failed to fetch products');
@@ -157,8 +154,6 @@ const PropulerProduct = () => {
     
     // dispatch(addorderid(orderId));
     dispatch(setaddorderID(orderId));
-    console.log('orderid', orderId);
-    console.log('orderid', orderId);
   };
 
   return (

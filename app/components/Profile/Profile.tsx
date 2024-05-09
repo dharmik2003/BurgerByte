@@ -13,7 +13,6 @@ import Spinner from '../Spinner/Spinner';
 const Profile = () => {
 
   const admintoken = Cookienamether('adminDetails');
-  console.log("admintoken", admintoken)
 
   const [loading, setLoading] = useState(true);
 
@@ -35,7 +34,6 @@ const Profile = () => {
     if (file) {
       setSelectedImage(URL.createObjectURL(file));
       dispatch(setPhotos(URL.createObjectURL(file)))
-      console.log("userphotos", userphotos)
       try {       
         const response = await fetch('/api/signup', {
           method: 'PUT',
@@ -81,7 +79,6 @@ const Profile = () => {
   const [newname, setnewname] = useState(''); // State to manage pop-up view visibility
   const [showPopup, setShowPopup] = useState<boolean>(false); // State to manage pop-up view visibility
 
-  console.log("newname", newname)
   const openPopup = () => {
     setShowPopup(true);
   };
@@ -98,7 +95,6 @@ const Profile = () => {
           email: useremail,
         }),
       });
-      console.log("response", response)
       if (response.ok) {
         toast.success('Profile Update successfully!');
         dispatch(setName(newname));
@@ -126,10 +122,8 @@ const Profile = () => {
         throw new Error('Failed to fetch cart items');
       }
       const cartItems = await response.json();
-      console.log("cartItems", cartItems)
       if (cartItems){
         const data = cartItems.user.find((data: any) => data.email==useremail)
-        console.log("data.image",data)
         
         setorders(data)
       }
@@ -144,7 +138,7 @@ const Profile = () => {
   useEffect(() => {
     fetchCartItems();
     
-  },[]);
+  });
 
   useEffect(()=>{
     if(orders){
@@ -152,11 +146,6 @@ const Profile = () => {
     }
   }, [orders])
 
-
-
-
-  console.log("selectedImage",selectedImage)
-  console.log("userphotos", userphotos)
 
   return (
     <div className='w-full h-[590px] bg-[#f4f1ea] p-6 pt-8'>

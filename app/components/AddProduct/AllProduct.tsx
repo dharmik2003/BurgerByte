@@ -34,7 +34,6 @@ const AllProduct = () => {
     const [updateitems, setupdateitems] = useState({
         id:'',title: '', image: '', price: '',
     })
-    console.log("updateitems", updateitems)
 
     const handleupdateitems = async () => {
 
@@ -99,7 +98,6 @@ const AllProduct = () => {
                 throw new Error('Failed to fetch product items');
             }
             const Items = await response.json();
-            console.log("Items", Items)
             setapiproductdata(Items.products);
             return Items;
         } catch (error) {
@@ -110,11 +108,9 @@ const AllProduct = () => {
 
     useEffect(() => {
         fetchCartItems();
-    }, []);
+    });
 
-    useEffect(() => {
-        console.log("all product admin", apiproductdata);
-    }, [apiproductdata]);
+
 
 
     /*admin delete items */

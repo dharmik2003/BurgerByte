@@ -16,10 +16,8 @@ const OrderDetails = () => {
     const [myorderss, setmyorderss] = useState([]);
    
     const paramsObject = useParams()
-    console.log("paramsObject", paramsObject)
 
     const params = paramsObject.id;
-    console.log("params", params)
 
     // Assuming myorders is your data structure and params is the parameter you want to match
 
@@ -53,7 +51,6 @@ const OrderDetails = () => {
     });
 
 
-    console.log("filteredData", filteredData);
 
     const [totalAmount, setTotalAmount] = useState<string>("");
     useEffect(() => {
@@ -78,7 +75,6 @@ const OrderDetails = () => {
 
     // Assuming myorderss is an array of Order objects
     let paymentid = (myorderss[0] as Order)?.paymentID;
-    console.log("paymentid", paymentid);
 
     const getuserid = async (key: any) => {
         try {
@@ -93,10 +89,8 @@ const OrderDetails = () => {
             });
             if (response.ok) {
                 const responseData = await response.json();
-                console.log("responseData", responseData)
                 const userId = responseData.userId;
 
-                console.log("---------------//", userId);
                 return userId
             }
             else {
@@ -130,14 +124,9 @@ const OrderDetails = () => {
     }
     useEffect(() => {
         fetchCartItems();
-    }, []);
-
-    useEffect(() => {
-        console.log("apiorderdata", apiorderdata);
-    }, [apiorderdata]);
+    });
 
 
-    console.log("order details", myorderss)
     return (
         <div className='w-full h-auto bg-[#f4f1ea] p-6'>
 

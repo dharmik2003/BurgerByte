@@ -42,11 +42,9 @@ const Myorder = () => {
     }, []);
 
     const { myorders } = useSelector((state: any) => state.myorderdata);
-    console.log("page myorders", myorders);
 
     const routed=useRouter()
     const handleorderid=(id:string)=>{
-        console.log(`http://localhost:3000/myorder/${id}`)
         routed.push(`http://localhost:3000/myorder/${id}`) 
     }
 
@@ -67,10 +65,7 @@ const Myorder = () => {
             });
             if (response.ok) {
                 const responseData = await response.json();
-                console.log("responseData", responseData)
                 const userId = responseData.userId;
-
-                console.log("---------------//", userId);
                 return userId
             }
             else {
@@ -110,7 +105,6 @@ const Myorder = () => {
                 // Group orders by orderId
                 const groupedOrders = groupOrdersByOrderId(filterdata);
                 setGroupedOrders(groupedOrders);
-                console.log("groupedOrders", groupedOrders); // Moved console.log here
             }
             setapiorderdata(cartItems.cartItems);
             return cartItems;
@@ -122,14 +116,7 @@ const Myorder = () => {
 
     useEffect(() => {
         fetchCartItems();
-    }, []);
-
-    useEffect(() => {
-        console.log("apiorderdata", apiorderdata);
-        console.log("myorderss", myorderss);
-        console.log("groupedOrders", groupedOrders);
-    }, [apiorderdata, myorderss, groupedOrders]);
-
+    });
 
     return (
         <div className='w-full h-full bg-[#f4f1ea] p-6'>

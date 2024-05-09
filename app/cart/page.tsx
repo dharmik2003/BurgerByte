@@ -6,7 +6,6 @@ import { usePathname } from 'next/navigation'
 
 const Cart = () => {
   const path = usePathname()
-  console.log("curent path: ", path)
   return (
     <div ><AddtoCart/></div>
   )

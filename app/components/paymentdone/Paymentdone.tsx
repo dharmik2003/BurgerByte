@@ -86,14 +86,9 @@ const Paymentdone = () => {
                 throw new Error('Failed to fetch cart items');
             }
             const cartItems = await response.json();
-            // console.log(cartItems)
             if (cartItems.cartItems) {
                 const userID = fetchCookie("userDetails")
-                console.log("userId", userID)
                 const orderuserID = await getuserid(userID)
-
-                // console.log("orderuserID", orderuserID)
-                // console.log("cartItems", cartItems)
                 const filterdata = cartItems.cartItems.filter((cart: any) => {
                     return cart.userId == orderuserID && cart.orderId == orderID
                 })
@@ -109,11 +104,8 @@ const Paymentdone = () => {
 
     useEffect(() => {
         fetchCartItems();
-    }, []);
+    });
 
-    useEffect(() => {
-        console.log("apiorderdata", apiorderdata);
-    }, [apiorderdata]);
 
     const getuserid = async (key: any) => {
         try {
@@ -128,10 +120,7 @@ const Paymentdone = () => {
             });
             if (response.ok) {
                 const responseData = await response.json();
-                console.log("responseData", responseData)
                 const userId = responseData.userId;
-
-                console.log("---------------//", userId);
                 return userId
             }
             else {
@@ -143,15 +132,11 @@ const Paymentdone = () => {
         }
     }
 
-
-    console.log("Productid", Productid)
-    console.log("paymentID", paymentID)
     const [loading, setLoading] = useState(false);
     const closePopup = async () => {
         try {
             setLoading(true)
             const userID = fetchCookie("userDetails");
-            console.log("userId", userID);
             const orderuserID = await getuserid(userID);
 
             const promises = Productid.map(async (product:any) => {
@@ -172,9 +157,7 @@ const Paymentdone = () => {
 
                     if (response.ok) {
                         const responseData = await response.json();
-                        console.log("responseData", responseData);
                         const userId = responseData.userId;
-                        console.log("---------------//", userId);
                         return userId;
                     } else {
                         throw new Error("User id not payment true, please login");
@@ -187,7 +170,6 @@ const Paymentdone = () => {
 
             // Wait for all promises to resolve
             const userIds = await Promise.all(promises);
-            console.log("User IDs:", userIds);
 
             // Proceed with other operations after all products are processed
             let orderId = nanoid();

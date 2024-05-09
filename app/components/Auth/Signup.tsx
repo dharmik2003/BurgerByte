@@ -32,9 +32,6 @@ const Signup = () => {
     }, []);
 
 
-    console.log("name---", username);
-    console.log("email---", useremail);
-    console.log("password---", userpassword);
 
     const router=useRouter()
     const dispatch=useDispatch()
@@ -63,7 +60,6 @@ const Signup = () => {
                 toast.error("All Field required")
                 return
             }
-            console.log("////////////////delete user", formData.email)
             const response = await fetch('/api/signup', {
                 method: 'DELETE',
                 headers: {
@@ -73,7 +69,6 @@ const Signup = () => {
                     email: formData.email,
                 }),
             });
-            console.log("response", response)
             if (response.ok) {
                 router.push('/login');
                 settoggel(false);
@@ -95,7 +90,6 @@ const Signup = () => {
                 toast.error("All Field required")
                 return
             }
-            console.log("////////////////delete user", formData.email)
             const response = await fetch('/api/signup', {
                 method: 'PUT',
                 headers: {
@@ -106,7 +100,6 @@ const Signup = () => {
                     isVerified: true
                 }),
             });
-            console.log("response", response)
             if (response.ok) {
                 router.push('/');
                 settoggel(false);
@@ -139,7 +132,6 @@ const Signup = () => {
     };
 
     
-    console.log(formData)
     const [loadingspinner1, setloadingspinner1]=useState<boolean>(false)
     const handleSubmit: MouseEventHandler<HTMLButtonElement> = async (event) => {
         event.preventDefault();
@@ -155,7 +147,6 @@ const Signup = () => {
                 return
             }
             startCounter();
-            console.log("////////////////", formData.name)
             const response = await fetch('/api/signup', {
                 method: 'POST',
                 headers: {
@@ -169,7 +160,6 @@ const Signup = () => {
                     admin:false
                 }),
             });
-            console.log("response",response)
             if (response.ok) {
                 toast.success('User signed up successfully!');
                 settoggel(true)
@@ -211,8 +201,6 @@ const Signup = () => {
     const handleSubmitOtp =async () => {
         
         const enteredOtp = otpDigits.join('');
-        console.log('signup 2',formData.email)
-        console.log(enteredOtp)
 
         try {
 
@@ -225,7 +213,6 @@ const Signup = () => {
                 return
             }
 
-            console.log("////////////////", enteredOtp)
             const response = await fetch('/api/otp', {
                 method: 'POST',
                 headers: {
@@ -236,7 +223,6 @@ const Signup = () => {
                     otp: enteredOtp
                 }),
             });
-            console.log("response", response)
             if (response.ok) {
                 await updateusers();
                 toast.success('signup successfully!');

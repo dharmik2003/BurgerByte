@@ -10,11 +10,8 @@ const Resetpassword = () => {
     const [confirmPassword, setConfirmPassword] = useState<string>('');
 
     const paramsObject = useSearchParams()
-    console.log("paramsObject", paramsObject)
     const paramsotp = paramsObject.get('otp');
-    console.log("params", paramsotp)
     const paramsemail = paramsObject.get('email');
-    console.log("params", paramsemail)
 
     useEffect(() => {
         if (paramsotp && paramsemail) {
@@ -37,10 +34,8 @@ const Resetpassword = () => {
                     forgototp: paramsotp
                 }),
             });
-            console.log("response", response)
             if (response.ok) {
                 const responseData = await response.json();
-                console.log("responseData", responseData)
             } else if (response.status == 400) {
                 toast.error('Some Technical Issue, Please try again');
                 router.push("/login");
@@ -69,7 +64,6 @@ const Resetpassword = () => {
                     password: password,
                 }),
             });
-            console.log("response", response)
             if (response.ok) {
                 router.push("/login")
                 toast.success('Password Update successfully!');
