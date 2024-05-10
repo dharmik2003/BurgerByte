@@ -259,7 +259,7 @@ const Burger = ({ orderid, id, title, image, review, price, rating }: Producttyp
 
 
   const quantitydata = apiorderdata.find((order: any) => order.productId == id && order.userId == userId && order.orderId == orderID)
-  if (quantitydata){
+  // if (quantitydata){
 
 
 
@@ -335,5 +335,5 @@ const Burger = ({ orderid, id, title, image, review, price, rating }: Producttyp
     </div>
   );
 };
-}
+// }
 export default Burger;
