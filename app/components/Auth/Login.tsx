@@ -2,7 +2,7 @@
 import { useRouter } from 'next/navigation';
 import React, { MouseEventHandler, useEffect, useState } from 'react';
 import { FaBurger } from 'react-icons/fa6';
-import { setName, setEmail, setPassword, setIsLogin, setadmin } from '@/app/Redux/User/User';
+import { setName, setEmail, setPassword, setIsLogin, setadmin, setaddress } from '@/app/Redux/User/User';
 import { useDispatch } from 'react-redux';
 import { IoIosArrowRoundBack } from 'react-icons/io';
 import Cookies from 'js-cookie';
@@ -77,6 +77,7 @@ const handleSubmit: MouseEventHandler<HTMLButtonElement> = async (event) => {
                 dispatch(setIsLogin(true));
                 dispatch(setadmin(users.admin));
                 dispatch(setaddorderID(orderId))
+                dispatch(setaddress(users.address))
                 if(users.admin){
                     addCookie('adminDetails', token)
                 }

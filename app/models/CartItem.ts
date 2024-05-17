@@ -11,7 +11,10 @@ const CartItemSchema = new mongoose.Schema({
     price: Number,
     quantity: Number,
     payment:Boolean,
-    paymentID:String
+    paymentID:String,
+    orderstatus:Boolean,
+    rejectorder:Boolean,
+    dispatchorder:Boolean
     
 },{ timestamps: true });
 

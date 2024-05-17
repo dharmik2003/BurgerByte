@@ -28,9 +28,19 @@ export const haveCookie = (request: NextRequest, key: string): boolean => {
     const cookies = request.cookies;
     return !!cookies.get(key);
 };
-export const haveCookie1 = (request: any, cookieName: string): boolean => {
-    return !!request.cookies[cookieName];
+
+
+
+export const haveCookieClient = (key:any) => {
+    const cookies = document.cookie.split(';').map(cookie => cookie.trim());
+    for (let cookie of cookies) {
+        if (cookie.startsWith(`${key}=`)) {
+            return true;
+        }
+    }
+    return false;
 };
+
 
 export const removeCookie = (key: string) => deleteCookie(key)
 

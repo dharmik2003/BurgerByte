@@ -108,7 +108,7 @@ const AllProduct = () => {
 
     useEffect(() => {
         fetchCartItems();
-    });
+    },[]);
 
 
 
@@ -131,8 +131,8 @@ const AllProduct = () => {
 
 
     return (
-        <div className='w-full h-auto bg-[#f4f1ea] p-6 flex justify-center items-center'>
-            <div className='lg:w-[40%] w-[90%] h-auto' >
+        <div className='w-full h-auto bg-[#f4f1ea] p-6 flex justify-center items-center '>
+            <div className='h-auto grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4' >
 
                 {apiproductdata.map((product: any) => (
                     <div key={product._id} className='lex flex-col justify-center' >

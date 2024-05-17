@@ -47,6 +47,7 @@ const Signup = () => {
         name: '',
         email: '',
         password: '',
+        address:'',
     });
 
     
@@ -138,14 +139,19 @@ const Signup = () => {
 
         try {
             setloadingspinner1(true)
-
-            if (!formData.name || !formData.email || !formData.password){
-                toast.error("All Field required")
-                setTimeout(() => {
-                    setloadingspinner1(false);
-                }, 2000);
-                return
+        
+            for (const key in formData) {
+                const value:any = formData[key as keyof typeof formData];
+                if (value === '' || value === 0) {
+                    toast.error(`All fields ${key} are required!`);
+                    setTimeout(() => {
+                        setloadingspinner1(false);
+                    }, 2000);
+                    return;
+                }
             }
+
+
             startCounter();
             const response = await fetch('/api/signup', {
                 method: 'POST',
@@ -157,7 +163,8 @@ const Signup = () => {
                     email: formData.email,
                     password: formData.password,
                     isVerified:false,
-                    admin:false
+                    admin:false,
+                    address: formData.address
                 }),
             });
             if (response.ok) {
@@ -268,7 +275,7 @@ const Signup = () => {
                 loading1?(
                     <div className='w-full h-[610px] flex justify-center items-center'> <Spinner /></div>
                 ):(
-                        <div  className={`w-full h-full pt-[5rem] pb-[6rem] bg-[#f4f1ea] flex justify-center items-center`}>
+                        <div  className={`w-full h-full pt-[4rem] pb-[6rem] bg-[#f4f1ea] flex justify-center items-center`}>
                             <div data-aos="fade-right" className={` ${toggleotp ? ("hidden") : ("block")} w-[90%] sm:w-[50%] md:w-[40%] lg:w-[30%] flex flex-col bg-green-700 p-6 rounded-lg justify-center items-center}`}>
                                 <div className='flex justify-center items-center space-x-2'>
                                     <FaBurger className='w-[1.2rem] h-[1.2rem] sm:h-[1.4rem] sm:w-[1.4rem] text-orange-500' />
@@ -282,6 +289,7 @@ const Signup = () => {
                                     <input type='text' name="name" value={formData.name} onChange={handleInputChange} placeholder='Name' required className='w-[80%] py-1 lg:w-[70%] lg:h-[2rem] rounded pl-4' /><br />
                                     <input type='email' name="email" value={formData.email} onChange={handleInputChange} placeholder='Email' required className='w-[80%] py-1 lg:w-[70%] lg:h-[2rem] rounded pl-4' /><br />
                                     <input type='text' name="password" value={formData.password} onChange={handleInputChange} placeholder='Password' required className='w-[80%] py-1 lg:w-[70%] lg:h-[2rem] rounded pl-4' />
+                                    <textarea rows={3} name="address" value={formData.address} onChange={handleInputChange} placeholder='Enter Your Address' required className='mt-5 lg:w-[70%] p-2 pl-4 rounded' />
                                 </div>
 
                              

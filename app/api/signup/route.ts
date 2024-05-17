@@ -6,7 +6,7 @@ import { generateOTP, sendEmail } from "@/app/utils/otp";
 
 export async function POST(req: any) {
     try {
-        const { name, email, password, isVerified,admin } = await req.json();
+        const { name, email, password, isVerified,admin,address } = await req.json();
 
         const db = await dbConnect();
         console.log("isVerified signup", isVerified)
@@ -20,7 +20,7 @@ export async function POST(req: any) {
         console.log("otp", otp)
 
         const hashedPassword = await bcrypt.hash(password, 10);
-        const newUser = new User({ name, email, password: hashedPassword, otp, isVerified: isVerified,admin:admin });
+        const newUser = new User({ name, email, password: hashedPassword, otp, isVerified: isVerified, admin: admin, address:address });
         console.log("newUser", newUser)
         console.log("isVerified:", newUser.isVerified);
         console.log("createdAt:", newUser.createdAt); 
@@ -70,7 +70,7 @@ export async function DELETE(req: any) {
 
 export async function PUT(req: any) {
     try {
-        const { email, name, password, isVerified,image } = await req.json();
+        const { email, name, password, isVerified,image,address } = await req.json();
 
         // Connect to MongoDB
         console.log("update put signup")
@@ -93,6 +93,7 @@ export async function PUT(req: any) {
         // Update user data based on provided fields
         if (name !== undefined) user.name = name;
         if (image !== undefined) user.image = image;
+        if (address !== undefined) user.address = address;
         if (password !== undefined) {
             const hashedPassword = await bcrypt.hash(password, 10);
             user.password = hashedPassword;

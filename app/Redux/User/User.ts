@@ -46,6 +46,7 @@ const initialState = {
     userphotos:'',
     isLogin: false,
     admin:false,
+    address:''
 };
 
 export const authSlice = createSlice({
@@ -71,6 +72,9 @@ export const authSlice = createSlice({
         setadmin: (state, action) => {
             state.admin = action.payload;
         },
+        setaddress: (state, action) => {
+            state.address = action.payload;
+        },
         setresetPhotos: (state) => {
             state.userphotos = '';
         },
@@ -81,11 +85,12 @@ export const authSlice = createSlice({
             state.userphotos = initialState.userphotos;
             state.isLogin = initialState.isLogin;
             state.admin = initialState.admin;
+            state.address = initialState.address;
         },
         
     },
 });
 
-export const { setName, setadmin, setEmail, setlogout, setresetPhotos, setPassword, setPhotos, setIsLogin } = authSlice.actions;
+export const { setName, setadmin, setaddress,setEmail, setlogout, setresetPhotos, setPassword, setPhotos, setIsLogin } = authSlice.actions;
 
 export default authSlice.reducer;

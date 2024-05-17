@@ -42,11 +42,27 @@ const MobileNav = ({closeNav ,showNav}:Props) => {
                         <TbPointFilled className='inline-block w-6 h-6 mr-2' /> {/* Add icon */}
                         <Link href='/' onClick={closeNav}>Home</Link>
                       </li>
-          <li className={`${path === '/menu' ? 'text-yellow-400 ' : 'text-black'} text-[25px] font-medium hover:text-yellow-400 text-white`}>
-            <TbPointFilled className='inline-block w-6 h-6 mr-2' /> {/* Add icon */}
 
-                      <Link href='/menu' onClick={closeNav}>Menu</Link>
-                      </li>
+
+          {
+            !admintoken ? (
+              <li className={`${path === '/contact' ? 'text-yellow-400 ' : 'text-black'} text-[25px] font-medium hover:text-yellow-400 text-white`}>
+                <TbPointFilled className='inline-block w-6 h-6 mr-2' /> {/* Add icon */}
+
+                <Link href='/menu' onClick={closeNav}>Menu</Link>
+              </li>
+
+            ) : (
+              <li className={`${path === '/product' ? 'text-yellow-400 ' : 'text-black'} text-[25px] font-medium hover:text-yellow-400 text-white`}>
+                <TbPointFilled className='inline-block w-6 h-6 mr-2' /> {/* Add icon */}
+
+                <Link href='/orders' onClick={closeNav}>Orders</Link>
+              </li>
+            )
+          }
+
+
+
           <li className={`${path === '/about' ? 'text-yellow-400 ' : 'text-black'} text-[25px] font-medium hover:text-yellow-400 text-white`}>
             <TbPointFilled className='inline-block w-6 h-6 mr-2' /> {/* Add icon */}
 
@@ -81,7 +97,7 @@ const MobileNav = ({closeNav ,showNav}:Props) => {
                 <li className={`${path === '/addproduct' ? 'text-yellow-400 ' : 'text-black'} text-[25px] font-medium hover:text-yellow-400 text-white`}>
                   <TbPointFilled className='inline-block w-6 h-6 mr-2' /> {/* Add icon */}
 
-                  <Link href='/addproduct' onClick={closeNav}>Add Items</Link>
+                  <Link href='/addproduct' onClick={closeNav}>Add Products</Link>
                 </li>
                       )
                      }

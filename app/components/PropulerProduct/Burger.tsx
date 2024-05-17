@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import toast from 'react-hot-toast';
 import { Cookienamether, fetchCookie } from '@/app/utils/cookies';
 import { MdDelete } from 'react-icons/md';
+import { set } from 'mongoose';
 
 export interface Producttype {
   orderid: String
@@ -27,10 +28,11 @@ export interface Addtocarttype {
   orderId: String;
   paymentID:String;
   payment:Boolean
-
+  orderstatus:Boolean
 }
 
 const Burger = ({ orderid, id, title, image, review, price, rating }: Producttype) => {
+  // debugger
   const dispatch = useDispatch();
   const admintoken = Cookienamether('adminDetails');
 
@@ -38,8 +40,10 @@ const Burger = ({ orderid, id, title, image, review, price, rating }: Producttyp
 
 
   const [apiorderdata, setapiorderdata] = useState([]);
-  const userId = "662a39a86867eee08946a7b7";
-  const orderiddatabase = "k1NEHAZYbVwLd0NnWmUjO";
+  console.log("apiorderdata")
+  console.log("apiorderdata", apiorderdata)
+  // const userId = "662a39a86867eee08946a7b7";
+  // const orderiddatabase = "k1NEHAZYbVwLd0NnWmUjO";
 
   async function fetchCartItems() {
     try {
@@ -58,9 +62,7 @@ const Burger = ({ orderid, id, title, image, review, price, rating }: Producttyp
 
   useEffect(() => {
     fetchCartItems();
-  });
-
-
+},[]);
 
   const getuserid = async (key: any) => {
     try {
@@ -88,24 +90,41 @@ const Burger = ({ orderid, id, title, image, review, price, rating }: Producttyp
     }
   }
 
+  const [userIDD, setUserID]=useState('')
+  console.log("setUserID", userIDD)
   const { orderID } = useSelector((state: any) => state.orderID)
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const userID = fetchCookie("userDetails");
+      const orderuserID = await getuserid(userID);
+      setUserID(orderuserID);
+    };
+
+    fetchData();
+  }, []);
+
+
   const handleAddToCart = async () => {
     try {
 
       const userID = fetchCookie("userDetails")
       const orderuserID =await getuserid(userID)
+      setUserID(orderuserID)
     
 
-        const burgerItem: Addtocarttype = {
-          id: id,
-          image: image,
-          name: title,
-          price: price,
-          quantity: 1,
-          orderId: orderID,
-          paymentID:'',
-          payment:false
-        };
+        // const burgerItem: Addtocarttype = {
+        //   id: id,
+        //   image: image,
+        //   name: title,
+        //   price: price,
+        //   quantity: 1,
+        //   orderId: orderID,
+        //   paymentID:'',
+        //   payment:false,
+        //   orderstatus:false,
+        //   dispatchorder: false,
+        // };
         try {
           const response = await fetch('/api/cart', {
             method: 'POST',
@@ -121,7 +140,10 @@ const Burger = ({ orderid, id, title, image, review, price, rating }: Producttyp
               quantity: 1,
               orderId: orderID,
               payment:false,
-              paymentID:''
+              paymentID:'',
+              orderstatus: false,
+              rejectorder:false,
+              dispatchorder:false,
             }),
           });
 
@@ -194,6 +216,7 @@ const Burger = ({ orderid, id, title, image, review, price, rating }: Producttyp
   const handleDecreaseQuantity = async (id: string) => {
     const userID = fetchCookie("userDetails");
     const orderuserID = await getuserid(userID);
+  
 
     let newquantity: number | undefined;
 
@@ -258,16 +281,17 @@ const Burger = ({ orderid, id, title, image, review, price, rating }: Producttyp
   };
 
 
-  const quantitydata = apiorderdata.find((order: any) => order.productId == id && order.userId == userId && order.orderId == orderID)
+  console.log("id, userIDD, orderID", id, userIDD, orderID)
+  const quantitydata = apiorderdata.find((order: any) => order.productId == id && order.userId == userIDD && order.orderId == orderID)
   // if (quantitydata){
-
+  console.log("quantitydata", quantitydata)
 
 
   return (
     <div className=" bg-white p-2 sm:p-6 relative rounded-lg m-3">
       <div className="w-[200px] mx-auto h-[200px] ">
-        {/* <h1>{id}</h1>
-        <h1>{orderID}</h1> */}
+         <h1>{id}</h1>
+        <h1>{orderID}</h1> 
         <div className='w-full h-full'>
           <Image
             src={image}
@@ -299,15 +323,15 @@ const Burger = ({ orderid, id, title, image, review, price, rating }: Producttyp
               <div className='flex'>
                 {
                   apiorderdata.find((order: any) =>
-                    order.productId === id &&
-                    order.userId === userId &&
-                    order.orderId === orderID
+                    order.productId == id &&
+                    order.userId == userIDD &&
+                    order.orderId == orderID
                   )?.quantity > 0 ? (
                     <>
                       <button onClick={() => handleDecreaseQuantity(id)} className='px-3 py-1 hover:bg-green-700 transition-all duration-200 bg-orange-600 flex items-center justify-center rounded-md text-white'>
                         <FaMinus />
                       </button>
-                      <h1 className='text-md px-3 py-1'>{apiorderdata.find((order: any) => order.productId == id && order.userId == userId && order.orderId == orderID)?.quantity || 0}</h1>
+                        <h1 className='text-md px-3 py-1'>{apiorderdata.find((order: any) => order.productId == id && order.userId == userIDD && order.orderId == orderID)?.quantity || 0}</h1>
                       <button onClick={() => handleIncreaseQuantity(id)} className='px-3 py-1 hover:bg-green-700 transition-all duration-200 bg-orange-600 flex items-center justify-center rounded-md text-white'>
                         <FaPlus />
                       </button>

@@ -24,7 +24,7 @@ const Profile = () => {
     return () => clearTimeout(timer);
   }, []);
 
-  const { username, useremail, userpassword, isLoading, userphotos } = useSelector((state: any) => state.auth); 
+  const { username, useremail, userpassword, isLoading, userphotos,address } = useSelector((state: any) => state.auth); 
 
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const dispatch=useDispatch()
@@ -138,7 +138,7 @@ const Profile = () => {
   useEffect(() => {
     fetchCartItems();
     
-  });
+  },[]);
 
   useEffect(()=>{
     if(orders){
@@ -200,11 +200,13 @@ const Profile = () => {
                       <h1>Name : </h1>
                       <h1>Email : </h1>
                       <h1>Password : </h1>
+                      <h1>Address : </h1>
                     </div>
                     <div>
                       <h1>{username ? username : null}</h1>
                       <h1>{useremail ? useremail : null}</h1>
                       <h1>{userpassword ? userpassword : null}</h1>
+                      <h1>{address ? address : null}</h1>
                     </div>
                   </div>
                   <div className='w-full h-full '>
@@ -223,6 +225,14 @@ const Profile = () => {
                       name='name'
                       onChange={(e) => setnewname(e.target.value)} // Cast e.target as HTMLInputElement
                       placeholder='Name'
+                      required
+                      className='w-[80%] py-1 lg:w-[70%] lg:h-[3rem] border border-green-600 mt-5 rounded pl-4'
+                    /><br />
+                    <textarea
+                    rows={6}
+                      name='address'
+                      onChange={(e) => setnewname(e.target.value)} // Cast e.target as HTMLInputElement
+                      placeholder='Enter New Address'
                       required
                       className='w-[80%] py-1 lg:w-[70%] lg:h-[3rem] border border-green-600 mt-5 rounded pl-4'
                     /><br />

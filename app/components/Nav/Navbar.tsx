@@ -7,7 +7,7 @@ import { HiBars3BottomRight } from 'react-icons/hi2'
 import { useDispatch, useSelector } from 'react-redux'
 import Cookies from 'js-cookie';
 import { setlogout } from '@/app/Redux/User/User'
-import { Cookienamether, fetchCookie } from '@/app/utils/cookies'
+import { Cookienamether, fetchCookie, haveCookie, haveCookieClient } from '@/app/utils/cookies'
 import { usePathname, useRouter } from 'next/navigation'
 
 
@@ -42,7 +42,7 @@ const Navbar = ({openNav}:Props) => {
     const orderlength = filterlengthorder.length
     useEffect(() => {
         fetchCartItems();
-    });
+    },[]);
 
 
 
@@ -77,6 +77,34 @@ const Navbar = ({openNav}:Props) => {
         router.push('/profile');
     };
 
+    // useEffect(()=>{
+        // const cookiethere = haveCookie('',"adminDetails")
+        // console.log("cookies there", cookiethere)
+        // if(cookiethere){
+        //     dispatch(setlogout())
+        // }
+
+
+    // },[])
+    // useEffect(()=>{
+    //     const cookiethere = haveCookie("", "userDetails")
+    //     console.log("cookies there", cookiethere)
+    //     if (cookiethere) {
+    //         dispatch(setlogout())
+    //     }
+    // },[])
+
+    // useEffect(() => {
+    //     const userDetailsExists = haveCookieClient("userDetails");
+    //     const adminDetailsExists = haveCookieClient("adminDetails");
+
+    //     console.log("User details cookie present:", userDetailsExists);
+    //     console.log("Admin details cookie present:", adminDetailsExists);
+
+    //     if (!userDetailsExists || !adminDetailsExists) {
+    //         dispatch(setlogout());
+    //     }
+    // }, []);
 
 
   return (
@@ -93,9 +121,23 @@ const Navbar = ({openNav}:Props) => {
                       <li className={`${path === '/' ? 'text-red-600 ' : 'text-black'} text-[20px] font-medium hover:text-red-600`}>
                           <Link href='/'>Home</Link>
                       </li>
-                      <li className={`${path === '/menu' ? 'text-red-600 ' : 'text-black'} text-[20px] font-medium hover:text-red-700`}>
+                      {/* <li className={`${path === '/menu' ? 'text-red-600 ' : 'text-black'} text-[20px] font-medium hover:text-red-700`}>
                           <Link href='/menu'>Menu</Link>
-                      </li>
+                      </li> */}
+
+                      {
+                          !admintoken ? (
+                              <li className={`${path === '/contact' ? 'text-red-600 ' : 'text-black'} text-[20px] font-medium hover:text-red-600`}>
+                                  <Link href='/menu'>Menu</Link>
+                              </li>
+
+                          ) : (
+                              <li className={`${path === '/product' ? 'text-red-600 ' : 'text-black'} text-[20px] font-medium hover:text-red-600`}>
+                                    <Link href='/orders'>Orders</Link>
+                              </li>
+
+                          )
+                      }
                       {/* <li className='text-[20px] font-medium hover:text-red-600'> */}
                       <li className={`${path === '/about' ? 'text-red-600 ': 'text-black'} text-[20px] font-medium hover:text-red-600`}>
                           <Link href='/about'>About</Link>

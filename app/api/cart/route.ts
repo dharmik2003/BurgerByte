@@ -2,15 +2,16 @@ import { NextApiRequest, NextApiResponse } from 'next';
 import { NextResponse } from 'next/server';
 import dbConnect from '@/lib/mongodb';
 import CartItem from '@/app/models/CartItem';
+import User from '@/app/models/user';
 
 export async function POST(req: any) {
 
         try {
-            const { userId, productId, image, name, price, quantity, orderId, payment, paymentID } = await req.json();
+            const { userId, productId, image, name, price, quantity, orderId, payment, paymentID, orderstatus, dispatchorder, rejectorder } = await req.json();
             console.log("0")
             console.log(userId, productId, image, name, price, quantity, orderId, paymentID, payment)
             // Check if the userId and productId are provided
-            if (!userId || !productId || !quantity || !image || !name || !price || !orderId) {
+            if (!userId || !productId || !quantity || !image || !name || !price || !orderId ) {
                 return NextResponse.json({ message: 'Missing required fields' }, { status: 400 });
             }
             console.log("1")
@@ -27,7 +28,10 @@ export async function POST(req: any) {
                     price,                    
                     quantity,
                     payment,
-                    paymentID
+                    paymentID,
+                    orderstatus,
+                    dispatchorder,
+                    rejectorder
                 });
                 console.log("3")
             await cartItem.save();
@@ -41,7 +45,7 @@ export async function POST(req: any) {
   
 export async function PUT(req: any) {
     try {
-        const { userId, productId, image, name, price, quantity, orderId, payment, paymentID } = await req.json();
+        const { userId, productId, image, name, price, quantity, orderId, payment, paymentID, orderstatus, rejectorder, dispatchorder } = await req.json();
 
         console.log("payment,paymentID cart api",payment,paymentID)
 
@@ -68,6 +72,9 @@ export async function PUT(req: any) {
         if (orderId !== undefined) orders.orderId = orderId;
         if (payment !== undefined) orders.payment = payment;
         if (paymentID !== undefined) orders.paymentID = paymentID;
+        if (orderstatus !== undefined) orders.orderstatus = orderstatus;
+        if (rejectorder !== undefined) orders.rejectorder = rejectorder;
+        if (dispatchorder !== undefined) orders.dispatchorder = dispatchorder;
 
         console.log("4")
         // Save updated user data
@@ -83,23 +90,54 @@ export async function PUT(req: any) {
     }
 }
 
-export async function GET(req: any,) {
-        try {
-            console.log("1")
-            const db = await dbConnect();
-            console.log("1")
-            const cartItems = await CartItem.find({});
-            console.log("cartItems")
-            console.log("1")
-            return NextResponse.json({ cartItems }, { status: 200 });
-        } catch (error) {
-            console.error("Error fetching products:", error);
-            return NextResponse.json(
-                { message: "An error occurred while fetching order data." },
-                { status: 500 }
-            );
-        }
-} 
+// export async function GET(req: any,) {
+//         try {
+//             console.log("1 get")
+//             const db = await dbConnect();
+//             console.log("2 get")
+//             const cartItems = await CartItem.find({});
+//             console.log("cartItems get")
+//             console.log("3 get")
+//             return NextResponse.json({ cartItems }, { status: 200 });
+//         } catch (error) {
+//             console.error("Error fetching products:", error);
+//             return NextResponse.json(
+//                 { message: "An error occurred while fetching order data." },
+//                 { status: 500 }
+//             );
+//         }
+// } 
+
+
+
+export async function GET(req: any) {
+    try {
+        console.log("1 get");
+        const db = await dbConnect();
+        console.log("2 get");
+
+        // Fetch cart items
+        const cartItems = await CartItem.find({});
+
+        // Extract unique userIds from cartItems
+        const userIds = Array.from(new Set(cartItems.map(item => item.userId)));
+
+        // Fetch user data based on userIds
+        const userData = await User.find({ _id: { $in: userIds } });
+
+        console.log("cartItems get");
+        console.log("3 get");
+
+        return NextResponse.json({ cartItems, userData }, { status: 200 });
+    } catch (error) {
+        console.error("Error fetching products:", error);
+        return NextResponse.json(
+            { message: "An error occurred while fetching order data." },
+            { status: 500 }
+        );
+    }
+}
+
 
 export async function DELETE(req: any) {
     try {

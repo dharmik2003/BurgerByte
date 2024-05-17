@@ -59,7 +59,7 @@ const AddtoCart = () => {
 
     useEffect(() => {
         fetchCartItems();
-    });
+    },[]);
 
     useEffect(() => {
     }, [apiorderdata]);
@@ -152,12 +152,13 @@ const AddtoCart = () => {
     const handleDecreaseQuantity = async (id: string) => {
         const userID = fetchCookie("userDetails");
         const orderuserID = await getuserid(userID);
+        console.log("userID", orderuserID)
 
         let newquantity: number | undefined;
 
         try {
             const updatedOrders = apiorderdata.find((order: any) =>
-                order.productId == id && order.userId == userID && order.orderId == orderID
+                order.productId == id && order.userId == orderuserID && order.orderId == orderID
             ) as any;
 
             if (updatedOrders) {
@@ -262,8 +263,7 @@ const AddtoCart = () => {
 
     return (
         <div className='w-full h-full bg-[#f4f1ea] p-6'>
-            {
-                
+            {                
                 loading?(
                     <div className = 'w-full h-[610px] flex justify-center items-center' > <Spinner /></div>
 
@@ -279,7 +279,9 @@ const AddtoCart = () => {
                             <div>
                         <div className = "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 p-6">
                             {orders.map((item: any) => (
+                                
                                 <div key={item.id} className='bg-white p-6 rounded-lg border'>
+                                    <h1>{orderID }</h1>
                                     <div className='w-[200px] h-[200px] mx-auto'>
                                         <Image src={item.image} alt={item.name} width={200} height={200} className='w-full h-full object-cover' />
                                     </div>

@@ -49,7 +49,7 @@ export async function middleware(request: NextRequest) {
     // }
     
     // Redirect to the login page if the userDetails cookie is not present
-    if (request.nextUrl.pathname === '/product' && adminDetailsExists) {
+    if ((request.nextUrl.pathname === '/product' && adminDetailsExists) || (request.nextUrl.pathname === '/orders' && adminDetailsExists)){
         // const homeUrl: string = new URL('/product', request.nextUrl.origin).toString();
         // return NextResponse.redirect(homeUrl);
         return NextResponse.next();
@@ -87,13 +87,15 @@ export async function middleware(request: NextRequest) {
         const homeUrl: string = new URL('/', request.nextUrl.origin).toString();
         return NextResponse.redirect(homeUrl);
     }
-   
 
+    if (request.nextUrl.pathname == '/orders' && userDetailsExists){
+        const homeUrl: string = new URL('/', request.nextUrl.origin).toString();
+        return NextResponse.redirect(homeUrl);
+    }
+   
     return NextResponse.next();
 }
 
-
-
 export const config = {
-    matcher: ['/product', '/cart', '/login', "/addproduct", '/signup', '/profile'],
+    matcher: ['/product', '/cart', '/login', "/addproduct", '/signup', '/profile',"/orders"],
 };

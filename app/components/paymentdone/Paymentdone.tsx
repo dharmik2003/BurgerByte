@@ -75,6 +75,8 @@ const Paymentdone = () => {
     const dispatch = useDispatch();
     const router = useRouter();
 
+    console.log("paymentID",paymentID)
+
 
     const [apiorderdata, setapiorderdata] = useState([]);
     const [Productid, setProductid] = useState<any>([]);
@@ -104,7 +106,7 @@ const Paymentdone = () => {
 
     useEffect(() => {
         fetchCartItems();
-    });
+    },[]);
 
 
     const getuserid = async (key: any) => {
@@ -170,6 +172,7 @@ const Paymentdone = () => {
 
             // Wait for all promises to resolve
             const userIds = await Promise.all(promises);
+            console.log("userIds", userIds)
 
             // Proceed with other operations after all products are processed
             let orderId = nanoid();

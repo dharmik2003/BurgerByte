@@ -9,6 +9,7 @@ import "react-multi-carousel/lib/styles.css";
 import { useSelector } from 'react-redux';
 import Spinner from '../Spinner/Spinner';
 import toast from 'react-hot-toast';
+import { MdOutlineDone } from 'react-icons/md';
 
 const responsive = {
     desktop: {
@@ -76,11 +77,10 @@ const Myorder = () => {
 
         }
     }
-    const [groupedOrders, setGroupedOrders] = useState<any[]>([]); // Provide type annotation for groupedOrders state
-
+    const [groupedOrders, setGroupedOrders] = useState<any[]>([]);
     // Function to group orders by orderId
-    const groupOrdersByOrderId = (orders: any[]): any[][] => { // Provide type annotations for parameters and return type
-        const grouped: { [key: string]: any[] } = {}; // Provide type annotation for grouped object
+    const groupOrdersByOrderId = (orders: any[]): any[][] => { 
+        const grouped: { [key: string]: any[] } = {}; 
         orders.forEach((order: any) => {
             if (!grouped[order.orderId]) {
                 grouped[order.orderId] = [];
@@ -100,7 +100,7 @@ const Myorder = () => {
             if (cartItems.cartItems) {
                 const userID = fetchCookie("userDetails");
                 const orderuserID = await getuserid(userID);
-                const filterdata = cartItems.cartItems.filter((cart: any) => cart.userId === orderuserID);
+                const filterdata = cartItems.cartItems.filter((cart: any) => cart.userId === orderuserID && cart.payment == true);
                 setmyorderss(filterdata);
                 // Group orders by orderId
                 const groupedOrders = groupOrdersByOrderId(filterdata);
@@ -116,8 +116,9 @@ const Myorder = () => {
 
     useEffect(() => {
         fetchCartItems();
-    });
+    },[]);
 
+    console.log("orders", groupedOrders)
     return (
         <div className='w-full h-full bg-[#f4f1ea] p-6'>
             {loading ? (
@@ -129,8 +130,8 @@ const Myorder = () => {
                     <h1 className='heading'>Order <span className='text-red-600'>History</span></h1>
 
                             {[...groupedOrders].reverse().map((orders: any[], index: number) => (
-                        <div key={index} className='flex sm:justify-center sm:items-center'>
-                            <div className='w-[95%] h-auto lg:w-[70%] flex-col justify-center items-center sm:flex-row sm:h-[230px] p-2 lg:pl-10 bg-white m-2 flex lg:justify-start gap-2 sm:gap-0 lg:gap-5 rounded-lg border'>
+                        <div key={index} className='flex sm:justify-center sm:items-center '>
+                            <div className='w-[95%] h-auto lg:w-[50%] lg:gap-10 relative flex-col justify-center items-center sm:flex-row sm:h-[230px] p-2 lg:pl-10 bg-white m-2 flex lg:justify-start gap-2 sm:gap-0 rounded-lg border'>
                                 <div className='w-full sm:w-[40%] lg:w-[30%]'>
                                     {/* Render images carousel here */}
                                     <Carousel additionalTransfrom={0} arrows={false} autoPlay={true} autoPlaySpeed={4000} centerMode={false} infinite responsive={responsive} itemClass="item" showDots={false}>
@@ -144,7 +145,7 @@ const Myorder = () => {
                                 <div className='w-[100%] lg:w-[40%]'>
                                     <div className='flex gap-1 sm:gap-4 pt-3 justify-evenly sm:justify-start items-center'>
                                         <div>
-                                            <h1 className='text-red-600 text-[17px] sm:text-[20px]'>Payment ID:</h1>
+                                            <h1 className='text-red-600 text-[17px] sm:text-[20px]'>Payment:</h1>
                                             <h1 className='text-red-600 text-[17px] sm:text-[20px]'>Order ID:</h1>
                                             <h1 className='text-red-600 text-[17px] sm:text-[20px]'>Date</h1>
                                             <h1 className='text-red-600 text-[17px] sm:text-[20px]'>Items</h1>
@@ -162,7 +163,38 @@ const Myorder = () => {
                                         <button className='px-5 py-1 rounded-lg mb-[1rem] text-[16px] w-[50%] bg-red-600 transition-all duration-200 hover:bg-blue-950 text-white'>View More</button>
                                     </div>
                                 </div>
+                                {
+                                        !orders[0].orderstatus && (
+                                        <div className='absolute top-3 left-3 transform rounded  text-sm bg-yellow-500 text-white py-0 px-2'>
+                                            Pending
+                                        </div>
+                                    )
+                                }
+                                {
+                                    orders[0].orderstatus && !orders[0].dispatchorder &&(
+                                                    <div className='absolute top-3 left-3 transform rounded  text-sm bg-blue-500 text-white py-0 px-2'>
+                                                    Accepted
+                                        </div>
+                                    )
+                                }
+                                {
+                                            orders[0].rejectorder &&  (
+                                                <div className='absolute top-3 left-3 transform rounded  text-sm bg-red-500 text-white py-0 px-2'>
+                                                    Reject Orders
+                                                </div>
+                                            )
+                                }
+                                {
+                                            orders[0].dispatchorder &&  (
+                                                <div className='absolute top-3 left-3 transform rounded  text-sm bg-green-600 text-white py-0 px-2'>
+                                                    Done
+                                                </div>
+                                            )
+                                }
                             </div>
+
+                           
+
                         </div>
                     ))}
                 </div>
