@@ -94,9 +94,9 @@ export const Pendding = () => {
     console.log("apiusers", apiusers)
 
     // Function to get user data by userId
-    const getUserById = (userId: any) => {
-        console.log(apiusers.find(user => user._id == userId))
-        return apiusers.find(user => user._id == userId);
+    const getUserById = (userId: any):any => {
+        console.log(apiusers.find((user:any) => user._id == userId))
+        return apiusers.find((user:any) => user._id == userId);
     };
 
 
@@ -216,6 +216,7 @@ export const Pendding = () => {
                                           <div>
 
                                               <h1 className='font-semibold text-green-700 text-[17px] sm:text-[20px]'>
+                                                  {/* {getUserById(orders[0].userId)?.name || 'User not found'} */}
                                                   {getUserById(orders[0].userId)?.name || 'User not found'}
                                               </h1>
                                               <h1 className='font-semibold text-green-700 text-[17px] sm:text-[20px]'>
@@ -337,9 +338,9 @@ export const Rejected = () => {
     console.log("apiusers", apiusers)
 
     // Function to get user data by userId
-    const getUserById = (userId: any) => {
-        console.log(apiusers.find(user => user._id == userId))
-        return apiusers.find(user => user._id == userId);
+    const getUserById = (userId: any):any => {
+        console.log(apiusers.find((user:any) => user._id == userId))
+        return apiusers.find((user:any) => user._id == userId);
     };
 
 
@@ -498,9 +499,9 @@ export const Accepted = () => {
     console.log("apiusers", apiusers)
 
     // Function to get user data by userId
-    const getUserById = (userId: any) => {
-        console.log(apiusers.find(user => user._id == userId))
-        return apiusers.find(user => user._id == userId);
+    const getUserById = (userId: any):any => {
+        console.log(apiusers.find((user:any) => user._id == userId))
+        return apiusers.find((user:any) => user._id == userId);
     };
 
 
@@ -702,9 +703,9 @@ export const DispatchOrders = () => {
     console.log("apiusers", apiusers)
 
     // Function to get user data by userId
-    const getUserById = (userId: any) => {
-        console.log(apiusers.find(user => user._id == userId))
-        return apiusers.find(user => user._id == userId);
+    const getUserById = (userId: any):any => {
+        console.log(apiusers.find((user:any) => user._id == userId))
+        return apiusers.find((user:any) => user._id == userId);
     };
 
 

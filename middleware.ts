@@ -1,53 +1,13 @@
-// import { NextRequest, NextResponse } from 'next/server';
-// import { haveCookie } from './app/utils/cookies';
 
-// export async function middleware(request: NextRequest) {
-//     // Retrieve userDetails cookie from the request
-//     const userDetails = haveCookie('userDetails');
-//     console.log("token-----", userDetails)
-
-//     // Check if userDetails cookie is present
-//     if (!userDetails) {
-//         const loginUrl: string = new URL('/login', request.nextUrl.origin).toString();
-//         return NextResponse.redirect(loginUrl);
-//     }
-
-//     const currentUrl = new URL(request.url)
-//     const currentPathname = currentUrl.pathname
-//     console.log(currentPathname)
-
-//     return NextResponse.next()
-// }
-
-// export const config = {
-//     matcher: '/cart',
-// };
 
 import { NextRequest, NextResponse } from 'next/server';
-import { fetchCookie, haveCookie, haveCookie1 } from './app/utils/cookies';
-import { useSelector } from 'react-redux';
-import jwt from "jsonwebtoken";
-
-// Your secret key used for signing JWT tokens
-const secretKey = "dharmik";
-
-
-
+import { fetchCookie, haveCookie } from './app/utils/cookies';
 export async function middleware(request: NextRequest) {
     // Check if userDetails cookie is present
 
     const adminDetailsExists = haveCookie(request, 'adminDetails');
     const userDetailsExists = haveCookie(request, 'userDetails');
 
-    
-
-
-    // if ((request.nextUrl.pathname === '/product' || request.nextUrl.pathname === '/addproduct') && !adminDetailsExists) {
-    //     // Redirect non-admin users trying to access product-related routes
-    //     const homeUrl: string = new URL('/', request.nextUrl.origin).toString();
-    //     return NextResponse.redirect(homeUrl);
-    // }
-    
     // Redirect to the login page if the userDetails cookie is not present
     if ((request.nextUrl.pathname === '/product' && adminDetailsExists) || (request.nextUrl.pathname === '/orders' && adminDetailsExists)){
         // const homeUrl: string = new URL('/product', request.nextUrl.origin).toString();

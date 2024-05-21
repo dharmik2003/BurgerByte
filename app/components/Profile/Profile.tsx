@@ -6,13 +6,13 @@ import React, { useEffect, useState } from 'react'
 import { MdOutlineControlPoint } from 'react-icons/md';
 import { useDispatch, useSelector } from 'react-redux';
 import Cookies from 'js-cookie';
-import { Cookienamether, removeCookie } from '@/app/utils/cookies';
+import { haveCookiebool, removeCookie } from '@/app/utils/cookies';
 import toast from 'react-hot-toast';
 import Spinner from '../Spinner/Spinner';
 
 const Profile = () => {
 
-  const admintoken = Cookienamether('adminDetails');
+  const admintoken = haveCookiebool('adminDetails');
 
   const [loading, setLoading] = useState(true);
 
@@ -113,7 +113,7 @@ const Profile = () => {
   /*Fetch api user */
 
   const [apiorderdata, setapiorderdata] = useState([]);
-  const [orders, setorders] = useState([]);
+  const [orders, setorders] = useState<any>([]);
 
   async function fetchCartItems() {
     try {

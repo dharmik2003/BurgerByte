@@ -116,7 +116,7 @@ const AddtoCart = () => {
 
         try {
             
-            const updatedOrders = apiorderdata.find((order: any) =>
+            const updatedOrders:any = apiorderdata.find((order: any) =>
                 order.productId == id && order.userId == orderuserID && order.orderId == orderID
             );
 

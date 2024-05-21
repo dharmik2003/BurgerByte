@@ -5,7 +5,7 @@ import { FaMinus, FaPencil, FaPlus, FaStar } from 'react-icons/fa6';
 import { BiShoppingBag } from 'react-icons/bi';
 import { useDispatch, useSelector } from 'react-redux';
 import toast from 'react-hot-toast';
-import { Cookienamether, fetchCookie } from '@/app/utils/cookies';
+import {  fetchCookie, haveCookiebool } from '@/app/utils/cookies';
 import { MdDelete } from 'react-icons/md';
 import { set } from 'mongoose';
 
@@ -34,12 +34,12 @@ export interface Addtocarttype {
 const Burger = ({ orderid, id, title, image, review, price, rating }: Producttype) => {
   // debugger
   const dispatch = useDispatch();
-  const admintoken = Cookienamether('adminDetails');
+  const admintoken = haveCookiebool('adminDetails');
 
   const { username, isLoading, admin } = useSelector((state: any) => state.auth);
 
 
-  const [apiorderdata, setapiorderdata] = useState([]);
+  const [apiorderdata, setapiorderdata] = useState<any>([]);
   console.log("apiorderdata")
   console.log("apiorderdata", apiorderdata)
   // const userId = "662a39a86867eee08946a7b7";
@@ -81,7 +81,7 @@ const Burger = ({ orderid, id, title, image, review, price, rating }: Producttyp
         return userId
       }
       else{
-        toast.error("Please Login!")
+        // toast.error("Please Login!3")
         // alert("user id not existing please login")
       }
 
@@ -290,8 +290,8 @@ const Burger = ({ orderid, id, title, image, review, price, rating }: Producttyp
   return (
     <div className=" bg-white p-2 sm:p-6 relative rounded-lg m-3">
       <div className="w-[200px] mx-auto h-[200px] ">
-         <h1>{id}</h1>
-        <h1>{orderID}</h1> 
+         {/* <h1>{id}</h1>
+        <h1>{orderID}</h1>  */}
         <div className='w-full h-full'>
           <Image
             src={image}

@@ -1,5 +1,5 @@
 'use client'
-import { Cookienamether, haveCookie } from '@/app/utils/cookies'
+import { Cookienamether, haveCookie, haveCookiebool } from '@/app/utils/cookies'
 import Link from 'next/link'
 import { usePathname, useRouter } from 'next/navigation'
 import React from 'react'

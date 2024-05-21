@@ -14,7 +14,7 @@ const OrderDetails = () => {
     // console.log("page myorders", myorders)
 
     const [apiorderdata, setapiorderdata] = useState<{ [key: string]: any[] }>({});
-    const [myorderss, setmyorderss] = useState([]);
+    const [myorderss, setmyorderss] = useState<any>([]);
 
     const path=usePathname()
     console.log("params", path)

@@ -7,7 +7,7 @@ import { HiBars3BottomRight } from 'react-icons/hi2'
 import { useDispatch, useSelector } from 'react-redux'
 import Cookies from 'js-cookie';
 import { setlogout } from '@/app/Redux/User/User'
-import { Cookienamether, fetchCookie, haveCookie, haveCookieClient } from '@/app/utils/cookies'
+import { Cookienamether, fetchCookie, haveCookie, haveCookiebool, haveCookieClient } from '@/app/utils/cookies'
 import { usePathname, useRouter } from 'next/navigation'
 
 
@@ -47,7 +47,7 @@ const Navbar = ({openNav}:Props) => {
 
 
     const admintoken = Cookienamether('adminDetails');
-
+    console.log("admintokenadmintoken", admintoken)
 
 
     const { username, isLogin ,admin} = useSelector((state: any) => state.auth);
@@ -55,12 +55,17 @@ const Navbar = ({openNav}:Props) => {
     const totlaorderlength=orders.length
 
 
+    console.log("Cookies 6e ho bhai", (haveCookiebool('userDetails') || haveCookiebool('adminDetails')))
     const dispatch = useDispatch()
     useEffect(() => {
-        if (!Cookies.get('userDetails') || !Cookies.get('adminDetails')) {
+        if (haveCookiebool('userDetails') || haveCookiebool('adminDetails')) {
+            console.log("Cookies 6e ho bhai", (haveCookiebool('userDetails') || haveCookiebool('adminDetails')))
                 // dispatch(setlogout());
-        }        
-    },);
+        }    
+        else{
+            dispatch(setlogout());
+        }    
+    },[]);
 
     const router=useRouter()
     const handleLoginClick = () => {
