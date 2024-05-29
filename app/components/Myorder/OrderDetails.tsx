@@ -129,7 +129,7 @@ const OrderDetails = () => {
     }
     useEffect(() => {
         fetchCartItems();
-    },[]);
+    });
 
     
     console.log("myorderss", myorderss)

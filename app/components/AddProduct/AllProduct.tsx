@@ -108,7 +108,7 @@ const AllProduct = () => {
 
     useEffect(() => {
         fetchCartItems();
-    },[]);
+    });
 
 
 

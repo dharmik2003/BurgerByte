@@ -54,6 +54,7 @@ export const Pendding = () => {
                 // Group orders by orderId
                 const groupedOrders = groupOrdersByOrderId(filterdata);
                 setGroupedOrders(groupedOrders);
+
             }
             setapiorderdata(cartItems.cartItems);
             return cartItems;
@@ -132,7 +133,6 @@ export const Pendding = () => {
             }
 
             setloading1(false)
-
             toast.success("Order Accepted successfully");
             return "Order status updated successfully";
         } catch (error) {

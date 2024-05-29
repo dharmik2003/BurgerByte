@@ -46,7 +46,8 @@ const Myorder = () => {
 
     const routed=useRouter()
     const handleorderid=(id:string)=>{
-        routed.push(`http://localhost:3000/myorder/${id}`) 
+        // routed.push(`http://localhost:3000/myorder/${id}`) 
+        routed.push(`https://burgerbyte.vercel.app/myorder/${id}`) 
     }
 
 
@@ -116,7 +117,7 @@ const Myorder = () => {
 
     useEffect(() => {
         fetchCartItems();
-    },[]);
+    });
 
     console.log("orders", groupedOrders)
     return (

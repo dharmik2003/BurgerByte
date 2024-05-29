@@ -138,7 +138,7 @@ const Profile = () => {
   useEffect(() => {
     fetchCartItems();
     
-  },[]);
+  });
 
   useEffect(()=>{
     if(orders){
