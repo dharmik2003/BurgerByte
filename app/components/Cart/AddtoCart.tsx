@@ -281,7 +281,7 @@ const AddtoCart = () => {
                             {orders.map((item: any) => (
                                 
                                 <div key={item.id} className='bg-white p-6 rounded-lg border'>
-                                    <h1>{orderID }</h1>
+                                    {/* <h1>{orderID }</h1> */}
                                     <div className='w-[200px] h-[200px] mx-auto'>
                                         <Image src={item.image} alt={item.name} width={200} height={200} className='w-full h-full object-cover' />
                                     </div>

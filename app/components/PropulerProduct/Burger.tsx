@@ -62,7 +62,7 @@ const Burger = ({ orderid, id, title, image, review, price, rating }: Producttyp
 
   useEffect(() => {
     fetchCartItems();
-},[]);
+});
 
   const getuserid = async (key: any) => {
     try {

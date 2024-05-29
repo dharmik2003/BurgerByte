@@ -2,7 +2,7 @@
 import {haveCookie, haveCookiebool } from '@/app/utils/cookies'
 import Link from 'next/link'
 import { usePathname, useRouter } from 'next/navigation'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { FaBurger } from 'react-icons/fa6'
 import { ImCross } from 'react-icons/im'
 import { TbPointFilled } from 'react-icons/tb'
@@ -23,6 +23,18 @@ const MobileNav = ({closeNav ,showNav}:Props) => {
   const path=usePathname()
 
   const admintoken = haveCookiebool('adminDetails');
+  console.log("admintoken", admintoken)
+
+  const [token, setToken] = useState(false);
+
+  useEffect(() => {
+    if (admintoken){
+      setToken(true);
+    }
+    else{
+      setToken(false)
+    }
+  }, [admintoken]);
 
   const { username, isLoading, admin } = useSelector((state: any) => state.auth);
 
@@ -44,22 +56,14 @@ const MobileNav = ({closeNav ,showNav}:Props) => {
                       </li>
 
 
-          {
-            !admintoken ? (
-              <li className={`${path === '/contact' ? 'text-yellow-400 ' : 'text-black'} text-[25px] font-medium hover:text-yellow-400 text-white`}>
-                <TbPointFilled className='inline-block w-6 h-6 mr-2' /> {/* Add icon */}
+         
 
-                <Link href='/menu' onClick={closeNav}>Menu</Link>
-              </li>
-
-            ) : (
-              <li className={`${path === '/product' ? 'text-yellow-400 ' : 'text-black'} text-[25px] font-medium hover:text-yellow-400 text-white`}>
-                <TbPointFilled className='inline-block w-6 h-6 mr-2' /> {/* Add icon */}
-
-                <Link href='/orders' onClick={closeNav}>Orders</Link>
-              </li>
-            )
-          }
+          <li className={`${path === (token ? '/product' : '/contact') ? 'text-yellow-400 ' : 'text-black'} text-[25px] font-medium hover:text-yellow-400 text-white`}>
+            <TbPointFilled className='inline-block w-6 h-6 mr-2' />
+            <Link href={token ? '/orders' : '/menu'} onClick={closeNav}>
+              {token ? 'Orders' : 'Menu'}
+            </Link>
+          </li>
 
 
 
@@ -70,7 +74,7 @@ const MobileNav = ({closeNav ,showNav}:Props) => {
                       </li>
         
                      {
-            !admintoken ?(
+            !token ?(
               <li className={`${path === '/contact' ? 'text-yellow-400 ' : 'text-black'} text-[25px] font-medium hover:text-yellow-400 text-white`}>
                 <TbPointFilled className='inline-block w-6 h-6 mr-2' /> {/* Add icon */}
 
@@ -86,7 +90,7 @@ const MobileNav = ({closeNav ,showNav}:Props) => {
                       )
                      }
                      {
-            !admintoken ?(
+            !token ?(
               <li className={`${path === '/myorder' ? 'text-yellow-400 ' : 'text-black'} text-[25px] font-medium hover:text-yellow-400 text-white`}>
             <TbPointFilled className='inline-block w-6 h-6 mr-2' /> {/* Add icon */}
 

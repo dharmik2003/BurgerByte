@@ -26,49 +26,101 @@ const AddProduct = () => {
 
 
     const [loader,setloader]=useState<boolean>(false)
+
+    // image store and then product add
+    // const handleSubmit = async () => {
+
+    //     for (const key in formData1) {
+    //         if (key === 'image') {
+    //             continue; 
+    //         }
+
+    //         if (formData1[key] === null || formData1[key] === '') {
+    //             toast.error(`Please fill in the ${key} field.`);
+    //             return;
+    //         }
+    //     }
+
+
+    //     try {
+    //         setloader(true)
+    //         const formData = new FormData();
+
+    //         // Step 1: Append the selected image to the FormData
+    //         if (Imagee) {
+    //             formData.append("image", Imagee);
+    //         } else {
+    //             console.error("No image selected");
+    //             return;
+    //         }
+
+    //         // Step 2: Upload the image to Cloudinary
+    //         const response1 = await axios.post("/api/imagestore", formData);
+    //         const data = await response1.data;
+
+    //         if (data.msg.secure_url) {
+    //             console.log("Image uploaded successfully:", data.msg.secure_url);
+
+    //             // Step 3: Update formData1 with the Cloudinary image URL
+    //             const updatedFormData1 = { ...formData1, image: data.msg.secure_url };
+
+    //             // Step 4: Store product data in MongoDB
+    //             const productResponse = await fetch('/api/products', {
+    //                 method: 'POST',
+    //                 headers: {
+    //                     'Content-Type': 'application/json',
+    //                 },
+    //                 body: JSON.stringify(updatedFormData1),
+    //             });
+
+    //             if (productResponse.ok) {
+    //                 // Product added successfully
+    //                 toast.success('Product added successfully');
+    //                 console.log('Product added successfully');
+
+    //                 // Step 5: Reset the form data
+    //                 setFormData({
+    //                     title: '',
+    //                     image: '',
+    //                     review: '',
+    //                     price: '',
+    //                     rating: ''
+    //                 });
+    //                 setImagee(null)
+    //                 setSelectedImage(null)
+    //                 setloader(false)
+    //             } else {
+    //                 // Error adding product
+    //                 console.error('Error adding product:', productResponse.statusText);
+    //                 toast.error('Error adding product. Please try again later.');
+    //             }
+    //         } else {
+    //             // Error uploading image to Cloudinary
+    //             console.error("Error uploading image:", data.msg);
+    //             toast.error('Error uploading image. Please try again later.');
+    //         }
+    //     } catch (error) {
+    //         // General error handling
+    //         console.error('Error handling form submission:', error);
+    //         toast.error('An error occurred. Please try again later.');
+    //     }
+    // };
+
     const handleSubmit = async () => {
 
-        for (const key in formData1) {
-            if (key === 'image') {
-                continue; 
-            }
 
-            if (formData1[key] === null || formData1[key] === '') {
-                toast.error(`Please fill in the ${key} field.`);
-                return;
-            }
-        }
 
+        console.log(formData1)
 
         try {
             setloader(true)
-            const formData = new FormData();
 
-            // Step 1: Append the selected image to the FormData
-            if (Imagee) {
-                formData.append("image", Imagee);
-            } else {
-                console.error("No image selected");
-                return;
-            }
-
-            // Step 2: Upload the image to Cloudinary
-            const response1 = await axios.post("/api/imagestore", formData);
-            const data = await response1.data;
-
-            if (data.msg.secure_url) {
-                console.log("Image uploaded successfully:", data.msg.secure_url);
-
-                // Step 3: Update formData1 with the Cloudinary image URL
-                const updatedFormData1 = { ...formData1, image: data.msg.secure_url };
-
-                // Step 4: Store product data in MongoDB
                 const productResponse = await fetch('/api/products', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
                     },
-                    body: JSON.stringify(updatedFormData1),
+                    body: JSON.stringify(formData1),
                 });
 
                 if (productResponse.ok) {
@@ -92,39 +144,35 @@ const AddProduct = () => {
                     console.error('Error adding product:', productResponse.statusText);
                     toast.error('Error adding product. Please try again later.');
                 }
-            } else {
-                // Error uploading image to Cloudinary
-                console.error("Error uploading image:", data.msg);
-                toast.error('Error uploading image. Please try again later.');
-            }
-        } catch (error) {
+             
+        }catch (error) {
             // General error handling
             console.error('Error handling form submission:', error);
             toast.error('An error occurred. Please try again later.');
         }
     };
 
-
     const [selectedImage, setSelectedImage] = useState<string | null>(null);
     const [Imagee, setImagee] = useState<File | null>(null);
     const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png'];
 
-    const handleImageSelect = async (event: React.ChangeEvent<HTMLInputElement>) => {
-        if (event.target.files && event.target.files.length > 0) {
-            const file = event.target.files[0];
+    //image take and store cloudinary
+    // const handleImageSelect = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    //     if (event.target.files && event.target.files.length > 0) {
+    //         const file = event.target.files[0];
 
-            // Check if the file type is allowed
-            if (!allowedTypes.includes(file.type)) {
-                toast.error('Only JPG, JPEG, and PNG files are allowed.');
-                return;
-            }
+    //         // Check if the file type is allowed
+    //         if (!allowedTypes.includes(file.type)) {
+    //             toast.error('Only JPG, JPEG, and PNG files are allowed.');
+    //             return;
+    //         }
 
-            setImagee(file);
-            setSelectedImage(URL.createObjectURL(file));
-            toast.success('Upload Photo Successfully');
-            // setFormData({ ...formData1, image: file });
-        }
-    };
+    //         setImagee(file);
+    //         setSelectedImage(URL.createObjectURL(file));
+    //         toast.success('Upload Photo Successfully');
+    //         // setFormData({ ...formData1, image: file });
+    //     }
+    // };
 
     // const handleResetPhotos = () => {
     //     setSelectedImage(null)
@@ -144,7 +192,7 @@ const AddProduct = () => {
                     </div>
                     <h1 className='text-[23px] font-semibold mb-[1rem] uppercase text-white mt-6'>Add Product</h1>
                     <input type='text' placeholder='Title' name="title" value={formData1.title} onChange={handleInputChange} required className='w-[80%] py-1 lg:w-[70%] lg:h-[2rem] rounded pl-4' /><br />
-                    {/* <input type='text' placeholder='Image URL' name="image" value={formData.image} onChange={handleInputChange} required className='w-[80%] py-1 lg:w-[70%] lg:h-[2rem] rounded pl-4' /><br /> */}
+                    <input type='text' placeholder='Image URL' name="image" value={formData1.image} onChange={handleInputChange} required className='w-[80%] py-1 lg:w-[70%] lg:h-[2rem] rounded pl-4' /><br />
                     <input type='text' placeholder='Review' name="review" value={formData1.review} onChange={handleInputChange} required className='w-[80%] py-1 lg:w-[70%] lg:h-[2rem] rounded pl-4' /><br />
                     <input type='text' placeholder='Price' name="price" value={formData1.price} onChange={handleInputChange} required className='w-[80%] py-1 lg:w-[70%] lg:h-[2rem] rounded pl-4' /><br />
                     <input type='text' placeholder='Rating' name="rating" value={formData1.rating} onChange={handleInputChange} required className='w-[80%] py-1 lg:w-[70%] lg:h-[2rem] rounded pl-4' /><br />

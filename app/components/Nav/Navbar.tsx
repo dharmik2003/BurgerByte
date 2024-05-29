@@ -42,17 +42,30 @@ const Navbar = ({openNav}:Props) => {
     const orderlength = filterlengthorder.length
     useEffect(() => {
         fetchCartItems();
-    },[]);
+    });
 
 
 
     const admintoken = haveCookiebool('adminDetails');
-    console.log("admintokenadmintoken", admintoken)
+    console.log("admintoken", admintoken)
+
+    const [token, setToken] = useState(false);
+    const [login, setlogin] = useState(false);
+
+    useEffect(() => {
+        if (admintoken) {
+            setToken(true);
+        }
+        else {
+            setToken(false)
+        }
+    }, [admintoken]);
 
 
     const { username, isLogin ,admin} = useSelector((state: any) => state.auth);
     const { orders } = useSelector((state: any) => state.orderdata);
     const totlaorderlength=orders.length
+
 
 
     console.log("Cookies 6e ho bhai", (haveCookiebool('userDetails') || haveCookiebool('adminDetails')))
@@ -64,8 +77,16 @@ const Navbar = ({openNav}:Props) => {
         }    
         else{
             dispatch(setlogout());
-        }    
+        }  
+       
+
     },[]);
+
+    useEffect(()=>{
+        if (isLogin) {
+            setlogin(true)
+        }
+    },[isLogin])
 
     const router=useRouter()
     const handleLoginClick = () => {
@@ -126,42 +147,30 @@ const Navbar = ({openNav}:Props) => {
                       <li className={`${path === '/' ? 'text-red-600 ' : 'text-black'} text-[20px] font-medium hover:text-red-600`}>
                           <Link href='/'>Home</Link>
                       </li>
-                      {/* <li className={`${path === '/menu' ? 'text-red-600 ' : 'text-black'} text-[20px] font-medium hover:text-red-700`}>
-                          <Link href='/menu'>Menu</Link>
-                      </li> */}
+                      
+                      <li className={`${path === (token ? '/product' : '/contact') ? 'text-red-600 ' : 'text-black'} text-[20px] font-medium hover:text-red-600`}>
+                          <Link href={token ? '/orders' : '/menu'}>
+                              {token ? 'Orders' : 'Menu'}
+                          </Link>
+                      </li>
+                    
 
-                      {
-                          !admintoken ? (
-                              <li className={`${path === '/contact' ? 'text-red-600 ' : 'text-black'} text-[20px] font-medium hover:text-red-600`}>
-                                  <Link href='/menu'>Menu</Link>
-                              </li>
-
-                          ) : (
-                              <li className={`${path === '/product' ? 'text-red-600 ' : 'text-black'} text-[20px] font-medium hover:text-red-600`}>
-                                    <Link href='/orders'>Orders</Link>
-                              </li>
-
-                          )
-                      }
                       {/* <li className='text-[20px] font-medium hover:text-red-600'> */}
                       <li className={`${path === '/about' ? 'text-red-600 ': 'text-black'} text-[20px] font-medium hover:text-red-600`}>
                           <Link href='/about'>About</Link>
                       </li>
                      
-                    {
-                          !admintoken ?(
-                              <li className={`${path === '/contact' ? 'text-red-600 ' : 'text-black'} text-[20px] font-medium hover:text-red-600`}>
-                                  <Link href='/contact'>Contact</Link>
-                              </li>
-                     
-                        ):(
-                                  <li className={`${path === '/product' ? 'text-red-600 ' : 'text-black'} text-[20px] font-medium hover:text-red-600`}>
-                                <Link href='/product'>Products</Link>
-                              </li>
-                                 
-                        )
-                    }
-                    {
+                      <li className={`${path === (!token ? '/product' : '/contact') ? 'text-red-600 ' : 'text-black'} text-[20px] font-medium hover:text-red-600`}>
+                          <Link href={!token ? '/contact' : '/product'}>
+                              {!token ? 'Contact' : 'Products'}
+                          </Link>
+                      </li>
+                      <li className={`${path === (!token ? '/myorder' : '/addproduct') ? 'text-red-600 ' : 'text-black'} text-[20px] font-medium hover:text-red-600`}>
+                          <Link href={!token ? '/myorder' : '/addproduct'}>
+                              {!token ? 'Myorder' : 'Add Items'}
+                          </Link>
+                      </li>
+                    {/* {
                           !admintoken ?(
                               <li className={`${path === '/myorder' ? 'text-red-600 ' : 'text-black'} text-[20px] font-medium hover:text-red-600`}>
                           <Link href='/myorder'>Myorder</Link>
@@ -172,7 +181,7 @@ const Navbar = ({openNav}:Props) => {
                                       <Link href='/addproduct'>Add Items</Link>
                                   </li>
                         )
-                    }
+                    } */}
                       
 
                   </ul>
@@ -180,7 +189,7 @@ const Navbar = ({openNav}:Props) => {
 
               <div className='flex items-center space-x-4 relative'>
                   <div>
-                      {isLogin ? (
+                      {login ? (
                           <button
                               onClick={profileinfo}
                               className='px-6 py-2 sm:px-8 sm:py-3 text-[14px] sm:text-[16px] bg-blue-950 transition-all duration-200 hover:bg-red-600 flex items-center rounded-md space-x-2 text-white'>
@@ -195,7 +204,7 @@ const Navbar = ({openNav}:Props) => {
                   </div>
                   <div className='realtive'>
                       {
-                          !admintoken?(
+                          token?(
                             <div>
                                   <button onClick={handleaddtocartClick} className='sm:px-6 sm:py-3 px-4 py-2 hover:bg-green-700 transition-all duration-200 bg-orange-600 flex items-center rounded-md text-white relative'>
                                       <BiShoppingBag className='w-[1.3rem] h-[1.3rem] sm:w-[1.7rem] sm:h-[1.7rem]' />

@@ -236,7 +236,7 @@ const OrderDetails = () => {
                         } */}
                         </div>
                         <div className='flex justify-between items-center px-3 mb-1 lg:mb-2'>
-                            <h1 className='text-green-700 text-xl sm:text-2xl px-2 font-bold'>Total Amount :</h1>
+                            <h1 className='text-green-700 text-xl sm:text-2xl px-2 font-bold'>Total Bill:</h1>
                             <h1 className='text-green-700 text-xl sm:text-2xl px-3 font-bold'>₹{totalAmount}</h1>
                         </div>
 
