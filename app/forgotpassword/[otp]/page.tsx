@@ -25,24 +25,19 @@
 
 import Resetpassword from '@/app/components/Auth/Resetpassword';
 import React from 'react';
-import { useSearchParams } from 'react-router-dom';
+// import { useSearchParams } from 'react-router-dom';
 
 const Page = () => {
-    const paramsObject = useSearchParams();
-    const params = new URLSearchParams(paramsObject[0]);
-    const otp = params.get('otp');
-    const email = params.get('email');
 
-    // Convert otp to a number or use a default value if it's null
-    const otpValue: number | null = otp ? parseInt(otp, 10) : null;
-    // Provide a default email value if it's null
-    const emailValue: string | null = email || null;
+    const otp = 111111;
+    const email = 'dk33@gmail.com';
 
-    console.log("params email, params otp", emailValue, otpValue);
+
+
 
     return (
         <div>
-            <Resetpassword otp={otpValue} email={emailValue} />
+            <Resetpassword otp={otp} email={email} />
         </div>
     );
 };
