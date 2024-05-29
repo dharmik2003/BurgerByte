@@ -1,5 +1,5 @@
 'use client'
-import { Cookienamether, haveCookie, haveCookiebool } from '@/app/utils/cookies'
+import { haveCookie, haveCookiebool } from '@/app/utils/cookies'
 import Link from 'next/link'
 import { usePathname, useRouter } from 'next/navigation'
 import React from 'react'
@@ -22,7 +22,7 @@ const MobileNav = ({closeNav ,showNav}:Props) => {
 
   const path=usePathname()
 
-  const admintoken = Cookienamether('adminDetails');
+  const admintoken = haveCookiebool('adminDetails');
 
   const { username, isLoading, admin } = useSelector((state: any) => state.auth);
 
