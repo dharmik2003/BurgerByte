@@ -4,8 +4,13 @@ import { FaBurger } from 'react-icons/fa6'
 import { useParams, useRouter, useSearchParams } from 'next/navigation';
 import toast from 'react-hot-toast';
 
-const Resetpassword:FC<{otp:number,email:string}> = ({otp,email}) => {
 
+interface ResetPasswordProps {
+    otp: number | null;
+    email: string | null;
+}
+
+const Resetpassword: React.FC<ResetPasswordProps> = ({ otp, email }) => {
     console.log("paramsemail,paramsotp", email, otp)
 
 
