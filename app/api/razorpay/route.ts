@@ -61,7 +61,7 @@ export async function POST(req: any) {
             "notes": {
                 "policy_name": "Jeevan Bima"
             },
-            "callback_url": "http://localhost:3000/paymentdone",
+            "callback_url": "https://burgerbyte.vercel.app/paymentdone",
             "callback_method": "get",
             options: {
                 checkout: {

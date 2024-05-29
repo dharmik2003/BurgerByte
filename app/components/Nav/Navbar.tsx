@@ -148,7 +148,7 @@ const Navbar = ({openNav}:Props) => {
                           <Link href='/'>Home</Link>
                       </li>
                       
-                      <li className={`${path === (token ? '/product' : '/contact') ? 'text-red-600 ' : 'text-black'} text-[20px] font-medium hover:text-red-600`}>
+                      <li className={`${path === (token ? '/orders' : '/menu') ? 'text-red-600 ' : 'text-black'} text-[20px] font-medium hover:text-red-600`}>
                           <Link href={token ? '/orders' : '/menu'}>
                               {token ? 'Orders' : 'Menu'}
                           </Link>

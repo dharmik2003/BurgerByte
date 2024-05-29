@@ -58,12 +58,28 @@ const MobileNav = ({closeNav ,showNav}:Props) => {
 
          
 
-          <li className={`${path === (token ? '/product' : '/contact') ? 'text-yellow-400 ' : 'text-black'} text-[25px] font-medium hover:text-yellow-400 text-white`}>
+          {/* <li className={`${path === (token ? '/product' : '/contact') ? 'text-yellow-400 ' : 'text-black'} text-[25px] font-medium hover:text-yellow-400 text-white`}>
             <TbPointFilled className='inline-block w-6 h-6 mr-2' />
             <Link href={token ? '/orders' : '/menu'} onClick={closeNav}>
               {token ? 'Orders' : 'Menu'}
             </Link>
+          </li> */}
+
+          {!token ?(
+          <li className={`${path === '/menu' ? 'text-yellow-400 ' : 'text-black'} text-[25px] font-medium hover:text-yellow-400 text-white`}>
+            <TbPointFilled className='inline-block w-6 h-6 mr-2' /> {/* Add icon */}
+
+              <Link href='/menu' onClick={closeNav}>Menu</Link>
           </li>
+
+          ):(
+          <li className={`${path === '/orders' ? 'text-yellow-400 ' : 'text-black'} text-[25px] font-medium hover:text-yellow-400 text-white`}>
+            <TbPointFilled className='inline-block w-6 h-6 mr-2' /> {/* Add icon */}
+
+                <Link href='/orders' onClick={closeNav}>Orders</Link>
+          </li>
+          )
+                     }
 
 
 
