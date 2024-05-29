@@ -68,10 +68,10 @@ const Profile = () => {
     }
     router.push('/');
   }
-  const handleResetPhotos = () => {
-    dispatch(setresetPhotos()); 
-    document.getElementById('fileInput')?.click();
-  };
+  // const handleResetPhotos = () => {
+  //   dispatch(setresetPhotos()); 
+  //   document.getElementById('fileInput')?.click();
+  // };
 
 
 
@@ -156,8 +156,7 @@ const Profile = () => {
         ) : (
             <div>
               <div className='w-full flex flex-col sm:gap-20 gap-10  md:flex-row justify-center items-center'>
-                <div className='relative w-[200px] h-[200px] sm:w-[300px] sm:h-[300px]'>
-                  {/* Display selected image or default circle */}
+                {/* <div className='relative w-[200px] h-[200px] sm:w-[300px] sm:h-[300px]'>
                   {userphotos ? (
                     <Image src={userphotos} alt="Selected" width={200} height={200} className="w-[200px] h-[200px] rounded-full border border-black sm:w-[300px] sm:h-[300px] object-cover" />
                   ) : (
@@ -181,7 +180,6 @@ const Profile = () => {
                     </div>
                   )}
 
-                  {/* File input */}
                   <input
                     type="file"
                     id="fileInput"
@@ -192,7 +190,7 @@ const Profile = () => {
                   <div className='py-2 px-2 sm:right-7 sm:top-4 sm:py-1 sm:px-1 flex justify-center items-center absolute top-2 right-6 cursor-pointer  bg-white border rounded-full'>
                     <button onClick={handleResetPhotos}><MdOutlineControlPoint className='sm:text-3xl ' /></button>
                   </div>
-                </div>
+                </div> */}
 
                 <div className='flex justify-center items-center flex-col'>
                   <div className='flex gap-2 text-2xl mb-3 sm:text-3xl'>

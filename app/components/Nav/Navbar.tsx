@@ -7,7 +7,7 @@ import { HiBars3BottomRight } from 'react-icons/hi2'
 import { useDispatch, useSelector } from 'react-redux'
 import Cookies from 'js-cookie';
 import { setlogout } from '@/app/Redux/User/User'
-import { Cookienamether, fetchCookie, haveCookie, haveCookiebool, haveCookieClient } from '@/app/utils/cookies'
+import { fetchCookie, haveCookie, haveCookiebool } from '@/app/utils/cookies'
 import { usePathname, useRouter } from 'next/navigation'
 
 
@@ -46,7 +46,7 @@ const Navbar = ({openNav}:Props) => {
 
 
 
-    const admintoken = Cookienamether('adminDetails');
+    const admintoken = haveCookiebool('adminDetails');
     console.log("admintokenadmintoken", admintoken)
 
 

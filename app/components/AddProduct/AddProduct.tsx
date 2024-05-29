@@ -23,59 +23,6 @@ const AddProduct = () => {
         setFormData({ ...formData1, [e.target.name]: e.target.value });
     };
 
-    // const handleSubmit = async () => {
-    
-    //     try {
-    //         const formData=new FormData()
-    //         if (Imagee) {
-    //             formData.append("image", Imagee);
-    //         } else {
-    //             console.error("No image selected");
-    //         }
-            
-    //         const response1 = await axios.post("/api/imagestore",formData)
-    //         const data=await response1.data
-    //         console.log()
-    //         if (data.msg.secure_url){
-    //             console.log("data.msg.secure_url", data.msg.secure_url)
-    //             setFormData({ ...formData1, image: data.msg.secure_url });
-    //         }
-    //         else{
-    //             toast.error("Error uploading image")
-    //         }
-
-    //         //data add in mongoDB
-
-    //         // Update formData with Cloudinary image URL
-
-    //         const response = await fetch('/api/products', {
-    //             method: 'POST',
-    //             headers: {
-    //                 'Content-Type': 'application/json',
-    //             },
-    //             body: JSON.stringify(formData1),
-    //         });
-
-    //         if (response.ok) {
-    //             // Product added successfully
-
-    //             toast.success('Product added successfully')
-    //             console.log('Product added successfully');
-    //             setFormData({
-    //                 title: '',
-    //                 image: '',
-    //                 review: '',
-    //                 price: '',
-    //                 rating: ''
-    //             });
-    //         } else {
-    //             // Error adding product
-    //             console.error('Error adding product');
-    //         }
-    //     } catch (error) {
-    //         console.error('Error adding product:', error);
-    //     }
-    // };
 
 
     const [loader,setloader]=useState<boolean>(false)
@@ -179,10 +126,10 @@ const AddProduct = () => {
         }
     };
 
-    const handleResetPhotos = () => {
-        setSelectedImage(null)
-        document.getElementById('fileInput')?.click();
-    };
+    // const handleResetPhotos = () => {
+    //     setSelectedImage(null)
+    //     document.getElementById('fileInput')?.click();
+    // };
 
 
 
@@ -204,7 +151,7 @@ const AddProduct = () => {
 
                     <div className='w-full flex justify-center items-start'>
                         <div className=' w-[80%] flex justify-start '>
-                            <div className='' onClick={() => document.getElementById('fileInput')?.click()}>
+                            {/* <div className='' onClick={() => document.getElementById('fileInput')?.click()}>
                                 {selectedImage?(
                                     <div className='w-[50px] h-[50px] flex justify-center items-center relative bg-white rounded-md lg:ml-5'>
                                         <CldImage src={selectedImage} alt="Selected" width={50} height={50} className="w-[50px] h-[50px] rounded-md  sm:w-[50px] sm:h-[50px] object-cover" crop={{
@@ -225,7 +172,7 @@ const AddProduct = () => {
                                         />
                                     </div>
                                 )}
-                            </div>
+                            </div> */}
                         </div>
                     </div>
 

@@ -30,23 +30,23 @@ export const haveCookiebool = (key: string): boolean => {
 };
 
 
-export const haveCookieClient = (key:any) => {
-    const cookies = document.cookie.split(';').map(cookie => cookie.trim());
-    for (let cookie of cookies) {
-        if (cookie.startsWith(`${key}=`)) {
-            return true;
-        }
-    }
-    return false;
-};
+// export const haveCookieClient = (key:any) => {
+//     const cookies = document.cookie.split(';').map(cookie => cookie.trim());
+//     for (let cookie of cookies) {
+//         if (cookie.startsWith(`${key}=`)) {
+//             return true;
+//         }
+//     }
+//     return false;
+// };
 
 
 export const removeCookie = (key: string) => deleteCookie(key)
 
 
-export const Cookienamether = (cookieName: string): boolean => {
-    return document.cookie.split(';').some(cookie => {
-        const [name] = cookie.trim().split('=');
-        return name === cookieName;
-    });
-};
+// export const Cookienamether = (cookieName: string): boolean => {
+//     return document.cookie.split(';').some(cookie => {
+//         const [name] = cookie.trim().split('=');
+//         return name === cookieName;
+//     });
+// };
