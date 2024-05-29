@@ -136,13 +136,17 @@ const Paymentdone = () => {
 
     const [loading, setLoading] = useState(false);
     const closePopup = async () => {
+
+       
         try {
             setLoading(true)
             const userID = fetchCookie("userDetails");
             const orderuserID = await getuserid(userID);
 
+           
             const promises = Productid.map(async (product:any) => {
                 try {
+                    console.log("closePopup", orderuserID, product.productId, orderID, paymentID)
                     const response = await fetch('/api/cart', {
                         method: 'PUT',
                         headers: {

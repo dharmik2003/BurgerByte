@@ -7,6 +7,7 @@ import { MdOutlineDone } from 'react-icons/md';
 
 export const Pendding = () => {
     const [loading, setLoading] = useState(true);
+    const [accepteloading, setaccepteloading]=useState(false);
 
     useEffect(() => {
         const timer = setTimeout(() => {
@@ -77,7 +78,6 @@ export const Pendding = () => {
             console.log("users", users)
             if (users.user) {
                 console.log("users", users)
-                // const filterdata = cartItems.cartItems.filter((cart: any) => cart.orderstatus == false && cart.payment == true);
                 setapiusers(users.user);
             }
             return users;
@@ -88,7 +88,7 @@ export const Pendding = () => {
     }
     useEffect(() => {
         fetchUsers();
-    }, []);
+    });
 
 
     console.log("groupedOrders", groupedOrders)
@@ -106,6 +106,7 @@ export const Pendding = () => {
     const [loading2, setloading2] = useState<boolean>(false)
 
     const handleacceptedorder = async (UserID: string, OrderID: string, productIDs: any) => {
+        setaccepteloading(true)
         console.log("accepted", UserID, OrderID, productIDs);
 
         try {
@@ -129,19 +130,24 @@ export const Pendding = () => {
 
                 if (!response.ok) {
                     throw new Error("Failed to update order status for product: " + productId);
+                    setaccepteloading(false)
                 }
             }
 
             setloading1(false)
+            setaccepteloading(false)
             toast.success("Order Accepted successfully");
             return "Order status updated successfully";
         } catch (error) {
             console.error("Error:", error);
+            setaccepteloading(false)
             throw error;
         }
     };
+
     const handlerejectorders = async (UserID: string, OrderID: string, productIDs: any) => {
         console.log("rejectorder", UserID, OrderID, productIDs);
+            setaccepteloading(false)
 
         try {
             // Loop through each product ID in the order
@@ -176,6 +182,7 @@ export const Pendding = () => {
             throw error;
         }
     };
+    console.log("groupedOrders peeding order admin", groupedOrders)
 
   return (
      <div>{
@@ -228,11 +235,8 @@ export const Pendding = () => {
                                           </div>
                                       </div>
                                       <div className='flex justify-center gap-5 items-center sm:justify-start mt-5'>
-
-                                          <button onClick={() => { handleacceptedorder(orders[0].userId, orders[0].orderId, orders) }} className='px-5 py-1 rounded-lg mb-[1rem] text-[16px] w-[50%] bg-green-600 transition-all duration-200 hover:bg-blue-950 text-white'>Accepted Order</button>
+                                          <button disabled={accepteloading}  onClick={() => { handleacceptedorder(orders[0].userId, orders[0].orderId, orders) }} className='px-5 py-1 rounded-lg mb-[1rem] text-[16px] w-[50%] bg-green-600 transition-all duration-200 hover:bg-blue-950 text-white'>Accepted Order</button>
                                           <button onClick={() => { handlerejectorders(orders[0].userId, orders[0].orderId, orders) }} className='px-5 py-1 rounded-lg mb-[1rem] text-[16px] w-[50%] bg-red-600 transition-all duration-200 hover:bg-blue-950 text-white'>Reject Order</button>
-
-
                                       </div>
                                   </div>
 
@@ -331,7 +335,7 @@ export const Rejected = () => {
     }
     useEffect(() => {
         fetchUsers();
-    }, []);
+    });
 
 
     console.log("groupedOrders", groupedOrders)
@@ -492,7 +496,7 @@ export const Accepted = () => {
     }
     useEffect(() => {
         fetchUsers();
-    }, []);
+    });
 
 
     console.log("groupedOrders", groupedOrders)
@@ -696,7 +700,7 @@ export const DispatchOrders = () => {
     }
     useEffect(() => {
         fetchUsers();
-    }, []);
+    });
 
 
     console.log("groupedOrders", groupedOrders)

@@ -86,6 +86,9 @@ const Navbar = ({openNav}:Props) => {
         if (isLogin) {
             setlogin(true)
         }
+        else{
+            setlogin(false)
+        }
     },[isLogin])
 
     const router=useRouter()
@@ -204,7 +207,7 @@ const Navbar = ({openNav}:Props) => {
                   </div>
                   <div className='realtive'>
                       {
-                          token?(
+                          !token?(
                             <div>
                                   <button onClick={handleaddtocartClick} className='sm:px-6 sm:py-3 px-4 py-2 hover:bg-green-700 transition-all duration-200 bg-orange-600 flex items-center rounded-md text-white relative'>
                                       <BiShoppingBag className='w-[1.3rem] h-[1.3rem] sm:w-[1.7rem] sm:h-[1.7rem]' />
