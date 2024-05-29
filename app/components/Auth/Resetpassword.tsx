@@ -1,25 +1,27 @@
 'use client'
-import React, { MouseEventHandler, useEffect, useState } from 'react'
+import React, { FC, MouseEventHandler, useEffect, useState } from 'react'
 import { FaBurger } from 'react-icons/fa6'
 import { useParams, useRouter, useSearchParams } from 'next/navigation';
 import toast from 'react-hot-toast';
 
-const Resetpassword = () => {
+const Resetpassword:FC<{otp:number,email:string}> = ({otp,email}) => {
+
+    console.log("paramsemail,paramsotp", email, otp)
+
+
+
 
     const [password, setPassword] = useState<string>('');
     const [confirmPassword, setConfirmPassword] = useState<string>('');
 
-    const paramsObject = useSearchParams()
-    const paramsotp = paramsObject.get('otp');
-    const paramsemail = paramsObject.get('email');
 
     useEffect(() => {
-        if (paramsotp && paramsemail) {
+        if (otp && email) {
             handlecheckdetails();
         } else {
             toast.error('Invalid OTP');
         }
-    }, [paramsotp, paramsemail]);
+    }, [otp,email]);
 
 
     const handlecheckdetails = async () => {
@@ -30,8 +32,8 @@ const Resetpassword = () => {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({
-                    email: paramsemail,
-                    forgototp: paramsotp
+                    email: email,
+                    forgototp: otp
                 }),
             });
             if (response.ok) {
@@ -60,7 +62,7 @@ const Resetpassword = () => {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({
-                    email:paramsemail,
+                    email:email,
                     password: password,
                 }),
             });
