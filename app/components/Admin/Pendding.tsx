@@ -64,7 +64,7 @@ export const Pendding = () => {
     }
     useEffect(() => {
         fetchCartItems();
-    }, []);
+    });
 
     async function fetchUsers() {
         try {
@@ -308,7 +308,7 @@ export const Rejected = () => {
     }
     useEffect(() => {
         fetchCartItems();
-    }, []);
+    });
 
     async function fetchUsers() {
         try {
@@ -469,7 +469,7 @@ export const Accepted = () => {
     }
     useEffect(() => {
         fetchCartItems();
-    }, []);
+    });
 
     async function fetchUsers() {
         try {
@@ -673,7 +673,7 @@ export const DispatchOrders = () => {
     }
     useEffect(() => {
         fetchCartItems();
-    }, []);
+    });
 
     async function fetchUsers() {
         try {
