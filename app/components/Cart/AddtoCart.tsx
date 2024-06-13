@@ -20,14 +20,6 @@ const AddtoCart = () => {
 
     const [loading, setLoading] = useState(true);
 
-    useEffect(() => {
-        const timer = setTimeout(() => {
-            setLoading(false);
-        }, 3000);
-
-        return () => clearTimeout(timer);
-    }, []);
-
     const { orderID } = useSelector((state: any) => state.orderID)
     const [apiorderdata, setapiorderdata] = useState([]);
     const [datadisplay, setdatadisplay] = useState<Boolean>(false);
@@ -48,6 +40,7 @@ const AddtoCart = () => {
                     return cart.userId == orderuserID && cart.orderId == orderID
                 })
                 setorders(filterdata)
+                setLoading(false);
             }
             setapiorderdata(cartItems.cartItems);
             return cartItems;
@@ -272,9 +265,7 @@ const AddtoCart = () => {
                     <div className='w-full h-[540px] flex flex-col justify-center items-center '>
                         <Image src={'https://supershopping.lk/images/home/Cart-empty.gif'} alt='emapty cart' width={600} height={600} className='rounded-xl mb-5' />
                         <button onClick={gotohomepage} className='px-8 py-3 rounded-lg mb-[3rem] text-[16px] lg:text-[20px] w-[80%] sm:w-[50%] lg:w-[30%] bg-green-700 transition-all duration-200 mt-7 hover:bg-red-600 text-white'>Home</button>
-                    </div>
-
-                   
+                    </div>                   
                 ):(
                             <div>
                         <div className = "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 p-6">

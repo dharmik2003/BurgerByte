@@ -34,13 +34,7 @@ const Myorder = () => {
 
     const [loading, setLoading] = useState(true); 
 
-    useEffect(() => {
-        const timer = setTimeout(() => {
-            setLoading(false);
-        }, 3000);
 
-        return () => clearTimeout(timer); 
-    }, []);
 
     const { myorders } = useSelector((state: any) => state.myorderdata);
 
@@ -105,10 +99,13 @@ const Myorder = () => {
                 // Group orders by orderId
                 const groupedOrders = groupOrdersByOrderId(filterdata);
                 setGroupedOrders(groupedOrders);
+                console.log("cartItems",cartItems )
+                setLoading(false);
             }
             setapiorderdata(cartItems.cartItems);
             return cartItems;
         } catch (error) {
+            setLoading(false);
             console.error('Error fetching cart items:', error);
             return { error: 'An error occurred while fetching cart items' };
         }

@@ -9,6 +9,8 @@ import Cookies from 'js-cookie';
 import { setlogout } from '@/app/Redux/User/User'
 import { fetchCookie, haveCookie, haveCookiebool } from '@/app/utils/cookies'
 import { usePathname, useRouter } from 'next/navigation'
+import { nanoid } from '@reduxjs/toolkit'
+import { setaddorderID } from '@/app/Redux/OrderID/OrderIDSlice'
 
 
 interface Props{
@@ -100,6 +102,8 @@ const Navbar = ({openNav}:Props) => {
     };
 
     const handhomeClick = () => {
+        let orderId = nanoid();
+        dispatch(setaddorderID(orderId))
         router.push('/');
     };
     const profileinfo = () => {
