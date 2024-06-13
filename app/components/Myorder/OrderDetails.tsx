@@ -140,15 +140,13 @@ const OrderDetails = () => {
 
     return (
             <>
-
             {
                 loader ? (
-                    <div className='w-full h-[610px] flex justify-center items-center' > <Spinner /></div>
-
+                    <div className='w-full h-[680px] flex justify-center items-center' > <Spinner /></div>
                 ) : (
 
 
-                        <div className='w-full h-[630px] bg-[#f4f1ea] p-6 relative'>
+                        <div className='w-full h-auto bg-[#f4f1ea] p-6 relative'>
 
                             <h1 className='heading'>Order <span className='text-red-600'>Detail</span></h1>
                             <div className="lg:w-[70%] grid grid-cols-1 sm:grid-cols-2 gap-6 p-6">
