@@ -9,14 +9,6 @@ export const Pendding = () => {
     const [loading, setLoading] = useState(true);
     const [accepteloading, setaccepteloading]=useState(false);
 
-    useEffect(() => {
-        const timer = setTimeout(() => {
-            setLoading(false);
-        }, 3000);
-
-        return () => clearTimeout(timer);
-    }, []);
-
     // const { myorders } = useSelector((state: any) => state.myorderdata);
 
     const routed = useRouter()
@@ -55,11 +47,12 @@ export const Pendding = () => {
                 // Group orders by orderId
                 const groupedOrders = groupOrdersByOrderId(filterdata);
                 setGroupedOrders(groupedOrders);
-
+                setLoading(false);
             }
             setapiorderdata(cartItems.cartItems);
             return cartItems;
         } catch (error) {
+            setLoading(false);
             console.error('Error fetching cart items:', error);
             return { error: 'An error occurred while fetching cart items' };
         }
@@ -256,14 +249,6 @@ export const Pendding = () => {
 export const Rejected = () => {
     const [loading, setLoading] = useState(true);
 
-    useEffect(() => {
-        const timer = setTimeout(() => {
-            setLoading(false);
-        }, 3000);
-
-        return () => clearTimeout(timer);
-    }, []);
-
     // const { myorders } = useSelector((state: any) => state.myorderdata);
 
     const routed = useRouter()
@@ -302,10 +287,12 @@ export const Rejected = () => {
                 // Group orders by orderId
                 const groupedOrders = groupOrdersByOrderId(filterdata);
                 setGroupedOrders(groupedOrders);
+                setLoading(false);
             }
             setapiorderdata(cartItems.cartItems);
             return cartItems;
         } catch (error) {
+            setLoading(false);
             console.error('Error fetching cart items:', error);
             return { error: 'An error occurred while fetching cart items' };
         }
@@ -417,14 +404,6 @@ export const Accepted = () => {
 
     const [loading, setLoading] = useState(true);
 
-    useEffect(() => {
-        const timer = setTimeout(() => {
-            setLoading(false);
-        }, 3000);
-
-        return () => clearTimeout(timer);
-    }, []);
-
     // const { myorders } = useSelector((state: any) => state.myorderdata);
 
     const routed = useRouter()
@@ -463,10 +442,12 @@ export const Accepted = () => {
                 // Group orders by orderId
                 const groupedOrders = groupOrdersByOrderId(filterdata);
                 setGroupedOrders(groupedOrders);
+                setLoading(false);
             }
             setapiorderdata(cartItems.cartItems);
             return cartItems;
         } catch (error) {
+            setLoading(false);
             console.error('Error fetching cart items:', error);
             return { error: 'An error occurred while fetching cart items' };
         }
@@ -621,13 +602,6 @@ export const DispatchOrders = () => {
 
     const [loading, setLoading] = useState(true);
 
-    useEffect(() => {
-        const timer = setTimeout(() => {
-            setLoading(false);
-        }, 3000);
-
-        return () => clearTimeout(timer);
-    }, []);
 
     // const { myorders } = useSelector((state: any) => state.myorderdata);
 
@@ -667,10 +641,12 @@ export const DispatchOrders = () => {
                 // Group orders by orderId
                 const groupedOrders = groupOrdersByOrderId(filterdata);
                 setGroupedOrders(groupedOrders);
+                setLoading(false);
             }
             setapiorderdata(cartItems.cartItems);
             return cartItems;
         } catch (error) {
+            setLoading(false);
             console.error('Error fetching cart items:', error);
             return { error: 'An error occurred while fetching cart items' };
         }
