@@ -288,7 +288,7 @@ const Signup = () => {
                                 <div className='flex flex-col justify-center items-center'>
                                     <input type='text' name="name" value={formData.name} onChange={handleInputChange} placeholder='Name' required className='w-[80%] py-1 lg:w-[70%] lg:h-[2rem] rounded pl-4' /><br />
                                     <input type='email' name="email" value={formData.email} onChange={handleInputChange} placeholder='Email' required className='w-[80%] py-1 lg:w-[70%] lg:h-[2rem] rounded pl-4' /><br />
-                                    <input type='text' name="password" value={formData.password} onChange={handleInputChange} placeholder='Password' required className='w-[80%] py-1 lg:w-[70%] lg:h-[2rem] rounded pl-4' />
+                                    <input type='passowrd' name="password" value={formData.password} onChange={handleInputChange} placeholder='Password' required className='w-[80%] py-1 lg:w-[70%] lg:h-[2rem] rounded pl-4' />
                                     <textarea rows={3} name="address" value={formData.address} onChange={handleInputChange} placeholder='Enter Your Address' required className='mt-5 lg:w-[70%] p-2 pl-4 rounded' />
                                 </div>
 

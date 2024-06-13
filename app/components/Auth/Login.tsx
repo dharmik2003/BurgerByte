@@ -176,7 +176,7 @@ const handleSubmit: MouseEventHandler<HTMLButtonElement> = async (event) => {
                                 </div>
                                 <h1 className='text-[23px] font-semibold mb-[1rem] uppercase text-white mt-6'>Login</h1>
                                 <input type='email' placeholder='Email' name="email" value={formData.email} onChange={handleInputChange} required className='w-[80%] py-1 lg:w-[70%] lg:h-[2rem] rounded pl-4' /><br />
-                                <input type='text' placeholder='Password' value={formData.password}
+                                <input type='passowrd' placeholder='Password' value={formData.password}
                                     onChange={handleInputChange} name="password" required className='w-[80%] relative py-1 lg:w-[70%] lg:h-[2rem] rounded pl-4' />
                                 <div className='w-[80%] flex justify-end text-white cursor-pointer' onClick={handleforgotpassword}>
                                     <p className=''>Forgot Password?</p>

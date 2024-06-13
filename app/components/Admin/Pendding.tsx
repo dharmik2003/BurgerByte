@@ -120,8 +120,6 @@ export const Pendding = () => {
                     }),
                 });
 
-
-
                 if (!response.ok) {
                     throw new Error("Failed to update order status for product: " + productId);
                     setaccepteloading(false)
