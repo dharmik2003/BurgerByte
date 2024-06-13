@@ -126,6 +126,7 @@ export const Pendding = () => {
                     throw new Error("Failed to update order status for product: " + productId);
                     setaccepteloading(false)
                 }
+                console.log("response pendding", response)
             }
 
             setloading1(false)
@@ -133,6 +134,7 @@ export const Pendding = () => {
             toast.success("Order Accepted successfully");
             return "Order status updated successfully";
         } catch (error) {
+            setloading1(false)
             console.error("Error:", error);
             setaccepteloading(false)
             throw error;
@@ -238,7 +240,7 @@ export const Pendding = () => {
                                                   </div>
                                               </div>
                                               <div className='flex justify-center gap-5 items-center sm:justify-start mt-5'>
-                                                  <button disabled={accepteloading} onClick={() => { handleacceptedorder(orders[0].userId, orders[0].orderId, orders) }} className='px-5 py-1 rounded-lg mb-[1rem] text-[16px] w-[50%] bg-green-600 transition-all duration-200 hover:bg-blue-950 text-white'>Accepted Order</button>
+                                                  <button disabled={loading1} onClick={() => { handleacceptedorder(orders[0].userId, orders[0].orderId, orders) }} className='px-5 py-1 rounded-lg mb-[1rem] text-[16px] w-[50%] bg-green-600 transition-all duration-200 hover:bg-blue-950 text-white'>Accepted Order</button>
                                                   <button onClick={() => { handlerejectorders(orders[0].userId, orders[0].orderId, orders) }} className='px-5 py-1 rounded-lg mb-[1rem] text-[16px] w-[50%] bg-red-600 transition-all duration-200 hover:bg-blue-950 text-white'>Reject Order</button>
                                               </div>
                                           </div>
