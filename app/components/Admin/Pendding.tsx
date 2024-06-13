@@ -3,6 +3,7 @@ import { useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react'
 import toast from 'react-hot-toast';
 import { MdOutlineDone } from 'react-icons/md';
+import Spinner from '../Spinner/Spinner';
 
 
 export const Pendding = () => {
@@ -178,70 +179,83 @@ export const Pendding = () => {
     console.log("groupedOrders peeding order admin", groupedOrders)
 
   return (
-     <div>{
-          groupedOrders.length === 0 ? (
-          <div className='w-full h-[610px] flex justify-center items-center text-[20px] sm:text-[22px]'>No orders available.</div>
-          ) : (
-                  <div>
-                      <h1 className='heading'>Pending <span className='text-red-600'>Orders</span></h1>
-                      {[...groupedOrders].reverse().map((orders: any[], index: number) => (
-                          <div key={index} className='flex sm:justify-center sm:items-center '>
-                              <div className='w-[95%] h-auto lg:w-[70%] xl:w-[60%] relative flex-col justify-center items-start sm:flex-row sm:gap-10 sm:h-auto p-4 bg-white m-2 flex lg:justify-between gap-2  rounded-lg border'>
+     <>
+          {
 
+              loading ? (
 
-                                  <div className='w-full h-full flex flex-col justify-start items-start sm:w-[40%] lg:w-[50%]'>
-                                      {orders.map((order: any, orderIndex: number) => (
-                                          <div key={orderIndex} className='w-full h-full flex border rounded mb-2 justify-start items-center'>
-                                              <div className='flex justify-start items-start'>
-                                                  <Image src={order.image} alt='not found' width={100} height={100} />
-                                              </div>
-                                              <div className='flex flex-col mr-2'>
-                                                  <span className=' text-[#B0B0B0] text-xl '>{order.name}</span>
-                                                  <span className=' border text-[#B0B0B0] text-lg  border-[#B0B0B0] px-2 rounded-md w-[60px]'>Qun: {order.quantity}</span>
-                                              </div>
-                                          </div>
-                                      ))}
-                                      {/* </Carousel> */}
-                                  </div>
-                                  <div className='w-[100%] lg:w-[40%]'>
-                                      <div className='flex gap-1 sm:gap-4 pt-3 justify-evenly sm:justify-start items-center'>
-                                          <div>
-                                              <h1 className='text-red-600 text-[17px] sm:text-[20px]'>Name</h1>
-                                              <h1 className='text-red-600 text-[17px] sm:text-[20px]'>Email</h1>
-                                              <h1 className='text-red-600 text-[17px] sm:text-[20px]'>Payment ID:</h1>
-                                              <h1 className='text-red-600 text-[17px] sm:text-[20px]'>Order ID:</h1>
-
-                                              <h1 className='text-red-600 text-[17px] sm:text-[20px]'>Total:</h1>
-                                          </div>
-                                          <div>
-
-                                              <h1 className='font-semibold text-green-700 text-[17px] sm:text-[20px]'>
-                                                  {/* {getUserById(orders[0].userId)?.name || 'User not found'} */}
-                                                  {getUserById(orders[0].userId)?.name || 'User not found'}
-                                              </h1>
-                                              <h1 className='font-semibold text-green-700 text-[17px] sm:text-[20px]'>
-                                                  {getUserById(orders[0].userId)?.email || 'User not found'}
-                                              </h1>
-                                              <h1 className='font-semibold text-green-700 text-[17px] sm:text-[20px]'>{orders[0].paymentID}</h1>
-                                              <h1 className='font-semibold text-green-700 text-[17px] sm:text-[20px]'>{orders[0].orderId}</h1>
-                                              <h1 className='font-semibold text-green-700 text-[17px] sm:text-[20px]'> ₹{orders.reduce((acc: number, item: any) => acc + item.price * item.quantity, 0)}</h1>
-                                          </div>
-                                      </div>
-                                      <div className='flex justify-center gap-5 items-center sm:justify-start mt-5'>
-                                          <button disabled={accepteloading}  onClick={() => { handleacceptedorder(orders[0].userId, orders[0].orderId, orders) }} className='px-5 py-1 rounded-lg mb-[1rem] text-[16px] w-[50%] bg-green-600 transition-all duration-200 hover:bg-blue-950 text-white'>Accepted Order</button>
-                                          <button onClick={() => { handlerejectorders(orders[0].userId, orders[0].orderId, orders) }} className='px-5 py-1 rounded-lg mb-[1rem] text-[16px] w-[50%] bg-red-600 transition-all duration-200 hover:bg-blue-950 text-white'>Reject Order</button>
-                                      </div>
-                                  </div>
-
-                              </div>
-
-
-
-                          </div>
-                      ))}
+                  <div className='w-full h-[610px] flex justify-center items-center'>
+                      <Spinner />
                   </div>
-          )}
-     </div>
+              ) : (
+                  <div>{
+                      groupedOrders.length === 0 ? (
+                          <div className='w-full h-[610px] flex justify-center items-center text-[20px] sm:text-[22px]'>No orders available.</div>
+                      ) : (
+                          <div>
+                              <h1 className='heading'>Pending <span className='text-red-600'>Orders</span></h1>
+                              {[...groupedOrders].reverse().map((orders: any[], index: number) => (
+                                  <div key={index} className='flex sm:justify-center sm:items-center '>
+                                      <div className='w-[95%] h-auto lg:w-[70%] xl:w-[60%] relative flex-col justify-center items-start sm:flex-row sm:gap-10 sm:h-auto p-4 bg-white m-2 flex lg:justify-between gap-2  rounded-lg border'>
+
+
+                                          <div className='w-full h-full flex flex-col justify-start items-start sm:w-[40%] lg:w-[50%]'>
+                                              {orders.map((order: any, orderIndex: number) => (
+                                                  <div key={orderIndex} className='w-full h-full flex border rounded mb-2 justify-start items-center'>
+                                                      <div className='flex justify-start items-start'>
+                                                          <Image src={order.image} alt='not found' width={100} height={100} />
+                                                      </div>
+                                                      <div className='flex flex-col mr-2'>
+                                                          <span className=' text-[#B0B0B0] text-xl '>{order.name}</span>
+                                                          <span className=' border text-[#B0B0B0] text-lg  border-[#B0B0B0] px-2 rounded-md w-[60px]'>Qun: {order.quantity}</span>
+                                                      </div>
+                                                  </div>
+                                              ))}
+                                              {/* </Carousel> */}
+                                          </div>
+                                          <div className='w-[100%] lg:w-[40%]'>
+                                              <div className='flex gap-1 sm:gap-4 pt-3 justify-evenly sm:justify-start items-center'>
+                                                  <div>
+                                                      <h1 className='text-red-600 text-[17px] sm:text-[20px]'>Name</h1>
+                                                      <h1 className='text-red-600 text-[17px] sm:text-[20px]'>Email</h1>
+                                                      <h1 className='text-red-600 text-[17px] sm:text-[20px]'>Payment ID:</h1>
+                                                      <h1 className='text-red-600 text-[17px] sm:text-[20px]'>Order ID:</h1>
+
+                                                      <h1 className='text-red-600 text-[17px] sm:text-[20px]'>Total:</h1>
+                                                  </div>
+                                                  <div>
+
+                                                      <h1 className='font-semibold text-green-700 text-[17px] sm:text-[20px]'>
+                                                          {/* {getUserById(orders[0].userId)?.name || 'User not found'} */}
+                                                          {getUserById(orders[0].userId)?.name || 'User not found'}
+                                                      </h1>
+                                                      <h1 className='font-semibold text-green-700 text-[17px] sm:text-[20px]'>
+                                                          {getUserById(orders[0].userId)?.email || 'User not found'}
+                                                      </h1>
+                                                      <h1 className='font-semibold text-green-700 text-[17px] sm:text-[20px]'>{orders[0].paymentID}</h1>
+                                                      <h1 className='font-semibold text-green-700 text-[17px] sm:text-[20px]'>{orders[0].orderId}</h1>
+                                                      <h1 className='font-semibold text-green-700 text-[17px] sm:text-[20px]'> ₹{orders.reduce((acc: number, item: any) => acc + item.price * item.quantity, 0)}</h1>
+                                                  </div>
+                                              </div>
+                                              <div className='flex justify-center gap-5 items-center sm:justify-start mt-5'>
+                                                  <button disabled={accepteloading} onClick={() => { handleacceptedorder(orders[0].userId, orders[0].orderId, orders) }} className='px-5 py-1 rounded-lg mb-[1rem] text-[16px] w-[50%] bg-green-600 transition-all duration-200 hover:bg-blue-950 text-white'>Accepted Order</button>
+                                                  <button onClick={() => { handlerejectorders(orders[0].userId, orders[0].orderId, orders) }} className='px-5 py-1 rounded-lg mb-[1rem] text-[16px] w-[50%] bg-red-600 transition-all duration-200 hover:bg-blue-950 text-white'>Reject Order</button>
+                                              </div>
+                                          </div>
+
+                                      </div>
+
+
+
+                                  </div>
+                              ))}
+                          </div>
+                      )
+                  }
+                  </div >
+              )
+          }
+          </>
   )
 }
 
@@ -336,66 +350,76 @@ export const Rejected = () => {
 
 
   return (
-     <div>{
-          groupedOrders.length === 0 ? (
-          <div className='w-full h-[610px] flex justify-center items-center text-[20px] sm:text-[22px]'>No orders available.</div>
-          ) : (
-                  <div>
-                      <h1 className='heading'>Rejected <span className='text-red-600'>Orders</span></h1>
-                      {[...groupedOrders].reverse().map((orders: any[], index: number) => (
-                          <div key={index} className='flex sm:justify-center sm:items-center '>
-                              <div className='w-[95%] h-auto lg:w-[70%] xl:w-[60%] relative flex-col justify-center items-start sm:flex-row sm:gap-10 sm:h-auto p-4 bg-white m-2 flex lg:justify-between gap-2  rounded-lg border'>
-
-
-                                  <div className='w-full h-full flex flex-col justify-start items-start sm:w-[40%] lg:w-[50%]'>
-                                      {orders.map((order: any, orderIndex: number) => (
-                                          <div key={orderIndex} className='w-full h-full flex border rounded mb-2 justify-start items-center'>
-                                              <div className='flex justify-start items-start'>
-                                                  <Image src={order.image} alt='not found' width={100} height={100} />
-                                              </div>
-                                              <div className='flex flex-col mr-2'>
-                                                  <span className=' text-[#B0B0B0] text-xl '>{order.name}</span>
-                                                  <span className=' border text-[#B0B0B0] text-lg  border-[#B0B0B0] px-2 rounded-md w-[60px]'>Qun: {order.quantity}</span>
-                                              </div>
-                                          </div>
-                                      ))}
-                                      {/* </Carousel> */}
-                                  </div>
-                                  <div className='w-[100%] lg:w-[40%]'>
-                                      <div className='flex gap-1 sm:gap-4 pt-3 justify-evenly sm:justify-start items-center'>
-                                          <div>
-                                              <h1 className='text-red-600 text-[17px] sm:text-[20px]'>Name</h1>
-                                              <h1 className='text-red-600 text-[17px] sm:text-[20px]'>Email</h1>
-                                              <h1 className='text-red-600 text-[17px] sm:text-[20px]'>Payment ID:</h1>
-                                              <h1 className='text-red-600 text-[17px] sm:text-[20px]'>Order ID:</h1>
-
-                                              <h1 className='text-red-600 text-[17px] sm:text-[20px]'>Total:</h1>
-                                          </div>
-                                          <div>
-
-                                              <h1 className='font-semibold text-green-700 text-[17px] sm:text-[20px]'>
-                                                  {getUserById(orders[0].userId)?.name || 'User not found'}
-                                              </h1>
-                                              <h1 className='font-semibold text-green-700 text-[17px] sm:text-[20px]'>
-                                                  {getUserById(orders[0].userId)?.email || 'User not found'}
-                                              </h1>
-                                              <h1 className='font-semibold text-green-700 text-[17px] sm:text-[20px]'>{orders[0].paymentID}</h1>
-                                              <h1 className='font-semibold text-green-700 text-[17px] sm:text-[20px]'>{orders[0].orderId}</h1>
-                                              <h1 className='font-semibold text-green-700 text-[17px] sm:text-[20px]'> ₹{orders.reduce((acc: number, item: any) => acc + item.price * item.quantity, 0)}</h1>
-                                          </div>
-                                      </div>
-                                   
-                                  </div>
-
-                              </div>
-
-
-
-                          </div>
-                      ))}
+    <>
+    {
+        loading ? (
+                  <div className='w-full h-[610px] flex justify-center items-center'>
+                      <Spinner />
                   </div>
+        ):(
+                    <div>{
+          groupedOrders.length === 0 ? (
+            <div className='w-full h-[610px] flex justify-center items-center text-[20px] sm:text-[22px]'>No orders available.</div>
+            ) : (
+            <div>
+                <h1 className='heading'>Rejected <span className='text-red-600'>Orders</span></h1>
+                {[...groupedOrders].reverse().map((orders: any[], index: number) => (
+                    <div key={index} className='flex sm:justify-center sm:items-center '>
+                        <div className='w-[95%] h-auto lg:w-[70%] xl:w-[60%] relative flex-col justify-center items-start sm:flex-row sm:gap-10 sm:h-auto p-4 bg-white m-2 flex lg:justify-between gap-2  rounded-lg border'>
+
+
+                            <div className='w-full h-full flex flex-col justify-start items-start sm:w-[40%] lg:w-[50%]'>
+                                {orders.map((order: any, orderIndex: number) => (
+                                    <div key={orderIndex} className='w-full h-full flex border rounded mb-2 justify-start items-center'>
+                                        <div className='flex justify-start items-start'>
+                                            <Image src={order.image} alt='not found' width={100} height={100} />
+                                        </div>
+                                        <div className='flex flex-col mr-2'>
+                                            <span className=' text-[#B0B0B0] text-xl '>{order.name}</span>
+                                            <span className=' border text-[#B0B0B0] text-lg  border-[#B0B0B0] px-2 rounded-md w-[60px]'>Qun: {order.quantity}</span>
+                                        </div>
+                                    </div>
+                                ))}
+                                {/* </Carousel> */}
+                            </div>
+                            <div className='w-[100%] lg:w-[40%]'>
+                                <div className='flex gap-1 sm:gap-4 pt-3 justify-evenly sm:justify-start items-center'>
+                                    <div>
+                                        <h1 className='text-red-600 text-[17px] sm:text-[20px]'>Name</h1>
+                                        <h1 className='text-red-600 text-[17px] sm:text-[20px]'>Email</h1>
+                                        <h1 className='text-red-600 text-[17px] sm:text-[20px]'>Payment ID:</h1>
+                                        <h1 className='text-red-600 text-[17px] sm:text-[20px]'>Order ID:</h1>
+
+                                        <h1 className='text-red-600 text-[17px] sm:text-[20px]'>Total:</h1>
+                                    </div>
+                                    <div>
+
+                                        <h1 className='font-semibold text-green-700 text-[17px] sm:text-[20px]'>
+                                            {getUserById(orders[0].userId)?.name || 'User not found'}
+                                        </h1>
+                                        <h1 className='font-semibold text-green-700 text-[17px] sm:text-[20px]'>
+                                            {getUserById(orders[0].userId)?.email || 'User not found'}
+                                        </h1>
+                                        <h1 className='font-semibold text-green-700 text-[17px] sm:text-[20px]'>{orders[0].paymentID}</h1>
+                                        <h1 className='font-semibold text-green-700 text-[17px] sm:text-[20px]'>{orders[0].orderId}</h1>
+                                        <h1 className='font-semibold text-green-700 text-[17px] sm:text-[20px]'> ₹{orders.reduce((acc: number, item: any) => acc + item.price * item.quantity, 0)}</h1>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+
+                    </div>
+                ))}
+            </div>
           )}
-     </div>
+        </div >
+        )
+    }
+    </>
   )
 }
 
@@ -533,68 +557,78 @@ export const Accepted = () => {
     };
 
   return (
-     <div>{
-          groupedOrders.length === 0 ? (
-          <div className='w-full h-[610px] flex justify-center items-center text-[20px] sm:text-[22px]'>No orders available.</div>
-          ) : (
-                  <div>
-                      <h1 className='heading'>Accepted <span className='text-red-600'>Orders</span></h1>
-                      {[...groupedOrders].reverse().map((orders: any[], index: number) => (
-                          <div key={index} className='flex sm:justify-center sm:items-center '>
-                              <div className='w-[95%] h-auto lg:w-[70%] xl:w-[60%] relative flex-col justify-center items-start sm:flex-row sm:gap-10 sm:h-auto p-4 bg-white m-2 flex lg:justify-between gap-2  rounded-lg border'>
-
-
-                                  <div className='w-full h-full flex flex-col justify-start items-start sm:w-[40%] lg:w-[50%]'>
-                                      {orders.map((order: any, orderIndex: number) => (
-                                          <div key={orderIndex} className='w-full h-full flex border rounded mb-2 justify-start items-center'>
-                                              <div className='flex justify-start items-start'>
-                                                  <Image src={order.image} alt='not found' width={100} height={100} />
-                                              </div>
-                                              <div className='flex flex-col mr-2'>
-                                                  <span className=' text-[#B0B0B0] text-xl '>{order.name}</span>
-                                                  <span className=' border text-[#B0B0B0] text-lg  border-[#B0B0B0] px-2 rounded-md w-[60px]'>Qun: {order.quantity}</span>
-                                              </div>
-                                          </div>
-                                      ))}
-                                      {/* </Carousel> */}
-                                  </div>
-                                  <div className='w-[100%] lg:w-[40%]'>
-                                      <div className='flex gap-1 sm:gap-4 pt-3 justify-evenly sm:justify-start items-center'>
-                                          <div>
-                                              <h1 className='text-red-600 text-[17px] sm:text-[20px]'>Name</h1>
-                                              <h1 className='text-red-600 text-[17px] sm:text-[20px]'>Email</h1>
-                                              <h1 className='text-red-600 text-[17px] sm:text-[20px]'>Payment ID:</h1>
-                                              <h1 className='text-red-600 text-[17px] sm:text-[20px]'>Order ID:</h1>
-
-                                              <h1 className='text-red-600 text-[17px] sm:text-[20px]'>Total:</h1>
-                                          </div>
-                                          <div>
-
-                                              <h1 className='font-semibold text-green-700 text-[17px] sm:text-[20px]'>
-                                                  {getUserById(orders[0].userId)?.name || 'User not found'}
-                                              </h1>
-                                              <h1 className='font-semibold text-green-700 text-[17px] sm:text-[20px]'>
-                                                  {getUserById(orders[0].userId)?.email || 'User not found'}
-                                              </h1>
-                                              <h1 className='font-semibold text-green-700 text-[17px] sm:text-[20px]'>{orders[0].paymentID}</h1>
-                                              <h1 className='font-semibold text-green-700 text-[17px] sm:text-[20px]'>{orders[0].orderId}</h1>
-                                              <h1 className='font-semibold text-green-700 text-[17px] sm:text-[20px]'> ₹{orders.reduce((acc: number, item: any) => acc + item.price * item.quantity, 0)}</h1>
-                                          </div>
-                                      </div>
-                                      <div className='flex justify-center gap-5 items-center sm:justify-start mt-5'>
-                                          <button onClick={() => { handleDispatchorder(orders[0].userId, orders[0].orderId, orders) }} className='px-5 py-1 rounded-lg mb-[1rem] text-[16px] w-[50%] bg-green-600 transition-all duration-200 hover:bg-blue-950 text-white'>Dispatch</button>
-                                      </div>
-                                  </div>
-
-                              </div>
-
-
-
-                          </div>
-                      ))}
+    <>
+    {
+        loading ? (
+                  <div className='w-full h-[610px] flex justify-center items-center'>
+                      <Spinner />
                   </div>
+        ):(
+                    <div>{
+          groupedOrders.length === 0 ? (
+            <div className='w-full h-[610px] flex justify-center items-center text-[20px] sm:text-[22px]'>No orders available.</div>
+            ) : (
+            <div>
+                <h1 className='heading'>Accepted <span className='text-red-600'>Orders</span></h1>
+                {[...groupedOrders].reverse().map((orders: any[], index: number) => (
+                    <div key={index} className='flex sm:justify-center sm:items-center '>
+                        <div className='w-[95%] h-auto lg:w-[70%] xl:w-[60%] relative flex-col justify-center items-start sm:flex-row sm:gap-10 sm:h-auto p-4 bg-white m-2 flex lg:justify-between gap-2  rounded-lg border'>
+
+
+                            <div className='w-full h-full flex flex-col justify-start items-start sm:w-[40%] lg:w-[50%]'>
+                                {orders.map((order: any, orderIndex: number) => (
+                                    <div key={orderIndex} className='w-full h-full flex border rounded mb-2 justify-start items-center'>
+                                        <div className='flex justify-start items-start'>
+                                            <Image src={order.image} alt='not found' width={100} height={100} />
+                                        </div>
+                                        <div className='flex flex-col mr-2'>
+                                            <span className=' text-[#B0B0B0] text-xl '>{order.name}</span>
+                                            <span className=' border text-[#B0B0B0] text-lg  border-[#B0B0B0] px-2 rounded-md w-[60px]'>Qun: {order.quantity}</span>
+                                        </div>
+                                    </div>
+                                ))}
+                                {/* </Carousel> */}
+                            </div>
+                            <div className='w-[100%] lg:w-[40%]'>
+                                <div className='flex gap-1 sm:gap-4 pt-3 justify-evenly sm:justify-start items-center'>
+                                    <div>
+                                        <h1 className='text-red-600 text-[17px] sm:text-[20px]'>Name</h1>
+                                        <h1 className='text-red-600 text-[17px] sm:text-[20px]'>Email</h1>
+                                        <h1 className='text-red-600 text-[17px] sm:text-[20px]'>Payment ID:</h1>
+                                        <h1 className='text-red-600 text-[17px] sm:text-[20px]'>Order ID:</h1>
+
+                                        <h1 className='text-red-600 text-[17px] sm:text-[20px]'>Total:</h1>
+                                    </div>
+                                    <div>
+
+                                        <h1 className='font-semibold text-green-700 text-[17px] sm:text-[20px]'>
+                                            {getUserById(orders[0].userId)?.name || 'User not found'}
+                                        </h1>
+                                        <h1 className='font-semibold text-green-700 text-[17px] sm:text-[20px]'>
+                                            {getUserById(orders[0].userId)?.email || 'User not found'}
+                                        </h1>
+                                        <h1 className='font-semibold text-green-700 text-[17px] sm:text-[20px]'>{orders[0].paymentID}</h1>
+                                        <h1 className='font-semibold text-green-700 text-[17px] sm:text-[20px]'>{orders[0].orderId}</h1>
+                                        <h1 className='font-semibold text-green-700 text-[17px] sm:text-[20px]'> ₹{orders.reduce((acc: number, item: any) => acc + item.price * item.quantity, 0)}</h1>
+                                    </div>
+                                </div>
+                                <div className='flex justify-center gap-5 items-center sm:justify-start mt-5'>
+                                    <button onClick={() => { handleDispatchorder(orders[0].userId, orders[0].orderId, orders) }} className='px-5 py-1 rounded-lg mb-[1rem] text-[16px] w-[50%] bg-green-600 transition-all duration-200 hover:bg-blue-950 text-white'>Dispatch</button>
+                                </div>
+                            </div>
+
+                        </div>
+
+
+
+                    </div>
+                ))}
+            </div>
           )}
-     </div>
+        </div >
+        )
+    }
+    </>
   )
 }
 
