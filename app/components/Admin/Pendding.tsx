@@ -58,9 +58,10 @@ export const Pendding = () => {
             return { error: 'An error occurred while fetching cart items' };
         }
     }
+
     useEffect(() => {
         fetchCartItems();
-    });
+    },[]);
 
     async function fetchUsers() {
         try {
@@ -82,7 +83,7 @@ export const Pendding = () => {
     }
     useEffect(() => {
         fetchUsers();
-    });
+    },[]);
 
 
     console.log("groupedOrders", groupedOrders)
@@ -313,7 +314,7 @@ export const Rejected = () => {
     }
     useEffect(() => {
         fetchCartItems();
-    });
+    },[]);
 
     async function fetchUsers() {
         try {
@@ -336,7 +337,7 @@ export const Rejected = () => {
     }
     useEffect(() => {
         fetchUsers();
-    });
+    },[]);
 
 
     console.log("groupedOrders", groupedOrders)
@@ -478,7 +479,7 @@ export const Accepted = () => {
     }
     useEffect(() => {
         fetchCartItems();
-    });
+    },[]);
 
     async function fetchUsers() {
         try {
@@ -501,7 +502,7 @@ export const Accepted = () => {
     }
     useEffect(() => {
         fetchUsers();
-    });
+    },[]);
 
 
     console.log("groupedOrders", groupedOrders)
@@ -687,7 +688,7 @@ export const DispatchOrders = () => {
     }
     useEffect(() => {
         fetchCartItems();
-    });
+    },[]);
 
     async function fetchUsers() {
         try {
@@ -710,7 +711,7 @@ export const DispatchOrders = () => {
     }
     useEffect(() => {
         fetchUsers();
-    });
+    },[])
 
 
     console.log("groupedOrders", groupedOrders)

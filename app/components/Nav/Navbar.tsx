@@ -44,7 +44,7 @@ const Navbar = ({openNav}:Props) => {
     const orderlength = filterlengthorder.length
     useEffect(() => {
         fetchCartItems();
-    });
+    },[]);
 
 
 

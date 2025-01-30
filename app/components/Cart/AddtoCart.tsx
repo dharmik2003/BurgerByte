@@ -52,7 +52,7 @@ const AddtoCart = () => {
 
     useEffect(() => {
         fetchCartItems();
-    });
+    },[]);
 
     useEffect(() => {
     }, [apiorderdata]);

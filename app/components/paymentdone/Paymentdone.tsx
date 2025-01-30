@@ -106,7 +106,7 @@ const Paymentdone = () => {
 
     useEffect(() => {
         fetchCartItems();
-    });
+    },[]);
 
 
     const getuserid = async (key: any) => {

@@ -113,7 +113,7 @@ const Myorder = () => {
 
     useEffect(() => {
         fetchCartItems();
-    });
+    },[]);
 
     console.log("orders", groupedOrders)
     return (
