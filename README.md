@@ -1,38 +1,77 @@
-Project Link -> https://burgerbyte.vercel.app/
+# BurgerByte 🍔
 
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+A responsive online burger ordering platform that allows users to browse burger menus, place orders, track their orders, and manage their accounts securely. The platform also features an admin panel where admins can accept orders and update their status. The app includes user authentication with login, signup, password reset, and OTP systems for added security. The website is designed with a user-friendly interface that ensures a seamless experience across all devices.
 
-## Getting Started
+## Features
 
-First, run the development server:
+- **Online Burger Ordering**:  
+  - Browse a variety of burgers from different categories.  
+  - Add items to the cart and place orders.  
+  - Track your order status in real-time.
 
+- **Admin Panel**:  
+  - Admins can accept orders and update the order status once ready.  
+
+- **User Authentication**:  
+  - Secure user login and registration.  
+  - Password reset functionality with email.  
+  - OTP system for additional security during registration and login.
+
+- **User-Friendly UI**:  
+  - Simple, intuitive, and easy-to-navigate interface for an enjoyable ordering experience.  
+
+- **Responsive Design**:  
+  - Optimized for all devices, ensuring usability across desktops, tablets, and mobile phones.
+
+- **MongoDB Database**:  
+  - The app uses MongoDB as the database to store user, order, and admin data securely.
+
+### Demo URL
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+https://burgerbyte.vercel.app/
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Project Technologies
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- **Frontend**:  
+  - Next.js
+  - Typescript
+  - Tailwind CSS
+- **DataBase**:
+  - MongoDB
+ 
+## Getting Started
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+### Prerequisites
 
-## Learn More
+- Node.js (LTS version recommended).  
 
-To learn more about Next.js, take a look at the following resources:
+### Installation
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Clone the repository:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+```bash
+https://github.com/dharmik2003/BurgerByte.git
+```
 
-## Deploy on Vercel
+```bash
+cd HungryHub
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Install npm package
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+```bash
+npm install
+```
+
+Run project
+
+```bash
+npm run start
+```
+
+Build project 
+
+```bash
+npm run build
+```
