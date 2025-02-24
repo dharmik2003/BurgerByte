@@ -14,7 +14,7 @@ const Page = () => {
         </div>
       }
     >
-      <Resetpassword otp={otp} email={email} />
+      <Resetpassword />
     </Suspense>
   );
 };

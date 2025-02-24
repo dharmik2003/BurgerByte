@@ -10,7 +10,10 @@ interface ResetPasswordProps {
   email: string | null;
 }
 
-const Resetpassword: React.FC<ResetPasswordProps> = ({ otp, email }) => {
+const Resetpassword = () => {
+  const otp = 111111;
+  const email = "dk33@gmail.com";
+
   const [password, setPassword] = useState<string>("");
   const [confirmPassword, setConfirmPassword] = useState<string>("");
 
