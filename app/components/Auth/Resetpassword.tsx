@@ -98,7 +98,7 @@ const Resetpassword: React.FC<ResetPasswordProps> = ({ otp, email }) => {
           required
           value={password}
           onChange={(e) => setPassword(e.target.value)}
-          className="w-full h-12  rounded-md pl-4"
+          className="w-full h-12  rounded-md pl-4 border"
         />
         <input
           type="password"
@@ -107,7 +107,7 @@ const Resetpassword: React.FC<ResetPasswordProps> = ({ otp, email }) => {
           required
           value={confirmPassword}
           onChange={(e) => setConfirmPassword(e.target.value)}
-          className="w-full h-12  rounded-md pl-4"
+          className="w-full h-12  rounded-md pl-4 border"
         />
         <div
           onClick={updatepassword}

@@ -23,7 +23,7 @@ import React from 'react';
 
 const ButtonSpinner = () => {
     return (
-        <div className='mt-[2rem] w-full mx-auto relative border-b-[2px] border-b-gray-300 border-opacity-50 text-center' >
+        <div className='w-full mx-auto relative border-b-[2px] border-b-gray-300 border-opacity-50 text-center' >
             <button
                 type="button"
                 className="pointer-events-none inline-block py-3 rounded-lg mb-[3rem] text-[16px] w-full bg-blue-950 transition-all duration-200 hover:bg-red-600 text-white  bg-primary px-6 pb-2 pt-2.5 text-xl font-medium uppercase leading-normal  shadow-primary-3 ease-in-out hover:bg-primary-accent-300 hover:shadow-primary-2 focus:bg-primary-accent-300 focus:shadow-primary-2 focus:outline-none focus:ring-0 active:bg-primary-600 active:shadow-primary-2 disabled:opacity-70 dark:shadow-black/30 dark:hover:shadow-dark-strong dark:focus:shadow-dark-strong dark:active:shadow-dark-strong"

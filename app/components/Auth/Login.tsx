@@ -165,7 +165,7 @@ const Login = () => {
             value={formData.email}
             onChange={handleInputChange}
             required
-            className="w-full h-12 rounded-md pl-4"
+            className="w-full h-12 rounded-md pl-4 border bg-white"
           />
 
           <div className="flex flex-col  gap-1"></div>
@@ -176,7 +176,7 @@ const Login = () => {
             onChange={handleInputChange}
             name="password"
             required
-            className="w-full h-12  rounded-md pl-4"
+            className="w-full h-12  rounded-md pl-4 border bg-white"
           />
           <div
             className="w-full flex justify-end text-black cursor-pointer"

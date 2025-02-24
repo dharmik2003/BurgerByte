@@ -109,7 +109,7 @@ const Signup = () => {
             onChange={handleInputChange}
             placeholder="Name"
             required
-            className="w-full h-12 rounded-md pl-4"
+            className="w-full h-12 rounded-md pl-4 border"
           />
           <input
             type="email"
@@ -118,7 +118,7 @@ const Signup = () => {
             onChange={handleInputChange}
             placeholder="Email"
             required
-            className="w-full h-12 rounded-md pl-4"
+            className="w-full h-12 rounded-md pl-4 border"
           />
           <input
             type="passowrd"
@@ -127,7 +127,7 @@ const Signup = () => {
             onChange={handleInputChange}
             placeholder="Password"
             required
-            className="w-full h-12 rounded-md pl-4"
+            className="w-full h-12 rounded-md pl-4 border"
           />
           <textarea
             rows={3}
@@ -136,7 +136,7 @@ const Signup = () => {
             onChange={handleInputChange}
             placeholder="Enter Your Address"
             required
-            className="w-full rounded-md pl-4 pt-1"
+            className="w-full rounded-md pl-4 pt-1 border"
           />
         </div>
 
