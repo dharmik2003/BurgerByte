@@ -1,6 +1,6 @@
 # BurgerByte 🍔
 
-A responsive online burger ordering platform that allows users to browse burger menus, place orders, track their orders, and manage their accounts securely. The platform also features an admin panel where admins can accept orders and update their status. The app includes user authentication with login, signup, password reset, and OTP systems for added security. The website is designed with a user-friendly interface that ensures a seamless experience across all devices.
+A responsive online burger ordering platform that allows users to browse burger menus, place orders, track their orders, and manage their accounts securely. The platform also features an admin panel where admins can accept orders and update their status. The app includes user authentication with login, signup, password reset. The website is designed with a user-friendly interface that ensures a seamless experience across all devices.
 
 ## Features
 
@@ -15,7 +15,10 @@ A responsive online burger ordering platform that allows users to browse burger 
 - **User Authentication**:  
   - Secure user login and registration.  
   - Password reset functionality with email.  
-  - OTP system for additional security during registration and login.
+
+- **Razorpay Payment Gateway**:  
+    - Seamless and secure payment processing using Razorpay for order payments.  
+    - Supports various payment methods such as credit/debit cards, wallets, and UPI. 
 
 - **User-Friendly UI**:  
   - Simple, intuitive, and easy-to-navigate interface for an enjoyable ordering experience.  
@@ -37,6 +40,7 @@ https://burgerbyte.vercel.app/
   - Next.js
   - Typescript
   - Tailwind CSS
+  - RazorPay payment getway
 - **DataBase**:
   - MongoDB
  
