@@ -1,7 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
-import { useParams, usePathname, useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import Image from "next/image";
 import { BurgerItem } from "@/app/Redux/Order/OrderSlice";
 import { fetchCookie } from "@/app/utils/cookies";
@@ -13,9 +12,8 @@ import { AppRoutes, COOKIE_USER } from "@/constant";
 const OrderDetails = () => {
   const [myorderss, setmyorderss] = useState<any>([]);
   const [totalAmount, setTotalAmount] = useState<string>("");
-  const path = usePathname();
-  const paramsObject = useParams();
-  const params = paramsObject.id;
+  const search = useSearchParams();
+  const params = search.get("id");
   const filteredData: any[] = [];
 
   useEffect(() => {

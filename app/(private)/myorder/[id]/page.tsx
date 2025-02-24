@@ -1,4 +1,3 @@
-"use client";
 import OrderDetails from "@/app/components/Myorder/OrderDetails";
 import Spinner from "@/app/components/Spinner/Spinner";
 import React, { Suspense } from "react";
