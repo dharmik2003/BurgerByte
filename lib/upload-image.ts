@@ -28,11 +28,8 @@ cloudinary.config({
 
 export const uploadImage = async (file: File, folder: string) => {
 
-    console.log("process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME", process.env.CLOUDINARY_API_SECRET, process.env.NEXT_PUBLIC_CLOUDINARY_API_KEY,process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME)
-
     const buffer=await file.arrayBuffer();
     const bytes=Buffer.from(buffer)
-    console.log("bytes", bytes)
 
     return  new Promise(async (resolve,reject)=>{
         await cloudinary.uploader.upload_stream(

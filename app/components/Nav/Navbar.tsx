@@ -1,244 +1,360 @@
-'use client'
-import Link from 'next/link'
-import React, { useEffect, useState } from 'react'
-import { BiCycling, BiShoppingBag } from 'react-icons/bi'
-import { FaBurger } from 'react-icons/fa6'
-import { HiBars3BottomRight } from 'react-icons/hi2'
-import { useDispatch, useSelector } from 'react-redux'
-import Cookies from 'js-cookie';
-import { setlogout } from '@/app/Redux/User/User'
-import { fetchCookie, haveCookie, haveCookiebool } from '@/app/utils/cookies'
-import { usePathname, useRouter } from 'next/navigation'
-import { nanoid } from '@reduxjs/toolkit'
-import { setaddorderID } from '@/app/Redux/OrderID/OrderIDSlice'
+// "use client";
+// import Link from "next/link";
+// import React, { useEffect, useState } from "react";
+// import { BiCycling, BiShoppingBag } from "react-icons/bi";
+// import { FaBurger } from "react-icons/fa6";
+// import { HiBars3BottomRight } from "react-icons/hi2";
+// import { useDispatch, useSelector } from "react-redux";
+// import Cookies from "js-cookie";
+// import { fetchCookie, haveCookie, haveCookiebool } from "@/app/utils/cookies";
+// import { usePathname, useRouter } from "next/navigation";
+// import { nanoid } from "@reduxjs/toolkit";
+// import { setaddorderID } from "@/app/Redux/OrderID/OrderIDSlice";
+// import { logout } from "@/app/Redux/User/User";
+// import { AdminRoutes, AppRoutes, COOKIE_ADMIN, COOKIE_USER } from "@/constant";
+
+// interface Props {
+//   openNav: () => void;
+// }
+
+// const Navbar = ({ openNav }: Props) => {
+//   const path = usePathname();
+//   const [apiorderdata, setapiorderdata] = useState([]);
+
+//     async function fetchCartItems() {
+//       try {
+//         const response = await fetch("/api/cart");
+//         if (!response.ok) {
+//           throw new Error("Failed to fetch cart items");
+//         }
+//         const cartItems = await response.json();
+//         setapiorderdata(cartItems.cartItems);
+//         return cartItems;
+//       } catch (error) {
+//         console.error("Error fetching cart items:", error);
+//         return { error: "An error occurred while fetching cart items" };
+//       }
+//     }
+
+//   const admintoken = haveCookiebool(COOKIE_ADMIN);
+//   console.log("admintoken", admintoken);
+
+//   const userData = useSelector((state: any) => state.auth);
+//   console.log("userData", userData);
+//   const { orders } = useSelector((state: any) => state.orderdata);
+//   const totlaorderlength = orders.length;
+
+//   console.log(
+//     "Cookies 6e ho bhai",
+//     haveCookiebool(COOKIE_USER) || haveCookiebool(COOKIE_ADMIN)
+//   );
+//   const dispatch = useDispatch();
+//   useEffect(() => {
+//     if (haveCookiebool(COOKIE_USER) || haveCookiebool(COOKIE_ADMIN)) {
+//       console.log(
+//         "Cookies 6e ho bhai",
+//         haveCookiebool(COOKIE_USER) || haveCookiebool(COOKIE_ADMIN)
+//       );
+//     } else {
+//       dispatch(logout());
+//     }
+//   }, []);
 
 
-interface Props{
-    openNav:()=>void
+//   const router = useRouter();
+
+//   const handhomeClick = () => {
+//     let orderId = nanoid();
+//     dispatch(setaddorderID(orderId));
+//     router.push(AppRoutes.DASHBOARD);
+//   };
+
+//   if (!mounted) {
+//     return null;
+//   }
+
+//   return (
+//     <div className="h-[9vh] sm:h-[12vh] bg-white border">
+//       <div className="sm:w-[90%] w-[95%] mx-auto flex h-[100%] items-center justify-between cursor-pointer">
+//         <div className="flex items-center space-x-2 " onClick={handhomeClick}>
+//           <FaBurger className="w-[1.2rem] h-[1.2rem] sm:h-[1.4rem] sm:w-[1.4rem] text-orange-500" />
+//           <h1 className="text-[20px] sm:text-[30px] font-semibold ">
+//             BurgerByte
+//           </h1>
+//         </div>
+//         <div>
+//           <ul className="hidden lg:flex items-center space-x-10">
+//             <li
+//               className={`${
+//                 path === AppRoutes.DASHBOARD ? "text-red-600 " : "text-black"
+//               } text-[20px] font-medium hover:text-red-600`}
+//             >
+//               <Link href={AppRoutes.DASHBOARD}>Home</Link>
+//             </li>
+//             <li
+//               className={`${
+//                 path === (admintoken ? AdminRoutes.ORDERS : AppRoutes.MENU)
+//                   ? "text-red-600 "
+//                   : "text-black"
+//               } text-[20px] font-medium hover:text-red-600`}
+//             >
+//               <Link href={admintoken ? AdminRoutes.ORDERS : AppRoutes.MENU}>
+//                 {admintoken ? "Orders" : "Menu"}
+//               </Link>
+//             </li>
+//             {/* <li className='text-[20px] font-medium hover:text-red-600'> */}
+//             <li
+//               className={`${
+//                 path === AppRoutes.ABOUT ? "text-red-600 " : "text-black"
+//               } text-[20px] font-medium hover:text-red-600`}
+//             >
+//               <Link href={AppRoutes.ABOUT}>About</Link>
+//             </li>
+//             <li
+//               className={`${
+//                 path ===
+//                 (!admintoken ? AppRoutes.CONTACT : AdminRoutes.PRODUCTS)
+//                   ? "text-red-600 "
+//                   : "text-black"
+//               } text-[20px] font-medium hover:text-red-600`}
+//             >
+//               <Link
+//                 href={!admintoken ? AppRoutes.CONTACT : AdminRoutes.PRODUCTS}
+//               >
+//                 {!admintoken ? "Contact" : "Products"}
+//               </Link>
+//             </li>
+//             <li
+//               className={`${
+//                 path ===
+//                 (!admintoken ? AppRoutes.MY_ORDER : AdminRoutes.ADD_PRODUCTS)
+//                   ? "text-red-600 "
+//                   : "text-black"
+//               } text-[20px] font-medium hover:text-red-600`}
+//             >
+//               <Link
+//                 href={
+//                   !admintoken ? AppRoutes.MY_ORDER : AdminRoutes.ADD_PRODUCTS
+//                 }
+//               >
+//                 {!admintoken ? "My Orders" : "Add Items"}
+//               </Link>
+//             </li>
+//           </ul>
+//         </div>
+//         <div className="flex items-center space-x-4 relative">
+//           <div>
+//             {userData?.user?.name ? (
+//               <button
+//                 onClick={() => router.push(AppRoutes.PROFILE)}
+//                 className="px-6 py-2 sm:px-8 sm:py-3 text-[14px] sm:text-[16px] bg-blue-950 transition-all duration-200 hover:bg-red-600 flex items-center rounded-md space-x-2 text-white"
+//               >
+//                 {/* <span><BiCycling className='w-[1.3rem] h-[1.3rem] sm:w-[1.7rem] sm:h-[1.7rem]'/></span> */}
+//                 Profile
+//               </button>
+//             ) : (
+//               <button
+//                 onClick={() => router.push(AppRoutes.LOGIN)}
+//                 className="px-6 py-2 sm:px-8 sm:py-3 text-[14px] sm:text-[16px] bg-blue-950 transition-all duration-200 hover:bg-red-600 flex items-center rounded-md space-x-2 text-white"
+//               >
+//                 Login
+//               </button>
+//             )}
+//           </div>
+//           <div className="realtive">
+//             {admintoken === false && (
+//               <div>
+//                 <button
+//                   onClick={() => router.push(AppRoutes.CART)}
+//                   className="sm:px-6 sm:py-3 px-4 py-2 hover:bg-green-700 transition-all duration-200 bg-orange-600 flex items-center rounded-md text-white relative"
+//                 >
+//                   <BiShoppingBag className="w-[1.3rem] h-[1.3rem] sm:w-[1.7rem] sm:h-[1.7rem]" />
+//                 </button>
+//                 {/* {orderlength > 0 && (
+//                   <div
+//                     className="w-[18px] h-[18px] sm:right-10 lg:-right-2 text-white text-md sm:-top-2 sm:py-3 sm:px-3 flex justify-center items-center absolute -top-1 right-11 z-[10] bg-green-700  rounded-full"
+//                     style={{
+//                       animation:
+//                         orderlength > 0 ? "bounce 1s infinite" : "none",
+//                     }}
+//                   >
+//                     {orderlength}
+//                   </div>
+//                 )} */}
+//               </div>
+//             )}
+//           </div>
+//           <HiBars3BottomRight
+//             onClick={openNav}
+//             className="lg:hidden w-[2rem] h-[2rem] text-black"
+//           />
+//         </div>
+//       </div>
+//     </div>
+//   );
+// };
+
+// export default Navbar;
+
+
+
+"use client";
+import Link from "next/link";
+import React, { useEffect, useState } from "react";
+import { BiCycling, BiShoppingBag } from "react-icons/bi";
+import { FaBurger } from "react-icons/fa6";
+import { HiBars3BottomRight } from "react-icons/hi2";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchCookie, haveCookie, haveCookiebool } from "@/app/utils/cookies";
+import { usePathname, useRouter } from "next/navigation";
+import { nanoid } from "@reduxjs/toolkit";
+import { setaddorderID } from "@/app/Redux/OrderID/OrderIDSlice";
+import { logout } from "@/app/Redux/User/User";
+import { AdminRoutes, AppRoutes, COOKIE_ADMIN, COOKIE_USER } from "@/constant";
+
+interface Props {
+  openNav: () => void;
 }
 
-const Navbar = ({openNav}:Props) => {
+const Navbar = ({ openNav }: Props) => {
+  const path = usePathname();
+  const [mounted, setMounted] = useState(false);
+  const [apiorderdata, setapiorderdata] = useState([]);
 
-    const path=usePathname()
+  const admintoken = haveCookiebool(COOKIE_ADMIN);
+  const userData = useSelector((state: any) => state.auth);
+  const { orders } = useSelector((state: any) => state.orderdata);
+  const dispatch = useDispatch();
+  const router = useRouter();
 
-
-    const { orderID } = useSelector((state: any) => state.orderID)
-    const [apiorderdata, setapiorderdata] = useState([]);
-
-    async function fetchCartItems() {
-        try {
-            const response = await fetch('/api/cart');
-            if (!response.ok) {
-                throw new Error('Failed to fetch cart items');
-            }
-            const cartItems = await response.json();
-            setapiorderdata(cartItems.cartItems);
-            return cartItems;
-        } catch (error) {
-            console.error('Error fetching cart items:', error);
-            return { error: 'An error occurred while fetching cart items' };
-        }
+  useEffect(() => {
+    setMounted(true);
+    if (haveCookiebool(COOKIE_USER) || haveCookiebool(COOKIE_ADMIN)) {
+      console.log("Cookies present");
+    } else {
+      dispatch(logout());
     }
+  }, []);
 
-    const filterlengthorder = apiorderdata.filter((item: any) => item.orderId ==orderID)
-    const orderlength = filterlengthorder.length
-    useEffect(() => {
-        fetchCartItems();
-    },[]);
+  async function fetchCartItems() {
+    try {
+      const response = await fetch("/api/cart");
+      if (!response.ok) {
+        throw new Error("Failed to fetch cart items");
+      }
+      const cartItems = await response.json();
+      setapiorderdata(cartItems.cartItems);
+      return cartItems;
+    } catch (error) {
+      console.error("Error fetching cart items:", error);
+      return { error: "An error occurred while fetching cart items" };
+    }
+  }
 
+  const handhomeClick = () => {
+    let orderId = nanoid();
+    dispatch(setaddorderID(orderId));
+    router.push(AppRoutes.DASHBOARD);
+  };
 
-
-    const admintoken = haveCookiebool('adminDetails');
-    console.log("admintoken", admintoken)
-
-    const [token, setToken] = useState(false);
-    const [login, setlogin] = useState(false);
-
-    useEffect(() => {
-        if (admintoken) {
-            setToken(true);
-        }
-        else {
-            setToken(false)
-        }
-    }, [admintoken]);
-
-
-    const { username, isLogin ,admin} = useSelector((state: any) => state.auth);
-    const { orders } = useSelector((state: any) => state.orderdata);
-    const totlaorderlength=orders.length
-
-
-
-    console.log("Cookies 6e ho bhai", (haveCookiebool('userDetails') || haveCookiebool('adminDetails')))
-    const dispatch = useDispatch()
-    useEffect(() => {
-        if (haveCookiebool('userDetails') || haveCookiebool('adminDetails')) {
-            console.log("Cookies 6e ho bhai", (haveCookiebool('userDetails') || haveCookiebool('adminDetails')))
-                // dispatch(setlogout());
-        }    
-        else{
-            dispatch(setlogout());
-        }  
-       
-
-    },[]);
-
-    useEffect(()=>{
-        if (isLogin) {
-            setlogin(true)
-        }
-        else{
-            setlogin(false)
-        }
-    },[isLogin])
-
-    const router=useRouter()
-    const handleLoginClick = () => {
-        router.push('/login');
-    };
-    const handleaddtocartClick = () => {
-        router.push('/cart');
-    };
-
-    const handhomeClick = () => {
-        let orderId = nanoid();
-        dispatch(setaddorderID(orderId))
-        router.push('/');
-    };
-    const profileinfo = () => {
-        router.push('/profile');
-    };
-
-    // useEffect(()=>{
-        // const cookiethere = haveCookie('',"adminDetails")
-        // console.log("cookies there", cookiethere)
-        // if(cookiethere){
-        //     dispatch(setlogout())
-        // }
-
-
-    // },[])
-    // useEffect(()=>{
-    //     const cookiethere = haveCookie("", "userDetails")
-    //     console.log("cookies there", cookiethere)
-    //     if (cookiethere) {
-    //         dispatch(setlogout())
-    //     }
-    // },[])
-
-    // useEffect(() => {
-    //     const userDetailsExists = haveCookieClient("userDetails");
-    //     const adminDetailsExists = haveCookieClient("adminDetails");
-
-    //     console.log("User details cookie present:", userDetailsExists);
-    //     console.log("Admin details cookie present:", adminDetailsExists);
-
-    //     if (!userDetailsExists || !adminDetailsExists) {
-    //         dispatch(setlogout());
-    //     }
-    // }, []);
-
+  // Don't render anything until after hydration
+  if (!mounted) {
+    return null;
+  }
 
   return (
-    <div className='h-[9vh] sm:h-[12vh] bg-white border'>
-        <div className='sm:w-[90%] w-[95%] mx-auto flex h-[100%] items-center justify-between cursor-pointer'>
-
-              <div className='flex items-center space-x-2 ' onClick={handhomeClick}>
-                  <FaBurger className='w-[1.2rem] h-[1.2rem] sm:h-[1.4rem] sm:w-[1.4rem] text-orange-500'/>
-                  <h1 className='text-[20px] sm:text-[30px] font-semibold '>BurgerByte</h1>
-            </div>
-             
-            <div>
-                  <ul className='hidden lg:flex items-center space-x-10'>
-                      <li className={`${path === '/' ? 'text-red-600 ' : 'text-black'} text-[20px] font-medium hover:text-red-600`}>
-                          <Link href='/'>Home</Link>
-                      </li>
-                      
-                      <li className={`${path === (token ? '/orders' : '/menu') ? 'text-red-600 ' : 'text-black'} text-[20px] font-medium hover:text-red-600`}>
-                          <Link href={token ? '/orders' : '/menu'}>
-                              {token ? 'Orders' : 'Menu'}
-                          </Link>
-                      </li>
-                    
-
-                      {/* <li className='text-[20px] font-medium hover:text-red-600'> */}
-                      <li className={`${path === '/about' ? 'text-red-600 ': 'text-black'} text-[20px] font-medium hover:text-red-600`}>
-                          <Link href='/about'>About</Link>
-                      </li>
-                     
-                      <li className={`${path === (!token ? '/product' : '/contact') ? 'text-red-600 ' : 'text-black'} text-[20px] font-medium hover:text-red-600`}>
-                          <Link href={!token ? '/contact' : '/product'}>
-                              {!token ? 'Contact' : 'Products'}
-                          </Link>
-                      </li>
-                      <li className={`${path === (!token ? '/myorder' : '/addproduct') ? 'text-red-600 ' : 'text-black'} text-[20px] font-medium hover:text-red-600`}>
-                          <Link href={!token ? '/myorder' : '/addproduct'}>
-                              {!token ? 'Myorder' : 'Add Items'}
-                          </Link>
-                      </li>
-                    {/* {
-                          !admintoken ?(
-                              <li className={`${path === '/myorder' ? 'text-red-600 ' : 'text-black'} text-[20px] font-medium hover:text-red-600`}>
-                          <Link href='/myorder'>Myorder</Link>
-                            </li>
-                     
-                        ):(
-                                  <li className={`${path === '/addproduct' ? 'text-red-600 ' : 'text-black'} text-[20px] font-medium hover:text-red-600`}>
-                                      <Link href='/addproduct'>Add Items</Link>
-                                  </li>
-                        )
-                    } */}
-                      
-
-                  </ul>
-            </div>
-
-              <div className='flex items-center space-x-4 relative'>
-                  <div>
-                      {login ? (
-                          <button
-                              onClick={profileinfo}
-                              className='px-6 py-2 sm:px-8 sm:py-3 text-[14px] sm:text-[16px] bg-blue-950 transition-all duration-200 hover:bg-red-600 flex items-center rounded-md space-x-2 text-white'>
-                              {/* <span><BiCycling className='w-[1.3rem] h-[1.3rem] sm:w-[1.7rem] sm:h-[1.7rem]'/></span> */}
-                              <span className='font-bold uppercase'>{username}</span>
-                          </button>
-                      ) : (
-                          <button onClick={handleLoginClick} className='px-6 py-2 sm:px-8 sm:py-3 text-[14px] sm:text-[16px] bg-blue-950 transition-all duration-200 hover:bg-red-600 flex items-center rounded-md space-x-2 text-white'>
-                              <span className='font-bold'>Login</span>
-                          </button>
-                      )}
-                  </div>
-                  <div className='realtive'>
-                      {
-                          !token?(
-                            <div>
-                                  <button onClick={handleaddtocartClick} className='sm:px-6 sm:py-3 px-4 py-2 hover:bg-green-700 transition-all duration-200 bg-orange-600 flex items-center rounded-md text-white relative'>
-                                      <BiShoppingBag className='w-[1.3rem] h-[1.3rem] sm:w-[1.7rem] sm:h-[1.7rem]' />
-                                  </button>
-                                  {
-                                      orderlength > 0? (<div className='w-[18px] h-[18px] sm:right-10 lg:-right-2 border-black text-md sm:-top-2 sm:py-3 sm:px-3 flex justify-center items-center absolute -top-1 right-11 z-[10] bg-white border rounded-full' style={{ animation: orderlength > 0 ? 'bounce 1s infinite' : 'none' }}>
-                                          {orderlength}
-                                      </div>):(<div></div>)
-                                  }
-
-                            </div>
-                          ):(
-                            <div>
-
-                            </div>
-                          )
-
-                      }
-
-                  </div>   
-                  <HiBars3BottomRight onClick={openNav} className='lg:hidden w-[2rem] h-[2rem] text-black' />
-              </div>
-
+    <div className="h-[9vh] sm:h-[12vh] bg-white border">
+      <div className="sm:w-[90%] w-[95%] mx-auto flex h-[100%] items-center justify-between cursor-pointer">
+        <div className="flex items-center space-x-2 " onClick={handhomeClick}>
+          <FaBurger className="w-[1.2rem] h-[1.2rem] sm:h-[1.4rem] sm:w-[1.4rem] text-orange-500" />
+          <h1 className="text-[20px] sm:text-[30px] font-semibold ">
+            BurgerByte
+          </h1>
         </div>
-        
+        <div>
+          <ul className="hidden lg:flex items-center space-x-10">
+            <li
+              className={`${
+                path === AppRoutes.DASHBOARD ? "text-red-600 " : "text-black"
+              } text-[20px] font-medium hover:text-red-600`}
+            >
+              <Link href={AppRoutes.DASHBOARD}>Home</Link>
+            </li>
+            <li
+              className={`${
+                path === (admintoken ? AdminRoutes.ORDERS : AppRoutes.MENU)
+                  ? "text-red-600 "
+                  : "text-black"
+              } text-[20px] font-medium hover:text-red-600`}
+            >
+              <Link href={admintoken ? AdminRoutes.ORDERS : AppRoutes.MENU}>
+                {admintoken ? "Orders" : "Menu"}
+              </Link>
+            </li>
+            <li
+              className={`${
+                path === AppRoutes.ABOUT ? "text-red-600 " : "text-black"
+              } text-[20px] font-medium hover:text-red-600`}
+            >
+              <Link href={AppRoutes.ABOUT}>About</Link>
+            </li>
+            <li
+              className={`${
+                path === (!admintoken ? AppRoutes.CONTACT : AdminRoutes.PRODUCTS)
+                  ? "text-red-600 "
+                  : "text-black"
+              } text-[20px] font-medium hover:text-red-600`}
+            >
+              <Link href={!admintoken ? AppRoutes.CONTACT : AdminRoutes.PRODUCTS}>
+                {!admintoken ? "Contact" : "Products"}
+              </Link>
+            </li>
+            <li
+              className={`${
+                path === (!admintoken ? AppRoutes.MY_ORDER : AdminRoutes.ADD_PRODUCTS)
+                  ? "text-red-600 "
+                  : "text-black"
+              } text-[20px] font-medium hover:text-red-600`}
+            >
+              <Link href={!admintoken ? AppRoutes.MY_ORDER : AdminRoutes.ADD_PRODUCTS}>
+                {!admintoken ? "My Orders" : "Add Items"}
+              </Link>
+            </li>
+          </ul>
+        </div>
+        <div className="flex items-center space-x-4 relative">
+          <div>
+            {mounted && (
+              <button
+                onClick={() => 
+                  router.push(userData?.user?.name ? AppRoutes.PROFILE : AppRoutes.LOGIN)
+                }
+                className="px-6 py-2 sm:px-8 sm:py-3 text-[14px] sm:text-[16px] bg-blue-950 transition-all duration-200 hover:bg-red-600 flex items-center rounded-md space-x-2 text-white"
+              >
+                {userData?.user?.name ? "Profile" : "Login"}
+              </button>
+            )}
+          </div>
+          <div className="relative">
+            {admintoken === false && (
+              <div>
+                <button
+                  onClick={() => router.push(AppRoutes.CART)}
+                  className="sm:px-6 sm:py-3 px-4 py-2 hover:bg-green-700 transition-all duration-200 bg-orange-600 flex items-center rounded-md text-white relative"
+                >
+                  <BiShoppingBag className="w-[1.3rem] h-[1.3rem] sm:w-[1.7rem] sm:h-[1.7rem]" />
+                </button>
+              </div>
+            )}
+          </div>
+          <HiBars3BottomRight
+            onClick={openNav}
+            className="lg:hidden w-[2rem] h-[2rem] text-black"
+          />
+        </div>
+      </div>
     </div>
-  )
-}
+  );
+};
 
-export default Navbar
+export default Navbar;

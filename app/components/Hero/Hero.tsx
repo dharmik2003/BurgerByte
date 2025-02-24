@@ -7,6 +7,7 @@ import burger2 from '@/public/images/b2.png'
 import Image from "next/image";
 import { BiCycling } from "react-icons/bi";
 import { useRouter } from "next/navigation";
+import { AppRoutes } from "@/constant";
 
 const responsive = {
     desktop: {
@@ -31,7 +32,7 @@ const responsive = {
 const Hero = () => {
     const router = useRouter()
     const gotomenuroutes = () => {
-        router.push('/menu')
+        router.push(AppRoutes.MENU)
     } 
   return (
     <div>

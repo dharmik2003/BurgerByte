@@ -8,16 +8,11 @@ import jwt from 'jsonwebtoken';
 export async function POST(req: any) {
     try {
         const { email, password } = await req.json();
-        console.log(email);
-        console.log(password);
 
         // Connect to MongoDB
         const db = await dbConnect();
-        console.log("Connected to MongoDB");
-
         // Find user by email
         const user = await User.findOne({ email });
-        console.log("user----", user);
 
         // Check if user exists
         if (!user) {
@@ -30,7 +25,6 @@ export async function POST(req: any) {
 
         // Compare passwords
         const passwordMatch = await bcrypt.compare(password, user.password);
-        console.log("passwordMatch----", passwordMatch)
 
         // Check if passwords match
         if (!passwordMatch) {
@@ -48,7 +42,6 @@ export async function POST(req: any) {
         };
 
         const token = jwt.sign({ details }, process.env.JWT_SECRET as string);
-        console.log(token);
         const userdata={
             user, password, token
         }

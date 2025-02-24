@@ -9,8 +9,6 @@ export async function POST(req: any) {
     try {
         const { email, forgototp } = await req.json();
 
-        console.log("Backend: Received email and forgototp", email, forgototp);
-
         // Connect to the database
         await dbConnect();
 
@@ -22,15 +20,11 @@ export async function POST(req: any) {
             return NextResponse.json({ message: "Email does not exist." }, { status: 400 });
         }
 
-        console.log("Backend: User found in database", existingUser);
-
         // Check if the provided forgototp matches the one stored in the database
         if (parseInt(existingUser.forgototp) !== parseInt(forgototp)) {
             return NextResponse.json({ message: "Forgot Invalid OTP." }, { status: 400 });
         }
 
-        console.log("Backend: Valid OTP");
-        console.log("5")
         return NextResponse.json({ message: "ForgotOTP send Successfully." }, { status: 201 });
 
     } catch (error) {

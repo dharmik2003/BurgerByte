@@ -26,10 +26,7 @@ const Home = () => {
       })
     }
     initAos()
-  },[])
-
-
-  
+  },[])  
 
   return (
       <div className='overflow-hidden'>

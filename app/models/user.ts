@@ -32,7 +32,7 @@ const userSchema = new mongoose.Schema({
         default: false
     },
     forgototp:Number,
-    image:String
+    image:String,
 }, { timestamps: true });
 
 

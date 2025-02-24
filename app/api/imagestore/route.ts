@@ -130,16 +130,8 @@ import { uploadImage } from "@/lib/upload-image";
 import { NextRequest, NextResponse } from "next/server";
 
 export const POST=async(req:NextRequest)=>{
-
     const formdata = await req.formData();
-    console.log("AAAA", formdata)
-
     const image = formdata.get('image') as unknown as File
-    console.log("BBBB", image)
-
     const data = await uploadImage(image, "BurgerByte-Image")
-    console.log("CCCC", { image })
-
     return NextResponse.json({ msg: data }, { status: 200 })
-
 }

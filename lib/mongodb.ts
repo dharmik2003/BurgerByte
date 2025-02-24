@@ -74,7 +74,6 @@ export default async function dbConnect(): Promise<Mongoose> {
         });
     }
 
-    console.log("Waiting for connection promise to resolve");
     cached.conn = await cached.promise;
     return cached.conn;
 }

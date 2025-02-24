@@ -63,11 +63,8 @@ export async function PUT(req: any) {
         const {id, title, image, review, price, rating } = await req.json();
 
         const db = await dbConnect();
-        console.log("update product",id, title, image, review, price, rating)
 
         const items = await ProductModel.findOne({ _id: id });
-        console.log("2")
-        console.log(items)
         // Check if user exists
         if (!items) {
             return NextResponse.json({ message: "Item not found." }, { status: 404 });
@@ -77,12 +74,9 @@ export async function PUT(req: any) {
         if (review !== undefined) items.review = review;
         if (price !== undefined) items.price = price;
         if (rating !== undefined) items.rating = rating;
-        console.log("4")
-
 
         // Save the product to the database
         await items.save();
-
         return NextResponse.json({ message: "Product Update successfully." }, { status: 201 });
 
     } catch (error) {
@@ -100,7 +94,6 @@ export async function DELETE(req: any) {
         const { id } = await req.json(); 
 
         const db = await dbConnect();
-        console.log("Deleting product with ID:", id);
 
         // Find the product by its ID and delete it
         const result = await ProductModel.deleteOne({ _id: id });
@@ -126,10 +119,8 @@ export async function DELETE(req: any) {
 
 export async function GET(req: any) {
     try {
-        console.log("1")
         const db = await dbConnect();
         const products: Product[] = await ProductModel.find({});
-        console.log("2")
         
         return NextResponse.json({ products }, { status: 200 });
 

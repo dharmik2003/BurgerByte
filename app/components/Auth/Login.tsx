@@ -1,230 +1,216 @@
-'use client'
-import { useRouter } from 'next/navigation';
-import React, { MouseEventHandler, useEffect, useState } from 'react';
-import { FaBurger } from 'react-icons/fa6';
-import { setName, setEmail, setPassword, setIsLogin, setadmin, setaddress } from '@/app/Redux/User/User';
-import { useDispatch } from 'react-redux';
-import { IoIosArrowRoundBack } from 'react-icons/io';
-import Cookies from 'js-cookie';
-import toast, { Toaster } from 'react-hot-toast';
-import { addCookie } from '@/app/utils/cookies';
-import { setaddorderID } from '@/app/Redux/OrderID/OrderIDSlice';
-import { nanoid } from 'nanoid';
-import ButtonSpinner from '../Spinner/ButtonSpinner';
-import Spinner from '../Spinner/Spinner';
+"use client";
+import { useRouter } from "next/navigation";
+import React, { MouseEventHandler, useState } from "react";
+import { useDispatch } from "react-redux";
+import toast, { Toaster } from "react-hot-toast";
+import { addCookie } from "@/app/utils/cookies";
+import { nanoid } from "nanoid";
+import ButtonSpinner from "../Spinner/ButtonSpinner";
+import Spinner from "../Spinner/Spinner";
+import { AppRoutes, COOKIE_ADMIN, COOKIE_USER } from "@/constant";
+import { login } from "@/app/Redux/User/User";
 
 const Login = () => {
+  const dispatch = useDispatch();
 
-    const dispatch = useDispatch()
+  const router = useRouter();
+  const handleToggle = () => {
+    router.push(AppRoutes.SIGNUP);
+  };
 
-    const [loading1, setLoading1] = useState(true);
+  const [formData, setFormData] = useState({
+    email: "",
+    password: "",
+  });
 
-    useEffect(() => {
-        const timer = setTimeout(() => {
-            setLoading1(false);
-        }, 1000);
+  const [loading, setLoading] = useState(false);
 
-        return () => clearTimeout(timer);
-    }, []);
+  // const handleSubmit: MouseEventHandler<HTMLButtonElement> = async (event) => {
+  //   setLoading(true);
+  //   event.preventDefault();
 
-    const router = useRouter()
-    const handleToggle = () => {
-        router.push("/signup"); 
-    };
+  //   let orderId = nanoid();
 
-    const [formData, setFormData] = useState({
-        email: '',
-        password: ''
-    });
+  //   // setFormData({
+  //   //     email: '',
+  //   //     password: ''
+  //   // })
+  //   try {
+  //     const response = await fetch("/api/login", {
+  //       method: "POST",
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //       },
+  //       body: JSON.stringify({
+  //         email: formData.email,
+  //         password: formData.password,
+  //       }),
+  //     });
+  //     if (response.ok) {
+  //       toast.success("User logged in successfully!");
 
-    const [loading, setLoading] = useState(false);
-    const [loading2, setLoading2] = useState(false);
+  //       const responseData = await response.json();
+  //       addCookie("userDetails", responseData.userdata.token);
 
+  //       console.log("responseData", responseData);
+  //       const users = responseData.userdata.user;
+  //       const userpassword = responseData.userdata.password;
+  //       const token = responseData.userdata.token;
+  //       dispatch(login({ responseData.userdata.user, responseData.userdata.token }));
 
-const handleSubmit: MouseEventHandler<HTMLButtonElement> = async (event) => {
-    setLoading(true)
+  //       if (users.admin) {
+  //         addCookie(COOKIE_ADMIN, token);
+  //       } else {
+  //         addCookie(COOKIE_USER, token);
+  //       }
+
+  //       setLoading(false);
+  //       // router.push(AppRoutes.DASHBOARD);
+  //     } else if (response.status == 403) {
+  //       setLoading(false);
+  //       toast.error("User is not verified.");
+  //     } else if (response.status == 404) {
+  //       setLoading(false);
+  //       toast.error("User not found.");
+  //     } else if (response.status == 401) {
+  //       // Incorrect password
+  //       setLoading(false);
+  //       toast.error("Incorrect password.");
+  //     } else {
+  //       // Other errors
+  //       setLoading(false);
+  //       console.error("Error logging in user:", response.statusText);
+  //       // Handle other errors
+  //     }
+  //   } catch (error) {
+  //     console.error("Error signing up user:", error);
+  //   }
+  // };
+
+  const handleSubmit: MouseEventHandler<HTMLButtonElement> = async (event) => {
     event.preventDefault();
-        
-        let orderId = nanoid();
+    setLoading(true);
 
-
-        // setFormData({
-        //     email: '',
-        //     password: ''
-        // })
     try {
-            const response = await fetch('/api/login', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        email: formData.email,
-                        password: formData.password
-                    }),
-                });
-            if (response.ok) {
-                toast.success('User logged in successfully!');
-                
-                const responseData = await response.json();
-                const users = responseData.userdata.user;
-                const userpassword = responseData.userdata.password;
-                const token = responseData.userdata.token;
+      const response = await fetch("/api/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          email: formData.email,
+          password: formData.password,
+        }),
+      });
 
-                dispatch(setName(users.name));
-                dispatch(setEmail(users.email));
-                dispatch(setPassword(userpassword));
-                dispatch(setIsLogin(true));
-                dispatch(setadmin(users.admin));
-                dispatch(setaddorderID(orderId))
-                dispatch(setaddress(users.address))
-                if(users.admin){
-                    addCookie('adminDetails', token)
-                }
-                else{
-                    addCookie('userDetails', token)
-                }
-                setLoading(false)
-                router.push("/");
-            } else if (response.status == 403) {
-                setLoading(false)
-                toast.error('User is not verified.');
-            } 
-            else if (response.status == 404) {
-                setLoading(false)
-                toast.error('User not found.');
-            }
-            else if (response.status == 401) {
-                // Incorrect password
-                setLoading(false)
-                toast.error('Incorrect password.');
-            } else {
-                // Other errors
-                setLoading(false)
-                console.error('Error logging in user:', response.statusText);
-                // Handle other errors
-            }
-    
+      if (!response.ok) {
+        setLoading(false);
+        const errorMessages: { [key: number]: string } = {
+          403: "User is not verified.",
+          404: "User not found.",
+          401: "Incorrect password.",
+        };
+        const errorMessage =
+          errorMessages[response.status] || `Error: ${response.statusText}`;
+        toast.error(errorMessage);
+        return;
+      }
+
+      const responseData = await response.json();
+      const { user, token } = responseData.userdata;
+
+      // Dispatch login action
+      dispatch(login({ user }));
+
+      // Manage cookies based on user role
+      const roleCookieName = user.admin ? COOKIE_ADMIN : COOKIE_USER;
+      addCookie(roleCookieName, token);
+
+      // You can redirect the user after successful login
+      toast.success("User logged in successfully!");
+      router.push(AppRoutes.DASHBOARD);
+      setLoading(false);
     } catch (error) {
-        console.error('Error signing up user:', error);
-       
+      setLoading(false);
+      console.error("Error logging in user:", error);
+      toast.error("An unexpected error occurred. Please try again later.");
+    } finally {
+      setLoading(false);
     }
-};
+  };
 
-    const handleInputChange = (e:any) => {
-        const { name, value } = e.target;
-        setFormData({
-            ...formData,
-            [name]: value
-        });
-    };
+  const handleInputChange = (e: any) => {
+    const { name, value } = e.target;
+    setFormData({
+      ...formData,
+      [name]: value,
+    });
+  };
 
-    const [toggelforgot, settoggelforgot]=useState<boolean>(false)
+  const [forgotmail, setforgotmail] = useState<String>("");
 
-    const [forgotmail, setforgotmail]=useState<String>('')
-    const handleforgotpassword=async()=>{
-        settoggelforgot(true)
-    }
-    const gotoforgotlogin = ()=>{
-        settoggelforgot(false)
-    }
-    const forgotmainsend =async()=>{
-        try{
-            setLoading2(true)
-            const response = await fetch('/api/forgotpassword',{
-                method:'POST',
-                headers:{
-                    'Content-Type': 'application/json',
-                },
-                body:JSON.stringify({
-                    email: forgotmail
-                })
-            })
-            if(response.ok){
-                toast.success('Please Check Email')
-                settoggelforgot(false)
-                setLoading2(false)
+  return (
+    <div
+      data-aos="fade-left"
+      className={`w-full h-full flex flex-col gap-6 justify-center items-center overflow-x-hidden`}
+    >
+      <div className="w-full h-full max-w-[500px] flex flex-col justify-center items-center gap-7">
+        <h1 className="text-[48px] font-semibold  uppercase text-black">
+          Login
+        </h1>
 
-                
-            } else if (response.status==400){
-                toast.error('This email not existing')
-                setLoading2(false)
+        <div className="w-full flex flex-col justify-center items-center gap-2">
+          <input
+            type="email"
+            placeholder="Email"
+            name="email"
+            value={formData.email}
+            onChange={handleInputChange}
+            required
+            className="w-full h-12 rounded-md pl-4"
+          />
 
-
-            }
-        } catch (error) {
-            console.error('Error Forgotpassword:', error);
-            setLoading2(false)
-
-        }
-        
-    }
-
-    return (
-        <div className='w-full h-full bg-[#f4f1ea] relative overflow-hidden'>
-            {/* login */}
-            {
-                loading1?(
-                    <div className='w-full h-[610px] flex justify-center items-center'> <Spinner /></div>
-                ):(
-
-                        <div  className={`w-full h-full pt-[5rem] pb-[6rem] bg-[#f4f1ea] flex justify-center items-center `}>
-                            <div data-aos="fade-left" className={`${toggelforgot ? ("hidden") : ("block")} w-[90%]  sm:w-[50%] lg:w-[30%] flex flex-col bg-green-700 p-6 rounded-lg justify-center items-center`}>
-                                <div className='flex items-center space-x-2'>
-                                    <FaBurger className='w-[1.2rem] h-[1.2rem] sm:h-[1.4rem] sm:w-[1.4rem] text-orange-500' />
-                                    <h1 className='text-[20px] sm:text-[30px] text-white font-semibold '>BurgerByte</h1>
-                                </div>
-                                <h1 className='text-[23px] font-semibold mb-[1rem] uppercase text-white mt-6'>Login</h1>
-                                <input type='email' placeholder='Email' name="email" value={formData.email} onChange={handleInputChange} required className='w-[80%] py-1 lg:w-[70%] lg:h-[2rem] rounded pl-4' /><br />
-                                <input type='passowrd' placeholder='Password' value={formData.password}
-                                    onChange={handleInputChange} name="password" required className='w-[80%] relative py-1 lg:w-[70%] lg:h-[2rem] rounded pl-4' />
-                                <div className='w-[80%] flex justify-end text-white cursor-pointer' onClick={handleforgotpassword}>
-                                    <p className=''>Forgot Password?</p>
-                                </div>
-
-                                {/* <div> */}
-                                {!loading ?
-                                    (<div className='mt-[2rem] w-[80%] mx-auto relative border-b-[2px] border-b-gray-300 border-opacity-50 text-center'>
-                                        <button className='px-8  py-3 rounded-lg mb-[3rem] text-[16px] lg:text-xl w-full bg-blue-950 transition-all duration-200 hover:bg-red-600 text-white' onClick={handleSubmit}>Login</button>
-                                    </div>
-                                    ) : (
-
-                                        <ButtonSpinner />
-                                    )}
-                                {/* </div> */}
-                                <p className='text-center text-white  mt-[1.5rem]'><span className='opacity-50'>New user? </span><span className='text-white underline cursor-pointer' onClick={handleToggle}>Signup now</span></p>
-                            </div>
-
-                            <div className={`${toggelforgot ? ("block") : ("hidden")} w-[90%] relative   sm:w-[50%] lg:w-[30%] flex flex-col bg-green-700 p-6 rounded-lg justify-center items-center`}>
-                                <div className='absolute top-3 left-2 text-white text-3xl cursor-pointer' onClick={gotoforgotlogin}>
-                                    <IoIosArrowRoundBack />
-                                </div>
-                                <div className='flex items-center space-x-2'>
-                                    <FaBurger className='w-[1.2rem] h-[1.2rem] sm:h-[1.4rem] sm:w-[1.4rem] text-orange-500' />
-                                    <h1 className='text-[20px] sm:text-[30px] text-white font-semibold '>BurgerByte</h1>
-                                </div>
-                                <h1 className='text-[23px] font-semibold mb-[1rem] uppercase text-white mt-6'>Forgot Password</h1>
-                                <input type='email' onChange={(e) => setforgotmail(e.target.value)} placeholder='Email' name="email" className='w-[80%] py-1 lg:w-[70%] lg:h-[2rem] rounded pl-4' /><br />
-
-                                    {
-                                        !loading2?(
-                                        <div className='mt-[2rem] w-[80%] mx-auto relative border-b-[2px] border-b-gray-300 border-opacity-50 text-center cursor-pointer'>
-                                            <button className='px-8  py-3 rounded-lg mb-[3rem] text-[16px] w-full bg-blue-950 transition-all duration-200 hover:bg-red-600 text-white' onClick={forgotmainsend}>Send Mail</button>
-                                        </div>
-
-                                        ):(
-                                            <ButtonSpinner/>
-                                        )
-                                    }
-                            </div>
-                        </div>
-
-                )
-            }
-            
-           
+          <div className="flex flex-col  gap-1"></div>
+          <input
+            type="passowrd"
+            placeholder="Password"
+            value={formData.password}
+            onChange={handleInputChange}
+            name="password"
+            required
+            className="w-full h-12  rounded-md pl-4"
+          />
+          <div
+            className="w-full flex justify-end text-black cursor-pointer"
+            onClick={() => router.push(AppRoutes.forgotPassword)}
+          >
+            <p className="">Forgot Password?</p>
+          </div>
         </div>
-    );
+
+        {!loading ? (
+          <div className=" w-full relative border-b-[2px] border-b-gray-400 border-opacity-50 text-center">
+            <button
+              className="px-8  py-3 rounded-lg mb-[3rem] text-[16px] lg:text-xl w-full bg-green-700 transition-all duration-200 hover:bg-blue-950 text-white"
+              onClick={handleSubmit}
+              disabled={loading}
+            >
+              Login
+            </button>
+          </div>
+        ) : (
+          <ButtonSpinner />
+        )}
+        <p className="text-center flex gap-2 text-lg text-black ">
+          <span className="opacity-50">New user? </span>{" "}
+          <span
+            className="text-black hover:underline cursor-pointer"
+            onClick={handleToggle}
+          >
+            Signup now
+          </span>
+        </p>
+      </div>
+    </div>
+  );
 };
 
 export default Login;
