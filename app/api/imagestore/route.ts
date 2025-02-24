@@ -11,7 +11,6 @@
 
 // export async function POST(req: any) {
 //     try {
-//         console.log("1111")
 //         const { image } = await req.json();
 //         console.log("2222",image)
 //         // Upload image to Cloudinary here and get the imageUrl
