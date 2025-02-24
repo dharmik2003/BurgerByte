@@ -1,10 +1,19 @@
-import About from '@/app/components/About/About'
-import React from 'react'
+import About from "@/app/components/About/About";
+import Spinner from "@/app/components/Spinner/Spinner";
+import React, { Suspense } from "react";
 
 const page = () => {
   return (
-    <div><About/></div>
-  )
-}
+    <Suspense
+      fallback={
+        <div className="w-full h-[610px] flex justify-center items-center">
+          <Spinner />
+        </div>
+      }
+    >
+      <About />
+    </Suspense>
+  );
+};
 
-export default page
+export default page;

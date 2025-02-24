@@ -1,5 +1,4 @@
 "use client";
-
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useRouter, useSearchParams } from "next/navigation";
@@ -70,7 +69,7 @@ const PaymentConfirmation = () => {
     if (payment_ID) {
       handleVerifyPayment(payment_ID);
     }
-  }, []);
+  }, [payment_ID]);
 
   if (isLoading) {
     return (

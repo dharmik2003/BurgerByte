@@ -1,10 +1,19 @@
-import PropulerProduct from '@/app/components/PropulerProduct/PropulerBurger'
-import React from 'react'
+import PropulerProduct from "@/app/components/PropulerProduct/PropulerBurger";
+import Spinner from "@/app/components/Spinner/Spinner";
+import React, { Suspense } from "react";
 
 const page = () => {
   return (
-    <div><PropulerProduct/></div>
-  )
-}
+    <Suspense
+      fallback={
+        <div className="w-full h-[610px] flex justify-center items-center">
+          <Spinner />
+        </div>
+      }
+    >
+      <PropulerProduct />
+    </Suspense>
+  );
+};
 
-export default page
+export default page;

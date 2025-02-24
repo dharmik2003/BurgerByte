@@ -309,7 +309,7 @@ const PropulerProduct = () => {
               showDots={false}
             >
               {products.map((product) => (
-                <div className=" bg-white p-2 sm:p-6 relative rounded-lg m-3">
+                <div key={product._id} className=" bg-white p-2 sm:p-6 relative rounded-lg m-3">
                   <div className="w-[200px] mx-auto h-[200px] ">
                     {/* <h1>{id}</h1>
                    <h1>{orderID}</h1>  */}

@@ -140,7 +140,6 @@ const AllProduct = () => {
     <div className="w-full h-full bg-[#f4f1ea] p-6 flex justify-center items-center ">
       {loading ? (
         <div className="w-full h-[610px] flex justify-center items-center">
-          {" "}
           <Spinner />
         </div>
       ) : (

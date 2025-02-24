@@ -1,10 +1,19 @@
-import AllProduct from '@/app/components/AddProduct/AllProduct'
-import React from 'react'
+import AllProduct from "@/app/components/AddProduct/AllProduct";
+import Spinner from "@/app/components/Spinner/Spinner";
+import React, { Suspense } from "react";
 
 const page = () => {
   return (
-    <div className='bg-red-100'><AllProduct/></div>
-  )
-}
+    <Suspense
+      fallback={
+        <div className="w-full h-[610px] flex justify-center items-center">
+          <Spinner />
+        </div>
+      }
+    >
+      <AllProduct />
+    </Suspense>
+  );
+};
 
-export default page
+export default page;

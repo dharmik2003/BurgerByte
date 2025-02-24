@@ -1,8 +1,7 @@
 import Image from "next/image";
 import React, { ReactNode } from "react";
 import { FaBurger } from "react-icons/fa6";
-import burger2 from '@/public/images/b2.png'
-
+import burger2 from "@/public/images/b2.png";
 
 interface LayoutProps {
   children: ReactNode;
@@ -24,8 +23,9 @@ const PublicLayout = ({ children }: LayoutProps) => {
           <div className="text-md text-white">
             <p>
               Welcome to BurgerByte, where every bite is a burst of flavor!
-              We're thrilled to have you here. Whether you're a burger
-              enthusiast or just craving something tasty, we've got you covered!
+              We&apos;re thrilled to have you here. Whether you&apos;re a burger
+              enthusiast or just craving something tasty, we&apos;ve got you
+              covered!
             </p>
           </div>
           <Image src={burger2} alt="bur1" className="hidden md:block" />
